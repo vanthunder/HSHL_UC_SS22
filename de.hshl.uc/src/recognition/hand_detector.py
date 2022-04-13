@@ -88,7 +88,7 @@ def main():
         endPoint = (1400, 300)
     elif input1 == '0':
         enable_wbacam = True
-        video = "0"
+        video = 0
         startPoint = (100, 100)
         endPoint = (300, 300)
     print(input1)
@@ -123,8 +123,8 @@ def main():
                 print(dt)
                 if dt >= seconds_until_click:
                     color = (0, 0,  255)
+                    cv2.circle(img, (400, 400), 30, (0, 0, 0), cv2.FILLED)
                     #send a message
-                    #counter = 0
 
                 if first_time:
                     first_time = False
@@ -134,6 +134,11 @@ def main():
                 t2 = t1
             else:
                 color = (255, 0, 0)
+                counter = 0
+                t1 = 0
+                t2 = 0
+                dt = 0
+                first_time = True
 
         cTime = time.time()
         fps = 1 / (cTime - pTime)
