@@ -1,10 +1,7 @@
-import pathlib
-import pkg_resources
 import cv2
 import mediapipe as mp
 import time
 import keyboard
-import os
 
 class hand_detector():
     def __init__(self, mode = False, maxHands = 1, detectionCon = 0.5, trackCon = 0.5, modelComplexity=1):
@@ -70,6 +67,12 @@ class hand_detector():
 
 
 def main():
+    first_time = True
+    t1 = 0
+    t2 = 0
+    dt = 0
+    seconds_until_click = 2
+    counter = 0
     enabale_webcam = False
     video = "hands.mp4"
     print("Bitte wählen Sie '0' für Webcam und '1' für ein Testvideo!")
@@ -87,7 +90,7 @@ def main():
     cTime = 0
     x = 300
     y = 200
-    cap = cv2.VideoCapture(video)
+    cap = cv2.VideoCapture(0)
     detector = hand_detector()
 
     startPoint = (100, 100)
@@ -110,9 +113,25 @@ def main():
         if len(lmlist) != 0:
             center = (int(lmlist[0].__getitem__(1)), int(lmlist[0].__getitem__(2)))
             img = cv2.circle(img, center, 20,(255, 255, 0), 2)
-            # TO-DO: Implemnt Timer
+            # TO-DO: Implement Timer
             if detector.intersection(lmlist, x, y, startPoint, endPoint)== True:
+                counter += 1
                 color = (255, 255, 40)
+
+                t1 = time.time()
+
+                print(dt)
+                if dt >= seconds_until_click:
+                    color = (0, 0,  255)
+                    #send a message
+                    #counter = 0
+
+                if first_time:
+                    first_time = False
+                else:
+                    dt += t1 - t2
+
+                t2 = t1
             else:
                 color = (255, 0, 0)
 
