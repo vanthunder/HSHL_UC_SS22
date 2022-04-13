@@ -29,12 +29,26 @@ class hand_detector():
                     self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
         return img
 
-    def intersection(self, lmList, x, y):
+    def intersection(self, lmList, x, y, start_Point, end_Point):
+        # X Range
+        for x in range(start_Point[0], end_Point[0]):
+            if lmList[0].__getitem__(1) == x:
+                print(x + "Intersection X: True")
+                return True
+        # Y Range
+        for y in range(start_Point[1], end_Point[1]):
+            print(y)
+            if lmList[0].__getitem__(2) == y:
+                print("Intersection Y: True")
+                return True
+
+
+        #if lmList[0].__getitem__(1) == start_Point.__getItem__(1):
         if x == lmList[0].__getitem__(1):
-            print("Intersection X: True")
+            print("Intersection XAB: True")
             return True
         elif y == lmList[0].__getitem__(1):
-            print("Intersection Y: True")
+            print("Intersection YAB: True")
             return True
         return False
 
@@ -65,15 +79,24 @@ def main():
     cap = cv2.VideoCapture(video)
     detector = hand_detector()
 
+    startPoint = (400, 400)
+    endPoint = (600, 600)
+    color = (255, 0, 0)
+    thickness = 2
+
+
+
+
 
 
     while cap.isOpened():
         success, img = cap.read()
         img = detector.findHands(img)
+        img = cv2.rectangle(img, startPoint, endPoint, color, thickness)
 
         lmlist = detector.findPosition(img)
         if len(lmlist) != 0:
-            detector.intersection(lmlist, x, y)
+            detector.intersection(lmlist, x, y, startPoint, endPoint)
 
         cTime = time.time()
         fps = 1 / (cTime - pTime)
