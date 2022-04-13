@@ -70,7 +70,17 @@ class hand_detector():
 
 
 def main():
+    enabale_webcam = False
     video = "hands.mp4"
+    print("Bitte wählen Sie '0' für Webcam und '1' für ein Testvideo!")
+    input1 = input('Wahl: ')
+    if input1 == 1:
+        enabale_webcam = False
+        video = "hands.mp4"
+    elif input1 == 0:
+        enable_wbacam = True
+        video = "0"
+    print(input1)
 
     #video = str(video)
     pTime = 0
@@ -100,6 +110,7 @@ def main():
         if len(lmlist) != 0:
             center = (int(lmlist[0].__getitem__(1)), int(lmlist[0].__getitem__(2)))
             img = cv2.circle(img, center, 20,(255, 255, 0), 2)
+            # TO-DO: Implemnt Timer
             if detector.intersection(lmlist, x, y, startPoint, endPoint)== True:
                 color = (255, 255, 40)
             else:
