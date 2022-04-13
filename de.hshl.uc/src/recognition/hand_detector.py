@@ -44,14 +44,14 @@ class hand_detector():
 def main():
     video = "hands.mp4"
 
-    video = str(video)
+    #video = str(video)
     pTime = 0
     cTime = 0
     cap = cv2.VideoCapture(video)
     detector = hand_detector()
 
 
-    while True:
+    while cap.isOpened():
         success, img = cap.read()
         img = detector.findHands(img)
         lmlist = detector.findPosition(img)
