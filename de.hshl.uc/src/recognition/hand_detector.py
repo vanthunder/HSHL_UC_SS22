@@ -31,26 +31,27 @@ class hand_detector():
 
     def intersection(self, lmList, x, y, start_Point, end_Point):
         # X Range
+        x_wert = False
+        y_wert = False
+
         for x in range(start_Point[0], end_Point[0]):
             if lmList[0].__getitem__(1) == x:
-                print(x + "Intersection X: True")
-                return True
+                x_wert = True
+                break
+            else:
+                x_wert = False
         # Y Range
         for y in range(start_Point[1], end_Point[1]):
-            print(y)
             if lmList[0].__getitem__(2) == y:
-                print("Intersection Y: True")
-                return True
+                y_wert = True
+                break
+            else:
+                y_wert = False
 
-
-        #if lmList[0].__getitem__(1) == start_Point.__getItem__(1):
-        if x == lmList[0].__getitem__(1):
-            print("Intersection XAB: True")
+        if(x_wert & y_wert):
+            print("Intersection Y: True")
+            print("Intersection X: True")
             return True
-        elif y == lmList[0].__getitem__(1):
-            print("Intersection YAB: True")
-            return True
-        return False
 
 
     def findPosition(self, img, handNo=0, draw=True):
@@ -74,13 +75,13 @@ def main():
     #video = str(video)
     pTime = 0
     cTime = 0
-    x = 800
-    y = 800
-    cap = cv2.VideoCapture(video)
+    x = 300
+    y = 200
+    cap = cv2.VideoCapture(0)
     detector = hand_detector()
 
-    startPoint = (400, 400)
-    endPoint = (600, 600)
+    startPoint = (100, 100)
+    endPoint = (300, 300)
     color = (255, 0, 0)
     thickness = 2
 
