@@ -133,6 +133,8 @@ def main():
 
                 t2 = t1
             else:
+                first_time = True
+                dt = 0
                 color = (255, 0, 0)
                 counter = 0
                 t1 = 0
@@ -154,7 +156,6 @@ def main():
             cap.release()
             cv2.destroyAllWindows()
             break
-
 
 if __name__ == "__main__":
     main()
