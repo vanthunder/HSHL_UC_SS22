@@ -1,10 +1,13 @@
+import pathlib
+import pkg_resources
 import cv2
 import mediapipe as mp
 import time
 import keyboard
+import os
 
 class hand_detector():
-    def __init__(self, mode = False, maxHands = 1, detectionCon = 0.5, trackCon = 0.5, modelComplexity=1):
+    def __init__(self, mode=False, maxHands=1, detectionCon=0.5, trackCon=0.5, modelComplexity=1):
         self.mode = mode
         self.maxHands = maxHands
         self.detectionCon = detectionCon
@@ -17,8 +20,8 @@ class hand_detector():
     def findHands(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.hands.process(imgRGB)
-        #print(self.results.multi_hand_landmarks)
-        #print(self.results.multi_hand_world_landmarks)
+        # print(self.results.multi_hand_landmarks)
+        # print(self.results.multi_hand_world_landmarks)
 
         if self.results.multi_hand_landmarks:
             for handLms in self.results.multi_hand_landmarks:
@@ -45,11 +48,10 @@ class hand_detector():
             else:
                 y_wert = False
 
-        if(x_wert & y_wert):
+        if (x_wert & y_wert):
             print("Intersection Y: True")
             print("Intersection X: True")
             return True
-
 
     def findPosition(self, img, handNo=0, draw=True):
 
@@ -73,6 +75,8 @@ def main():
     dt = 0
     seconds_until_click = 2
     counter = 0
+    startPoint = (1000, 100)
+    endPoint = (1400, 300)
     enabale_webcam = False
     video = "hands.mp4"
     print("Bitte wählen Sie '0' für Webcam und '1' für ein Testvideo!")
@@ -80,34 +84,30 @@ def main():
     if input1 == 1:
         enabale_webcam = False
         video = "hands.mp4"
+        startPoint = (1000, 100)
+        endPoint = (1400, 300)
     elif input1 == 0:
         enable_wbacam = True
         video = "0"
+        startPoint = (100, 100)
+        endPoint = (300, 300)
     print(input1)
 
-    #video = str(video)
+    # video = str(video)
     pTime = 0
     cTime = 0
     x = 300
     y = 200
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(video)
     detector = hand_detector()
 
-    startPoint = (100, 100)
-    endPoint = (300, 300)
     color = (255, 0, 0)
     thickness = 2
-
-
-
-
-
 
     while cap.isOpened():
         success, img = cap.read()
         img = detector.findHands(img)
         img = cv2.rectangle(img, startPoint, endPoint, color, thickness)
-
 
         lmlist = detector.findPosition(img)
         if len(lmlist) != 0:
@@ -135,16 +135,13 @@ def main():
             else:
                 color = (255, 0, 0)
 
-
-
-
         cTime = time.time()
         fps = 1 / (cTime - pTime)
         pTime = cTime
 
         cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
         cv2.putText(img, "Press ' q ' to exit!", (10, 200), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
-        #cv2.putText(img, "Testfield", (x, y), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
+        # cv2.putText(img, "Testfield", (x, y), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
 
         cv2.imshow("Image", img)
         cv2.waitKey(1)
@@ -153,7 +150,6 @@ def main():
             cv2.destroyAllWindows()
             break
 
+
 if __name__ == "__main__":
     main()
-
-
