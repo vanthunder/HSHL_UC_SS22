@@ -20,13 +20,24 @@ class hand_detector():
     def findHands(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.hands.process(imgRGB)
-        # print(results.multi_hand_landmarks)
+        #print(self.results.multi_hand_landmarks)
+        #print(self.results.multi_hand_world_landmarks)
 
         if self.results.multi_hand_landmarks:
             for handLms in self.results.multi_hand_landmarks:
                 if draw:
                     self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
         return img
+
+    def intersection(self, lmList, x, y):
+        if x == lmList[0].__getitem__(1):
+            print("Intersection X: True")
+            return True
+        elif y == lmList[0].__getitem__(1):
+            print("Intersection Y: True")
+            return True
+        return False
+
 
     def findPosition(self, img, handNo=0, draw=True):
 
@@ -41,22 +52,28 @@ class hand_detector():
                     cv2.circle(img, (cx, cy), 3, (255, 0, 255), cv2.FILLED)
         return lmlist
 
+
+
 def main():
     video = "hands.mp4"
 
     #video = str(video)
     pTime = 0
     cTime = 0
+    x = 800
+    y = 800
     cap = cv2.VideoCapture(video)
     detector = hand_detector()
+
 
 
     while cap.isOpened():
         success, img = cap.read()
         img = detector.findHands(img)
+
         lmlist = detector.findPosition(img)
         if len(lmlist) != 0:
-            print(lmlist[4])
+            detector.intersection(lmlist, x, y)
 
         cTime = time.time()
         fps = 1 / (cTime - pTime)
@@ -64,6 +81,7 @@ def main():
 
         cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
         cv2.putText(img, "Press ' q ' to exit!", (10, 200), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
+        cv2.putText(img, "Testfield", (x, y), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
 
         cv2.imshow("Image", img)
         cv2.waitKey(1)
