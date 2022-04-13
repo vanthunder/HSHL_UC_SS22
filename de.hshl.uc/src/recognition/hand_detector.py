@@ -77,7 +77,7 @@ def main():
     cTime = 0
     x = 300
     y = 200
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(video)
     detector = hand_detector()
 
     startPoint = (100, 100)
@@ -100,7 +100,13 @@ def main():
         if len(lmlist) != 0:
             center = (int(lmlist[0].__getitem__(1)), int(lmlist[0].__getitem__(2)))
             img = cv2.circle(img, center, 20,(255, 255, 0), 2)
-            detector.intersection(lmlist, x, y, startPoint, endPoint)
+            if detector.intersection(lmlist, x, y, startPoint, endPoint)== True:
+                color = (255, 255, 40)
+            else:
+                color = (255, 0, 0)
+
+
+
 
         cTime = time.time()
         fps = 1 / (cTime - pTime)
@@ -108,7 +114,7 @@ def main():
 
         cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
         cv2.putText(img, "Press ' q ' to exit!", (10, 200), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
-        cv2.putText(img, "Testfield", (x, y), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
+        #cv2.putText(img, "Testfield", (x, y), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
 
         cv2.imshow("Image", img)
         cv2.waitKey(1)
