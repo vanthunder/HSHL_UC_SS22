@@ -94,8 +94,11 @@ def main():
         img = detector.findHands(img)
         img = cv2.rectangle(img, startPoint, endPoint, color, thickness)
 
+
         lmlist = detector.findPosition(img)
         if len(lmlist) != 0:
+            center = (int(lmlist[0].__getitem__(1)), int(lmlist[0].__getitem__(2)))
+            img = cv2.circle(img, center, 20,(255, 255, 0), 2)
             detector.intersection(lmlist, x, y, startPoint, endPoint)
 
         cTime = time.time()
