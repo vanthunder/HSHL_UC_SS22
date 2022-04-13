@@ -78,15 +78,15 @@ def main():
     startPoint = (1000, 100)
     endPoint = (1400, 300)
     enabale_webcam = False
-    video = "hands.mp4"
+    video = ""
     print("Bitte wählen Sie '0' für Webcam und '1' für ein Testvideo!")
     input1 = input('Wahl: ')
-    if input1 == 1:
+    if input1 == '1':
         enabale_webcam = False
         video = "hands.mp4"
         startPoint = (1000, 100)
         endPoint = (1400, 300)
-    elif input1 == 0:
+    elif input1 == '0':
         enable_wbacam = True
         video = "0"
         startPoint = (100, 100)
