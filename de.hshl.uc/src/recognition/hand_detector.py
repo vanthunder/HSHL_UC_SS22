@@ -108,7 +108,7 @@ def main():
         success, img = cap.read()
         img = detector.findHands(img)
         img = cv2.rectangle(img, startPoint, endPoint, color, thickness)
-
+        # TO-DO Loading animation Circle
         lmlist = detector.findPosition(img)
         if len(lmlist) != 0:
             center = (int(lmlist[0].__getitem__(1)), int(lmlist[0].__getitem__(2)))
