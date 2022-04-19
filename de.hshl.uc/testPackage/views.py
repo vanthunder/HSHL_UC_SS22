@@ -1,7 +1,9 @@
 import numpy as np
 
 from PyQt5.QtCore import Qt, QThread, QTimer
-from PyQt5.QtWidgets import QMainWindow, QWidget, QPushButton, QVBoxLayout, QApplication, QSlider
+from PyQt5.QtGui import QImage, QPixmap
+from PyQt5.QtWidgets import QMainWindow, QWidget, QPushButton, QVBoxLayout, QApplication, QSlider, QLabel
+from PyQt5.uic.properties import QtGui
 from pyqtgraph import ImageView
 
 
@@ -36,7 +38,22 @@ class StartWindow(QMainWindow):
         self.image_view.setImage(frame.T)
 
     def update_movie(self):
-        self.image_view.setImage(self.camera.last_frame.T)
+        #self.image_view.setImage(self.camera.last_frame.T)
+        image = np.array(self.camera.last_frame.T).reshape(2048, 2048).astype(np.int32)
+        qimage = QtGui.QImage(image, image.shape[0], image.shape[1], QtGui.QImage.Format_RGB32)
+        img = PrintImage(QPixmap(qimage))
+        #image = self.camera.last_frame.T
+       # h, w = image.shape
+
+        label = QLabel(self)
+        pixmap = QPixmap(self.camera.last_frame.T)
+        label.setPixmap(pixmap)
+        self.image_view=label
+
+        # Optional, resize window to image size
+        #self.resize(pixmap.width(), pixmap.height())
+        #image = np.transpose(image, (1, 0, 2)).copy()
+        #self.image_view.setImage(image)
 
     def update_brightness(self, value):
         value /= 10

@@ -2,8 +2,9 @@ import numpy as np
 
 from PyQt5.QtCore import Qt, QThread, QTimer
 from PyQt5.QtWidgets import QMainWindow, QWidget, QPushButton, QVBoxLayout, QApplication, QSlider, QLabel, QSizePolicy
+from PyQt5.uic.properties import QtGui
 from pyqtgraph import ImageView
-from PyQt5.QtGui import QImage, QPalette
+from PyQt5.QtGui import QImage, QPalette, QPixmap
 
 
 class StartWindow(QMainWindow):
@@ -30,7 +31,11 @@ class StartWindow(QMainWindow):
         self.update_timer.timeout.connect(self.update_movie)
 
     def update_movie(self):
-        self.imageLabel.setPicture(self.camera.last_frame.T)
+
+        image = np.array(self.camera).reshape(1920, 1080).astype(np.int32)
+        #image = np.transpose(image, (1, 0, 2)).copy()
+        qimage = QtGui.QImage(image, image.shape[0], image.shape[1], QtGui.QImage.Format_RGB32)
+        self.imageLabel.setPicture(QImage(qimage))
 
 
 
