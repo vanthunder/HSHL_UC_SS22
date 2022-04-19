@@ -29,7 +29,8 @@ class VideoThread(QThread):
             success, img = self.camera.cap.read()
             if success:
                 # init Hand detector
-                hd.findHands(img)
+                #hd.findHands(img)
+                img = self.hand_detector.hand_detector_run(hand_detector, img)
                 self.change_pixmap_signal.emit(img)
 
 

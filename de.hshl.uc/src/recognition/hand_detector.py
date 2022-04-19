@@ -201,8 +201,8 @@ class hand_detector:
                 cv2.destroyAllWindows()
                 break
 
-    def hand_detector_run(cap, detector, img = None):
-        img = img
+    def hand_detector_run(detector, img):
+        hdt = hand_detector()
         pTime = 0
         cTime = 0
         x = 300
@@ -219,23 +219,9 @@ class hand_detector:
         endPoint = (1400, 300)
         enabale_webcam = False
         video = ""
-        print("Bitte wählen Sie '0' für Webcam und '1' für ein Testvideo!")
-        input1 = input('Wahl: ')
-        if input1 == '1':
-            enabale_webcam = False
-            video = "hands.mp4"
-            startPoint = (1000, 100)
-            endPoint = (1400, 300)
-        elif input1 == '0':
-            enable_wbacam = True
-            video = 0
-            startPoint = (100, 100)
-            endPoint = (300, 300)
+
 
        # cap = cv2.VideoCapture(video)
-
-        print(input1)
-        print(video)
 
         ANGLE_DELTA = 360 // 8
 
@@ -251,10 +237,10 @@ class hand_detector:
         # Lmlist
         #
         #success, img = cap.read()
-        img = detector.findHands(img)
+        img = detector.findHands(hdt, img)
         img = cv2.rectangle(img, startPoint, endPoint, color, thickness)
         # TO-DO Loading animation Circle
-        lmlist = detector.findPosition(img)
+        lmlist = detector.findPosition(hdt, img)
         # Setze Globale Liste!
         handlist = lmlist
         hand_detector.handlist = lmlist
@@ -265,7 +251,7 @@ class hand_detector:
             img = cv2.circle(img, center, 20, (255, 255, 0), 2)
             img = hand_detector.circleLoadAnimation(img, ANGLE_DELTA=360 // 8)
             # TO-DO: Implement Timer
-            if detector.intersection(lmlist, x, y, startPoint, endPoint) == True:
+            if detector.intersection(hdt, lmlist, x, y, startPoint, endPoint) == True:
                 counter += 1
                 color = (255, 255, 40)
 
@@ -301,11 +287,10 @@ class hand_detector:
         cv2.putText(img, "Press ' q ' to exit!", (10, 200), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
         # cv2.putText(img, "Testfield", (x, y), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
 
-        cv2.imshow("Image", img)
-        cv2.waitKey(1)
+
         # Implement this in the Window class!
         if keyboard.is_pressed('q'):
-            cap.release()
+            #cap.release()
             cv2.destroyAllWindows()
         return img
 
