@@ -1,13 +1,24 @@
 import pathlib
+
+import numpy as np
 import pkg_resources
 import cv2
 import mediapipe as mp
 import time
 import keyboard
 import os
+from threading import Thread
+from matplotlib import pyplot as plt
+import random
 
-class hand_detector():
-    def __init__(self, mode=False, maxHands=1, detectionCon=0.5, trackCon=0.5, modelComplexity=1):
+
+class hand_detector:
+    handlist = [1, 12]
+    str = 'test'
+
+
+
+    def __init__(self, mode: object = False, maxHands: object = 1, detectionCon: object = 0.5, trackCon: object = 0.5, modelComplexity: object = 1) -> object:
         self.mode = mode
         self.maxHands = maxHands
         self.detectionCon = detectionCon
@@ -16,6 +27,7 @@ class hand_detector():
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands(self.mode, self.maxHands, self.modelComplex, self.detectionCon, self.trackCon)
         self.mpDraw = mp.solutions.drawing_utils
+        self.handList = [1, 2]
 
     def findHands(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -64,98 +76,135 @@ class hand_detector():
                 lmlist.append([id, cx, cy])
                 if draw:
                     cv2.circle(img, (cx, cy), 3, (255, 0, 255), cv2.FILLED)
+        handlist = lmlist
         return lmlist
 
+    def getLmlist(self):
+        return self.lmList
 
+    def circleLoadAnimation(img, ANGLE_DELTA):
+        # Build it with rectangle?
+        for angle in range(0, 360, ANGLE_DELTA):
+            r = angle
+            g = 0
+            b = 0
+            cv2.ellipse(img, (350, 350), (20, 20), 0 ,angle, angle + ANGLE_DELTA, (r, g, b), cv2.FILLED)
 
-def main():
-    first_time = True
-    t1 = 0
-    t2 = 0
-    dt = 0
-    seconds_until_click = 2
-    counter = 0
-    startPoint = (1000, 100)
-    endPoint = (1400, 300)
-    enabale_webcam = False
-    video = ""
-    print("Bitte wählen Sie '0' für Webcam und '1' für ein Testvideo!")
-    input1 = input('Wahl: ')
-    if input1 == '1':
-        enabale_webcam = False
-        video = "hands.mp4"
+        return img
+
+    def runloop(cap, detector):
+        pTime = 0
+        cTime = 0
+        x = 300
+        y = 200
+        color = (255, 0, 0)
+        thickness = 2
+        first_time = True
+        t1 = 0
+        t2 = 0
+        dt = 0
+        seconds_until_click = 2
+        counter = 0
         startPoint = (1000, 100)
         endPoint = (1400, 300)
-    elif input1 == '0':
-        enable_wbacam = True
-        video = 0
-        startPoint = (100, 100)
-        endPoint = (300, 300)
-    print(input1)
+        enabale_webcam = False
+        video = ""
+        print("Bitte wählen Sie '0' für Webcam und '1' für ein Testvideo!")
+        input1 = input('Wahl: ')
+        if input1 == '1':
+            enabale_webcam = False
+            video = "hands.mp4"
+            startPoint = (1000, 100)
+            endPoint = (1400, 300)
+        elif input1 == '0':
+            enable_wbacam = True
+            video = 0
+            startPoint = (100, 100)
+            endPoint = (300, 300)
+        cap = cv2.VideoCapture(video)
+        print(input1)
+        print(video)
 
-    # video = str(video)
-    pTime = 0
-    cTime = 0
-    x = 300
-    y = 200
-    cap = cv2.VideoCapture(video)
-    detector = hand_detector()
+        ANGLE_DELTA = 360 // 8
 
-    color = (255, 0, 0)
-    thickness = 2
+        img = np.zeros((700, 700, 3), np.uint8)
+        img[::] = 255
 
-    while cap.isOpened():
-        success, img = cap.read()
-        img = detector.findHands(img)
-        img = cv2.rectangle(img, startPoint, endPoint, color, thickness)
-        # TO-DO Loading animation Circle
-        lmlist = detector.findPosition(img)
-        if len(lmlist) != 0:
-            center = (int(lmlist[0].__getitem__(1)), int(lmlist[0].__getitem__(2)))
-            img = cv2.circle(img, center, 20,(255, 255, 0), 2)
-            # TO-DO: Implement Timer
-            if detector.intersection(lmlist, x, y, startPoint, endPoint)== True:
-                counter += 1
-                color = (255, 255, 40)
 
-                t1 = time.time()
 
-                print(dt)
-                if dt >= seconds_until_click:
-                    color = (0, 0,  255)
-                    cv2.circle(img, (400, 400), 30, (0, 0, 0), cv2.FILLED)
-                    #send a message
+        plt.gcf().set_size_inches((8, 8))
+        plt.imshow(img)
+        plt.show()
 
-                if first_time:
-                    first_time = False
+
+
+        while cap.isOpened():
+            success, img = cap.read()
+            img = detector.findHands(img)
+            img = cv2.rectangle(img, startPoint, endPoint, color, thickness)
+            # TO-DO Loading animation Circle
+            lmlist = detector.findPosition(img)
+            # Setze Globale Liste!
+            handlist = lmlist
+            hand_detector.handlist = lmlist
+            print("Liste")
+            if len(lmlist) != 0:
+                center = (int(lmlist[0].__getitem__(1)), int(lmlist[0].__getitem__(2)))
+                img = cv2.circle(img, center, 20, (255, 255, 0), 2)
+                img = hand_detector.circleLoadAnimation(img, ANGLE_DELTA = 360 // 8)
+                # TO-DO: Implement Timer
+                if detector.intersection(lmlist, x, y, startPoint, endPoint) == True:
+                    counter += 1
+                    color = (255, 255, 40)
+
+                    t1 = time.time()
+
+                    # print(dt)
+                    if dt >= seconds_until_click:
+                        color = (0, 0, 255)
+                        cv2.circle(img, (400, 400), 30, (0, 0, 0), cv2.FILLED)
+                        # send a message
+
+                    if first_time:
+                        first_time = False
+                    else:
+                        dt += t1 - t2
+
+                    t2 = t1
                 else:
-                    dt += t1 - t2
+                    first_time = True
+                    dt = 0
+                    color = (255, 0, 0)
+                    counter = 0
+                    t1 = 0
+                    t2 = 0
+                    dt = 0
+                    first_time = True
 
-                t2 = t1
-            else:
-                first_time = True
-                dt = 0
-                color = (255, 0, 0)
-                counter = 0
-                t1 = 0
-                t2 = 0
-                dt = 0
-                first_time = True
+            cTime = time.time()
+            fps = 1 / (cTime - pTime)
+            pTime = cTime
 
-        cTime = time.time()
-        fps = 1 / (cTime - pTime)
-        pTime = cTime
+            cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
+            cv2.putText(img, "Press ' q ' to exit!", (10, 200), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
+            # cv2.putText(img, "Testfield", (x, y), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
 
-        cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
-        cv2.putText(img, "Press ' q ' to exit!", (10, 200), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
-        # cv2.putText(img, "Testfield", (x, y), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
+            cv2.imshow("Image", img)
+            cv2.waitKey(1)
+            if keyboard.is_pressed('q'):
+                cap.release()
+                cv2.destroyAllWindows()
+                break
 
-        cv2.imshow("Image", img)
-        cv2.waitKey(1)
-        if keyboard.is_pressed('q'):
-            cap.release()
-            cv2.destroyAllWindows()
-            break
+
+    def main(self):
+        print()
+        detector = hand_detector()
+        # video = str(video)
+        detector.runloop(detector)
+        t = Thread(target=detector.runloop(), args=())
+        t.start()
+
 
 if __name__ == "__main__":
     main()
