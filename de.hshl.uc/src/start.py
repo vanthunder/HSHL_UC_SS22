@@ -6,10 +6,11 @@ from recognition.hand_detector import hand_detector
 
 # Setup the camera
 video = 'hands.mp4'
-camera = Camera(0)
+handDetector = hand_detector()
+camera = Camera(video)
 camera.initialize()
 # Qt Start Code
 app = QApplication([])
-start_window = StartWindow(camera)
+start_window = StartWindow(camera, hand_detector)
 start_window.show()
 app.exit(app.exec_())

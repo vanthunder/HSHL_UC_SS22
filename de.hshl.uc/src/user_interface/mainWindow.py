@@ -1,4 +1,7 @@
+import io
+
 import numpy as np
+from PIL import Image
 
 from PyQt5.QtCore import Qt, QThread, QTimer, pyqtSignal, pyqtSlot
 from PyQt5.QtWidgets import QMainWindow, QWidget, QPushButton, QVBoxLayout, QApplication, QSlider, QLabel, QSizePolicy
@@ -7,27 +10,35 @@ from pyqtgraph import ImageView
 from PyQt5.QtGui import QImage, QPalette, QPixmap
 import cv2
 
+from recognition.hand_detector import hand_detector
+
 
 class VideoThread(QThread):
     change_pixmap_signal = pyqtSignal(np.ndarray)
 
-    def __init__(self, camera):
+    def __init__(self, camera, hand_detector):
         super().__init__()
         self.camera = camera
-
+        self.hand_detector = hand_detector
+        hd = self.hand_detector
+    # Camera Loop
     def run(self):
+        hd = hand_detector()
         # capture from web cam
         while True:
-            ret, cv_img = self.camera.cap.read()
-            if ret:
-                self.change_pixmap_signal.emit(cv_img)
+            success, img = self.camera.cap.read()
+            if success:
+                # init Hand detector
+                hd.findHands(img)
+                self.change_pixmap_signal.emit(img)
 
 
 class StartWindow(QMainWindow):
 
-    def __init__(self, camera = None):
+    def __init__(self, camera = None, hand_detector = None):
         super().__init__()
         self.camera = camera
+        self.hand_detector = hand_detector
         self.disply_width = 640
         self.display_height = 480
 
@@ -66,7 +77,7 @@ class StartWindow(QMainWindow):
 
     def start_movie(self):
         # create the video capture thread
-        self.thread = VideoThread(self.camera)
+        self.thread = VideoThread(self.camera, self.hand_detector)
         # connect its signal to the update_image slot
         self.thread.change_pixmap_signal.connect(self.update_image)
         # start the thread
