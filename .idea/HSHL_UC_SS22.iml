@@ -11,6 +11,8 @@
     <option name="namespacePackageFolders">
       <list>
         <option value="$MODULE_DIR$/de.hshl.uc/src/recognition" />
+        <option value="$MODULE_DIR$/de.hshl.uc/src/user_interface" />
+        <option value="$MODULE_DIR$/de.hshl.uc/src/model" />
       </list>
     </option>
   </component>
