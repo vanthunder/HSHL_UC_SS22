@@ -3,12 +3,14 @@ from PyQt5.QtWidgets import QApplication
 from model.camera import Camera
 from user_interface.mainWindow import StartWindow
 from recognition.hand_detector import hand_detector
+from Socket import New_Client
 
 # Setup the camera
 video = 'hands.mp4'
 handDetector = hand_detector()
 camera = Camera(video)
 camera.initialize()
+client = New_Client
 # Qt Start Code
 app = QApplication([])
 start_window = StartWindow(camera, hand_detector)
