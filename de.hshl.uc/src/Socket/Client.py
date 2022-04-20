@@ -2,7 +2,8 @@ import socket
 
 client_socket = socket.socket(socket.AF_INET,
                               socket.SOCK_STREAM)
-server_adr = ('127.0.0.1', 1337)
+server_adr = ('34.159.99.140', 1666)
 client_socket.connect(server_adr)
+print(str(socket.gethostname()))
 client_socket.send(bytes('Hi', "utf8"))
 
