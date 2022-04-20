@@ -23,6 +23,7 @@ class VideoThread(QThread):
         self.hand_detector = hand_detector
         hd = self.hand_detector
         gd = gesture_detector()
+
     # Camera Loop
     def run(self):
         hd = hand_detector()
@@ -33,25 +34,26 @@ class VideoThread(QThread):
             success, img = self.camera.cap.read()
             if success:
                 # init Hand detector
-                #hd.findHands(img)
+                # hd.findHands(img)
                 img = self.hand_detector.hand_detector_run(hand_detector, img)
                 lmList = self.hand_detector.handlist
-                #print(lmList)
+                # print(lmList)
                 gd.writeLmList(lmList)
                 gd.print()
+                # cv2.imshow('Test', img)
                 self.change_pixmap_signal.emit(img)
 
 
 class StartWindow(QMainWindow):
 
-    def __init__(self, camera = None, hand_detector = None):
+    def __init__(self, camera=None, hand_detector=None):
         super().__init__()
         self.camera = camera
         self.hand_detector = hand_detector
         self.disply_width = 1728
         self.display_height = 972
         self.setWindowTitle('Projekt: Ubi')
-        self.setMinimumSize(1920,1080)
+        self.setMinimumSize(1920, 1080)
 
         self.imageLabel = QLabel()
         self.imageLabel.setMaximumSize(1728, 972)
@@ -59,11 +61,11 @@ class StartWindow(QMainWindow):
         self.imageLabel.setAlignment(Qt.AlignCenter)
         self.imageLabel.setBackgroundRole(QPalette.Base)
         self.imageLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
-        #self.imageLabel.setScaledContents(True)
+        # self.imageLabel.setScaledContents(True)
 
         self.central_widget = QWidget()
         self.button_movie = QPushButton('Start Movie', self.central_widget)
-        #self.image_view = ImageView()
+        # self.image_view = ImageView()
 
         self.layout = QVBoxLayout(self.central_widget)
         self.layout.addWidget(self.imageLabel)
@@ -71,8 +73,8 @@ class StartWindow(QMainWindow):
 
         self.button_movie.clicked.connect(self.start_movie)
 
-       # self.update_timer = QTimer()
-       # self.update_timer.timeout.connect(self.update_movie)
+    # self.update_timer = QTimer()
+    # self.update_timer.timeout.connect(self.update_movie)
 
     @pyqtSlot(np.ndarray)
     def update_image(self, cv_img):
@@ -96,13 +98,13 @@ class StartWindow(QMainWindow):
         self.thread.change_pixmap_signal.connect(self.update_image)
         # start the thread
         self.thread.start()
-        #self.update_timer.start(30)
+        # self.update_timer.start(30)
 
 
 if __name__ == '__main__':
     app = QApplication([])
     window = StartWindow()
     window.setWindowTitle('Project: UBI')
-    window.setBaseSize(1920,1080)
+    window.setBaseSize(1920, 1080)
     window.show()
     app.exit(app.exec_())
