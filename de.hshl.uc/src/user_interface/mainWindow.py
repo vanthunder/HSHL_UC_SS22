@@ -11,6 +11,7 @@ from PyQt5.QtGui import QImage, QPalette, QPixmap
 import cv2
 
 from recognition.hand_detector import hand_detector
+from recognition.gesture_detector import gesture_detector
 
 
 class VideoThread(QThread):
@@ -21,9 +22,12 @@ class VideoThread(QThread):
         self.camera = camera
         self.hand_detector = hand_detector
         hd = self.hand_detector
+        gd = gesture_detector()
     # Camera Loop
     def run(self):
         hd = hand_detector()
+        gd = gesture_detector()
+        lmList = []
         # capture from web cam
         while True:
             success, img = self.camera.cap.read()
@@ -31,6 +35,10 @@ class VideoThread(QThread):
                 # init Hand detector
                 #hd.findHands(img)
                 img = self.hand_detector.hand_detector_run(hand_detector, img)
+                lmList = self.hand_detector.handlist
+                #print(lmList)
+                gd.writeLmList(lmList)
+                gd.print()
                 self.change_pixmap_signal.emit(img)
 
 
@@ -40,13 +48,18 @@ class StartWindow(QMainWindow):
         super().__init__()
         self.camera = camera
         self.hand_detector = hand_detector
-        self.disply_width = 640
-        self.display_height = 480
+        self.disply_width = 1728
+        self.display_height = 972
+        self.setWindowTitle('Projekt: Ubi')
+        self.setMinimumSize(1920,1080)
 
         self.imageLabel = QLabel()
+        self.imageLabel.setMaximumSize(1728, 972)
+        self.imageLabel.setAutoFillBackground(True)
+        self.imageLabel.setAlignment(Qt.AlignCenter)
         self.imageLabel.setBackgroundRole(QPalette.Base)
         self.imageLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
-        self.imageLabel.setScaledContents(True)
+        #self.imageLabel.setScaledContents(True)
 
         self.central_widget = QWidget()
         self.button_movie = QPushButton('Start Movie', self.central_widget)
@@ -89,5 +102,7 @@ class StartWindow(QMainWindow):
 if __name__ == '__main__':
     app = QApplication([])
     window = StartWindow()
+    window.setWindowTitle('Project: UBI')
+    window.setBaseSize(1920,1080)
     window.show()
     app.exit(app.exec_())
