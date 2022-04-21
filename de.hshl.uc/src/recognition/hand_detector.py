@@ -198,6 +198,7 @@ class hand_detector:
                 break
 
     def hand_detector_run(detector, img):
+        #img.flags.writable = False
         hdt = hand_detector()
         pTime = 0
         cTime = 0

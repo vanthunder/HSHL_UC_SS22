@@ -32,6 +32,7 @@ class VideoThread(QThread):
         # capture from web cam
         while True:
             success, img = self.camera.cap.read()
+            #img.flags.writeable = False
             if success:
                 # init Hand detector
                 # hd.findHands(img)

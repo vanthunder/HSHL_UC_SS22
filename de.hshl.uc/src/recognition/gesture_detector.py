@@ -1,11 +1,17 @@
+import time
+
+import cv2
+import numpy as np
+import mediapipe as mp
+
 from recognition.hand_detector import hand_detector
+
+
 
 
 class gesture_detector(hand_detector):
 
-    def __init__(self, lmList: object = [])->object:
-        hand = hand_detector()
-
+    def __init__(self, lmList: object = []) -> object:
         self.lmList = lmList
 
     def writeLmList(self, lmList):
@@ -13,3 +19,4 @@ class gesture_detector(hand_detector):
 
     def print(self):
         print(self.lmList)
+

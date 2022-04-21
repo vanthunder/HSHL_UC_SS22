@@ -8,8 +8,9 @@ nickname = input("Choose your nickname: ")
 
 # Connecting To Server
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(('34.159.99.140', 1666))
+client.connect(('127.0.0.2', 1666))
 tuple = (1, 2)
+counter = 0
 serial = pickle.dumps(tuple)
 
 
@@ -34,9 +35,10 @@ def receive():
 # Sending Messages To Server
 def write():
     while True:
-        message = '{}: {}'.format(nickname, input(tuple))
-        client.send(bytes(serial))
-        client.send(message.encode('utf8'))
+        message = '{}: {}'.format(nickname, input(''))
+
+        print(message)
+        client.send(bytes(message, 'utf8'))
 
 
 
