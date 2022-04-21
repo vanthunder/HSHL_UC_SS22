@@ -1,14 +1,19 @@
 import io
 
+import keyboard
+from PyQt5.QtWidgets import QGraphicsRectItem, QGraphicsView, QGraphicsProxyWidget
+from PyQt5 import QtGui, QtCore
+
 import numpy as np
 from PIL import Image
 
-from PyQt5.QtCore import Qt, QThread, QTimer, pyqtSignal, pyqtSlot
+from PyQt5.QtCore import Qt, QThread, QTimer, pyqtSignal, pyqtSlot, QRectF, QRect
 from PyQt5.QtWidgets import QMainWindow, QWidget, QPushButton, QVBoxLayout, QApplication, QSlider, QLabel, QSizePolicy
 from PyQt5 import QtGui
 from pyqtgraph import ImageView
 from PyQt5.QtGui import QImage, QPalette, QPixmap
 import cv2
+from pyqtgraph.Qt import QtCore
 
 from recognition.hand_detector import hand_detector
 from recognition.gesture_detector import gesture_detector
@@ -16,6 +21,9 @@ from recognition.gesture_detector import gesture_detector
 
 class VideoThread(QThread):
     change_pixmap_signal = pyqtSignal(np.ndarray)
+    update_label_signal = pyqtSignal(int)
+    counter = int(1)
+
 
     def __init__(self, camera, hand_detector):
         super().__init__()
@@ -23,6 +31,7 @@ class VideoThread(QThread):
         self.hand_detector = hand_detector
         hd = self.hand_detector
         gd = gesture_detector()
+
 
     # Camera Loop
     def run(self):
@@ -43,6 +52,9 @@ class VideoThread(QThread):
                 gd.print()
                 # cv2.imshow('Test', img)
                 self.change_pixmap_signal.emit(img)
+                self.update_label_signal.emit(lmList[0].__getitem__(2))
+                # Updates the label
+
 
 
 class StartWindow(QMainWindow):
@@ -56,6 +68,7 @@ class StartWindow(QMainWindow):
         self.setWindowTitle('Projekt: Ubi')
         self.setMinimumSize(1920, 1080)
 
+
         self.imageLabel = QLabel()
         self.imageLabel.setMaximumSize(1728, 972)
         self.imageLabel.setAutoFillBackground(True)
@@ -65,7 +78,19 @@ class StartWindow(QMainWindow):
         # self.imageLabel.setScaledContents(True)
 
         self.central_widget = QWidget()
+        self.pad = QLabel
+       # self.central_widget.a
+        self.layout = QVBoxLayout(self.imageLabel)
+        self.imageLabel1 = QLabel()
+        self.imageLabel1.setMaximumSize(100, 400)
+        self.imageLabel1.setAutoFillBackground(True)
+        self.imageLabel.layout().addWidget(self.imageLabel1)
+       # self.imageLabel.setParent(self.pad)
+
+
+        #self.setScene(self.scene)
         self.button_movie = QPushButton('Start Movie', self.central_widget)
+        #self.pd = QGraphicsRectItem(1, 1, 20, 20, self.central_widget)
         # self.image_view = ImageView()
 
         self.layout = QVBoxLayout(self.central_widget)
@@ -83,6 +108,10 @@ class StartWindow(QMainWindow):
         qt_img = self.convert_cv_qt(cv_img)
         self.imageLabel.setPixmap(qt_img)
 
+    def updatePosition(self, c):
+        self.imageLabel1.setGeometry(QRect(400,c-200,100,400))
+        print("Klick")
+
     def convert_cv_qt(self, cv_img):
         """Convert from an opencv image to QPixmap"""
         rgb_image = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
@@ -97,6 +126,7 @@ class StartWindow(QMainWindow):
         self.thread = VideoThread(self.camera, self.hand_detector)
         # connect its signal to the update_image slot
         self.thread.change_pixmap_signal.connect(self.update_image)
+        self.thread.update_label_signal.connect(self.updatePosition)
         # start the thread
         self.thread.start()
         # self.update_timer.start(30)

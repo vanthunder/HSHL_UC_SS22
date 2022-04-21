@@ -19,11 +19,12 @@ def receive():
         try:
             # Receive Message From Server
             # If 'NICK' Send Nickname
-            message = client.recv(4096).decode('utf8')
+            message = client.recv(1024).decode('utf8')
             if message == 'NICK':
                 client.send(nickname.encode('utf8'))
             else:
                 print(message)
+
         except:
             # Close Connection When Error
             print("An error occured!")
@@ -34,9 +35,10 @@ def receive():
 # Sending Messages To Server
 def write():
     while True:
-        message = '{}: {}'.format(nickname, input(tuple))
-        client.send(bytes(serial))
-        client.send(message.encode('utf8'))
+
+        message = '{}: {}'.format(nickname, input(''))
+        client.send(message.encode('utf-8'))
+        #client.send(message.encode('utf8'))
 
 
 

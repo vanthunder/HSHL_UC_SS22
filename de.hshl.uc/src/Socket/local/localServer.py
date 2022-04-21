@@ -24,6 +24,8 @@ nicknames = []
 def writeList(coordinates):
     testList.append(coordinates)
     print(coordinates, " added to the list!")
+    coordinates = pickle.dumps(coordinates)
+    broadcast(coordinates)
     print(testList)
 
 
@@ -31,6 +33,7 @@ def writeList(coordinates):
 # Sending Messages To All Connected Clients
 def broadcast(message):
     for client in clients:
+        #print(message)
         client.send(message)
 
 
@@ -41,14 +44,20 @@ def handle(client):
     while True:
         try:
             # Broadcasting Messages
-            message = client.recv(4096)
-            received_tupel = pickle.loads(message)
-            print('TUPLE: ', received_tupel)
+
+            message = client.recv(1024)
+
+            received_tupel = pickle.loads(message)  ## Fehler Code
+            # print('TUPLE: ', received_tupel)
             # Proof if message is a coordinate
             if (type(received_tupel) == tuple):
                 print("Tuple detectet")
                 writeList(received_tupel)
-            broadcast(message)
+            else:
+                broadcast(message)
+
+
+
 
         except:
             # Removing And Closing Clients
@@ -56,9 +65,10 @@ def handle(client):
             clients.remove(client)
             client.close()
             nickname = nicknames[index]
-            broadcast('{} left!'.format(nickname).encode('utf8'))
+            broadcast('{} left!'.format(nickname).encode('ascii'))
             nicknames.remove(nickname)
             break
+
 
 # Receiving / Listening Function
 def receive():
@@ -69,14 +79,14 @@ def receive():
 
         # Request And Store Nickname
         client.send('NICK'.encode('utf8'))
-        nickname = client.recv(1024).decode('utf8')
-        nicknames.append(nickname)
+#        nickname = client.recv(1024).decode('ascii')
+ #       nicknames.append(nickname)
         clients.append(client)
 
         # Print And Broadcast Nickname
-        print("Nickname is {}".format(nickname))
-        broadcast("{} joined!".format(nickname).encode('utf8'))
-        client.send('Connected to server!'.encode('utf8'))
+  #      print("Nickname is {}".format(nickname))
+   #     broadcast("{} joined!".format(nickname).encode('ascii'))
+        client.send('Connected to server!'.encode('ascii'))
 
         # Start Handling Thread For Client
         thread = threading.Thread(target=handle, args=(client,))
