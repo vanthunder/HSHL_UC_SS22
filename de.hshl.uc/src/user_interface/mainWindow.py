@@ -57,7 +57,9 @@ class VideoThread(QThread):
                 # cv2.imshow('Test', img)
                 self.change_pixmap_signal.emit(img)
                 #To Do send to server:
-                if lmList[0].__getitem__(2):
+                if not lmList:
+                    print()
+                else:
                    client.sendcoordinate(lmList[0].__getitem__(2))
                    self.update_label_signal.emit(client.Y)
                 #print(client.y)
