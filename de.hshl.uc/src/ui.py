@@ -9,7 +9,7 @@ class ui():
     def create_frame(self):
         app = QApplication(sys.argv)
         hdt = hand_detector()
-        hdt.hand_detector.main(self=hdt)
+        hdt.hand_detector.main()
 
 
 

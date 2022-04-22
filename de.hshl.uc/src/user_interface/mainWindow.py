@@ -1,6 +1,7 @@
 import io
 
 import keyboard
+import qimage2ndarray as qimage2ndarray
 from PyQt5.QtWidgets import QGraphicsRectItem, QGraphicsView, QGraphicsProxyWidget
 from PyQt5 import QtGui, QtCore
 
@@ -17,6 +18,8 @@ from pyqtgraph.Qt import QtCore
 
 from recognition.hand_detector import hand_detector
 from recognition.gesture_detector import gesture_detector
+#from Socket.local.localClient import local_client
+from Socket.online.onlineClient import local_client
 
 
 class VideoThread(QThread):
@@ -38,6 +41,7 @@ class VideoThread(QThread):
         hd = hand_detector()
         gd = gesture_detector()
         lmList = []
+        client = local_client()
         # capture from web cam
         while True:
             success, img = self.camera.cap.read()
@@ -52,7 +56,11 @@ class VideoThread(QThread):
                 gd.print()
                 # cv2.imshow('Test', img)
                 self.change_pixmap_signal.emit(img)
-                self.update_label_signal.emit(lmList[0].__getitem__(2))
+                #To Do send to server:
+                client.sendcoordinate(lmList[0].__getitem__(2))
+                #print(client.y)
+                #To Do receive Coordinate
+                self.update_label_signal.emit(client.Y)
                 # Updates the label
 
 
@@ -113,13 +121,21 @@ class StartWindow(QMainWindow):
         print("Klick")
 
     def convert_cv_qt(self, cv_img):
-        """Convert from an opencv image to QPixmap"""
-        rgb_image = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
-        h, w, ch = rgb_image.shape
-        bytes_per_line = ch * w
-        convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
-        p = convert_to_Qt_format.scaled(self.disply_width, self.display_height, Qt.KeepAspectRatio)
-        return QPixmap.fromImage(p)
+
+        cv_img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
+        image = qimage2ndarray.array2qimage(cv_img)
+        #img = QImage(cv_img, cv_img.shape[1], cv_img.shape[0], QImage.Format_RGB888)
+        #pix = QPixmap.fromImage(cv_img)
+        #pix = pix.scaled(self.lblVid.width(), self.lblVid.height(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        #self.lblVid.setPixmap(pix)
+        return QPixmap.fromImage(image)
+    """Convert from an opencv image to QPixmap"""
+       # rgb_image = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
+       # h, w, ch = rgb_image.shape
+       # bytes_per_line = ch * w
+       # convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
+       # p = convert_to_Qt_format.scaled(self.disply_width, self.display_height, Qt.KeepAspectRatio)
+
 
     def start_movie(self):
         # create the video capture thread

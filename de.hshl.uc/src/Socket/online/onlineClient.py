@@ -19,7 +19,7 @@ class local_client:
 
         # Connecting To Server
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client.connect(('127.0.0.2', 1666))
+        self.client.connect(('34.159.99.140', 1666))
         #print(self.client)
         self.tuple = (1, 2)
         counter = 0
@@ -83,9 +83,7 @@ class local_client:
 
         lclient = local_client()
         receive_thread = threading.Thread(target=lclient.receive, args=())
-        print('TEST')
         receive_thread.start()
-
         write_thread = threading.Thread(target=lclient.write(), args=())
         write_thread.start()
 

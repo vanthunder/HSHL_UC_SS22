@@ -48,13 +48,15 @@ def handle(client):
             message = client.recv(1024)
 
             received_tupel = pickle.loads(message)  ## Fehler Code
+            received_tupel = pickle.dumps(received_tupel)
+            broadcast(received_tupel)
             # print('TUPLE: ', received_tupel)
             # Proof if message is a coordinate
-            if (type(received_tupel) == tuple):
-                print("Tuple detectet")
-                writeList(received_tupel)
-            else:
-                broadcast(message)
+            #if (type(received_tupel) == tuple):
+            #    print("Tuple detectet")
+            #    writeList(received_tupel)
+            ##else:
+            #    broadcast(message)
 
 
 
