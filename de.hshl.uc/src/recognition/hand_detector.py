@@ -214,7 +214,6 @@ class hand_detector:
         counter = 0
         startPoint = (1000, 100)
         endPoint = (1400, 300)
-        NGLE_DELTA = 360 // 8
         # img = np.zeros((700, 700, 3), np.uint8)
         # img[::] = 255
         # #plt.gcf().set_size_inches((8, 8))
@@ -223,7 +222,9 @@ class hand_detector:
         # TO-DO: detector Klasse übergeben!
         # CV2 Operation ausführen
         img = detector.findHands(hdt, img)
+
         img = cv2.rectangle(img, startPoint, endPoint, color, thickness)
+
         # TO-DO Loading animation Circle
         lmlist = detector.findPosition(hdt, img)
         # Setze Globale Liste!
@@ -270,18 +271,15 @@ class hand_detector:
         cv2.putText(img, "Press ' q ' to exit!", (10, 200), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
         # cv2.putText(img, "Testfield", (x, y), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 3)
 
-        # Implement this in the Window class!
-        if keyboard.is_pressed('q'):
-            # cap.release()
-            cv2.destroyAllWindows()
+
         return img
 
     def main(self):
         print()
         detector = hand_detector()
-        cap = cv2.VideoCapture("hands.mp4")
-        success, img = cap.read()
-        detector.hand_detector_run(cap, img)
+        #cap = cv2.VideoCapture("hands.mp4")
+        #success, img = cap.read()
+       # detector.hand_detector_run(cap, img)
 
 
 

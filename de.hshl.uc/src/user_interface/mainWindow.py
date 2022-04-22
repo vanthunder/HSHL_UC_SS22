@@ -71,19 +71,19 @@ class StartWindow(QMainWindow):
         super().__init__()
         self.camera = camera
         self.hand_detector = hand_detector
-        self.disply_width = 1728
-        self.display_height = 972
+        self.disply_width = 1920
+        self.display_height = 1080
         self.setWindowTitle('Projekt: Ubi')
-        self.setMinimumSize(1920, 1080)
+        self.setMinimumSize(1920, 1200)
 
 
         self.imageLabel = QLabel()
-        self.imageLabel.setMaximumSize(1728, 972)
+        self.imageLabel.setMaximumSize(1920, 1080)
         self.imageLabel.setAutoFillBackground(True)
         self.imageLabel.setAlignment(Qt.AlignCenter)
         self.imageLabel.setBackgroundRole(QPalette.Base)
         self.imageLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
-        # self.imageLabel.setScaledContents(True)
+        self.imageLabel.setScaledContents(True)
 
         self.central_widget = QWidget()
         self.pad = QLabel
@@ -152,6 +152,6 @@ if __name__ == '__main__':
     app = QApplication([])
     window = StartWindow()
     window.setWindowTitle('Project: UBI')
-    window.setBaseSize(1920, 1080)
+    window.setBaseSize(2400, 1444)
     window.show()
     app.exit(app.exec_())
