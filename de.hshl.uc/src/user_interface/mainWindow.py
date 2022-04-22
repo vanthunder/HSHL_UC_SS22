@@ -57,10 +57,12 @@ class VideoThread(QThread):
                 # cv2.imshow('Test', img)
                 self.change_pixmap_signal.emit(img)
                 #To Do send to server:
-                client.sendcoordinate(lmList[0].__getitem__(2))
+                if lmList[0].__getitem__(2):
+                   client.sendcoordinate(lmList[0].__getitem__(2))
+                   self.update_label_signal.emit(client.Y)
                 #print(client.y)
                 #To Do receive Coordinate
-                self.update_label_signal.emit(client.Y)
+
                 # Updates the label
 
 
