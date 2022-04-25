@@ -11,7 +11,6 @@ from PIL import Image
 from PyQt5.QtCore import Qt, QThread, QTimer, pyqtSignal, pyqtSlot, QRectF, QRect
 from PyQt5.QtWidgets import QMainWindow, QWidget, QPushButton, QVBoxLayout, QApplication, QSlider, QLabel, QSizePolicy
 from PyQt5 import QtGui
-from memory_profiler import profile
 from pyqtgraph import ImageView
 from PyQt5.QtGui import QImage, QPalette, QPixmap, QPainter, QPen
 import cv2

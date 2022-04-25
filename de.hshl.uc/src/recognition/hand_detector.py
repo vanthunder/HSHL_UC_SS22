@@ -297,7 +297,7 @@ class hand_detector:
         lmlist = self.findPosition(self, img)
         handlist = lmlist
         hand_detector.handlist = lmlist
-        if lmlist != 0:
+        if len(lmlist) != 0:
             center = (int(lmlist[0].__getitem__(1)), int(lmlist[0].__getitem__(2)))
             img = cv2.circle(img, center, 20, (255, 255, 0), 2)
             # img = hand_detector.circleLoadAnimation(img, ANGLE_DELTA=360 // 8)

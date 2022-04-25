@@ -9,9 +9,9 @@ from recognition.hand_detector import hand_detector
 # Setup the camera
 video = 'hands.mp4'
 handDetector = hand_detector()
-camera = Camera(video)
-camera.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
-camera.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 240)
+camera = Camera(0)
+# camera.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+# camera.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 240)
 camera.initialize()
 #client = New_Client
 # Qt Start Code
