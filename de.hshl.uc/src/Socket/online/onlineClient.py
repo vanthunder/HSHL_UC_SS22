@@ -21,6 +21,7 @@ class local_client:
 
         # Connecting To Server
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.client.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         self.client.connect(('34.159.99.140', 1666))
         #print(self.client)
         self.tuple = (1, 2)
@@ -39,7 +40,7 @@ class local_client:
                 #print(self.client)
                 # Receive Message From Server
                 # If 'NICK' Send Nickname
-                message = self.client.recv(1024)
+                message = self.client.recv(2048)
 
                 message = (pickle.loads(message))
                 self.TempTupel = message
