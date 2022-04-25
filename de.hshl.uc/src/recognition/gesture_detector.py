@@ -18,5 +18,5 @@ class gesture_detector(hand_detector):
         self.lmList = lmList
 
     def print(self):
-        print(self.lmList)
+        print("")
 
