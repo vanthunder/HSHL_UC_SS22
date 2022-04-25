@@ -1,4 +1,5 @@
 import io
+import threading
 
 import keyboard
 import qimage2ndarray as qimage2ndarray
@@ -27,7 +28,9 @@ class VideoThread(QThread):
     update_label_signal = pyqtSignal(int)
     update_ball_signal = pyqtSignal()
     update_player_2 = pyqtSignal(int)
+    starte_receive_loop = pyqtSignal(local_client)
     counter = int(1)
+    client = local_client()
 
 
     def __init__(self, camera, hand_detector):
@@ -37,8 +40,12 @@ class VideoThread(QThread):
         hd = self.hand_detector
         gd = gesture_detector()
 
+    def start_receive(self):
+        self.client.receive()
+        print("THEADING!!!!!")
 
-    # Camera Loop
+
+     #Camera Loop
     def run(self):
         bX = 0
         bY = 0
@@ -47,10 +54,13 @@ class VideoThread(QThread):
         hd = hand_detector()
         gd = gesture_detector()
         lmList = []
-        client = local_client()
+
         # Left or Right
-        Player = input('Player: ')
-        client.Player = Player
+        Player = 'Left'#input('Player: ')
+        self.client.player = Player
+        rThread = threading.Thread(target=self.start_receive, args=())
+        rThread.start()
+        #self.starte_receive_loop.emit(self.client)
         # capture from web cam
         while True:
             success, img = self.camera.cap.read()
@@ -78,11 +88,14 @@ class VideoThread(QThread):
                     print()
                 else:
                     # Send Tupel
-                   client.sendcoordinate(lmList[0].__getitem__(2))
-                   if client.tmpTupel.get(0) == Player:
-                      self.update_label_signal.emit(client.tmpTupel.get(1))
+                   self.client.sendcoordinate(Player,lmList[0].__getitem__(2))
+
+                   print("Player:  ",self.client.TempTupel.__getitem__(0))
+
+                   if self.client.TempTupel.__getitem__(0) == 'Left':
+                      self.update_label_signal.emit(self.client.TempTupel.__getitem__(1))
                    else:
-                      self.update_player_2.emit(client.tmpTupel.get(1))
+                      self.update_player_2.emit(self.client.TempTupel.__getitem__(1))
                    print()
                 #print(client.y)
                 #To Do receive Coordinate
@@ -199,9 +212,10 @@ class StartWindow(QMainWindow):
 
     def updatePosition(self, c):
         self.imageLabel1.setGeometry(QRect(10,c-200,10,400))
-        self.imageLabel2.setGeometry(QRect(1400,c-200,10,400))
+        #self.imageLabel2.setGeometry(QRect(1400,c-200,10,400))
         print("Klick")
     def updatePositionPlayer2(self, y):
+        print(y," TEST")
         self.imageLabel2.setGeometry(QRect(1400,y-200,10,400))
 
     def updateBall(self):
@@ -270,18 +284,23 @@ class StartWindow(QMainWindow):
        # bytes_per_line = ch * w
        # convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
        # p = convert_to_Qt_format.scaled(self.disply_width, self.display_height, Qt.KeepAspectRatio)
-
+    def start_thread_receive(self,local_cl):
+        cl = local_cl
+        cl.receive()
 
     def start_movie(self):
         # create the video capture thread
         self.thread = VideoThread(self.camera, self.hand_detector)
+        self.thread1 = threading.Thread()
         # connect its signal to the update_image slot
         self.thread.change_pixmap_signal.connect(self.update_image)
         self.thread.update_label_signal.connect(self.updatePosition)
         self.thread.update_ball_signal.connect(self.updateBall)
         self.thread.update_player_2.connect(self.updatePositionPlayer2)
+#        self.thread1.starte_receive_loop.connect(self.start_thread_receive)
         # start the thread
         self.thread.start()
+        self.thread1.start()
         # self.update_timer.start(30)
 
 
