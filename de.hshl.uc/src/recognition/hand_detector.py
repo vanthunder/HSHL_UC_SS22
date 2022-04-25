@@ -15,6 +15,15 @@ import random
 class hand_detector:
     handlist = [1, 12]
     str = 'test'
+    mode = False
+    maxHands = 1
+    detectionCon = 0.5
+    modelComplex = 1
+    trackCon = 0.5
+    mpHands = mp.solutions.hands
+    hands = mpHands.Hands(mode, maxHands, modelComplex, detectionCon, trackCon)
+    mpDraw = mp.solutions.drawing_utils
+    handList = [1, 2]
 
     def __init__(self, mode: object = False, maxHands: object = 1, detectionCon: object = 0.5, trackCon: object = 0.5,
                  modelComplexity: object = 1) -> object:
@@ -149,7 +158,7 @@ class hand_detector:
             hand_detector.handlist = lmlist
             print("Liste")
 
-            if len(lmlist) != 0:
+            if lmlist != 0:
                 center = (int(lmlist[0].__getitem__(1)), int(lmlist[0].__getitem__(2)))
                 img = cv2.circle(img, center, 20, (255, 255, 0), 2)
                 img = hand_detector.circleLoadAnimation(img, ANGLE_DELTA=360 // 8)
@@ -275,7 +284,7 @@ class hand_detector:
         return img
     def find_hands_on_image(self, img):
         # TO -DO Intersection außerhalb der While Methode
-        hdt = hand_detector()
+        #hdt = self.hand_detector()
         x = 300
         y = 200
         color = (255, 0, 0)
@@ -283,12 +292,12 @@ class hand_detector:
         counter = 0
         startPoint = (1000, 100)
         endPoint = (1400, 300)
-        img = self.findHands(hdt, img)
+        img = self.findHands(self, img)
         img = cv2.rectangle(img, startPoint, endPoint, color, thickness)
-        lmlist = self.findPosition(hdt, img)
+        lmlist = self.findPosition(self, img)
         handlist = lmlist
         hand_detector.handlist = lmlist
-        if len(lmlist) != 0:
+        if lmlist != 0:
             center = (int(lmlist[0].__getitem__(1)), int(lmlist[0].__getitem__(2)))
             img = cv2.circle(img, center, 20, (255, 255, 0), 2)
             # img = hand_detector.circleLoadAnimation(img, ANGLE_DELTA=360 // 8)

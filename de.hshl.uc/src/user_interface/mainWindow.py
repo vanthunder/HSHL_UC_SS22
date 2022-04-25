@@ -11,6 +11,7 @@ from PIL import Image
 from PyQt5.QtCore import Qt, QThread, QTimer, pyqtSignal, pyqtSlot, QRectF, QRect
 from PyQt5.QtWidgets import QMainWindow, QWidget, QPushButton, QVBoxLayout, QApplication, QSlider, QLabel, QSizePolicy
 from PyQt5 import QtGui
+from memory_profiler import profile
 from pyqtgraph import ImageView
 from PyQt5.QtGui import QImage, QPalette, QPixmap, QPainter, QPen
 import cv2
@@ -25,7 +26,7 @@ from Socket.online.onlineClient import local_client
 class VideoThread(QThread):
     change_pixmap_signal = pyqtSignal(np.ndarray)
     update_label_signal = pyqtSignal(int)
-    update_ball_signal = pyqtSignal(int, int)
+    update_ball_signal = pyqtSignal()
     counter = int(1)
 
 
@@ -60,7 +61,7 @@ class VideoThread(QThread):
                 cv2.putText(img_proc, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
                 # print(lmList)
                 gd.writeLmList(lmList)
-                gd.print()
+                #gd.print()
                 # cv2.imshow('Test', img)
                 self.change_pixmap_signal.emit(img_proc)
 
@@ -68,13 +69,14 @@ class VideoThread(QThread):
                 bX += 1+speedX
                 bY += 1+speedY
                 #Bewege ball
-                self.update_ball_signal.emit(bX, bY)
+                self.update_ball_signal.emit()
                 #To Do send to server:
                 if not lmList:
                     print()
                 else:
                    client.sendcoordinate(lmList[0].__getitem__(2))
                    self.update_label_signal.emit(client.Y)
+                   print()
                 #print(client.y)
                 #To Do receive Coordinate
 
@@ -86,12 +88,16 @@ class StartWindow(QMainWindow):
 
     def __init__(self, camera=None, hand_detector=None):
         super().__init__()
+        self.bX = 0
+        self.bY = 0
+        self.positive = True
         self.camera = camera
         self.hand_detector = hand_detector
         self.disply_width = 1920
         self.display_height = 1080
         self.setWindowTitle('Projekt: Ubi')
         self.setMinimumSize(1920, 1200)
+        #self.pixmap_item = QPixmap()
 
 
         self.imageLabel = QLabel()
@@ -155,6 +161,7 @@ class StartWindow(QMainWindow):
 
 
         # Adds paddles to the main image label
+#        self.imageLabel.setPixmap(self.pixmap_item)
         self.imageLabel.layout().addWidget(self.imageLabel1)
         self.imageLabel.layout().addWidget(self.imageLabel2)
         self.imageLabel.layout().addWidget(self.imageLabel3)
@@ -179,37 +186,75 @@ class StartWindow(QMainWindow):
     @pyqtSlot(np.ndarray)
     def update_image(self, cv_img):
         """Updates the image_label with a new opencv image"""
+        #self.pixmap_item.fromImage(self.convert_cv_qt(cv_img))
         qt_img = self.convert_cv_qt(cv_img)
-        self.imageLabel.setPixmap(qt_img)
+        self.imageLabel.setPixmap(QPixmap.fromImage(qt_img))
 
     def updatePosition(self, c):
         self.imageLabel1.setGeometry(QRect(10,c-200,10,400))
         self.imageLabel2.setGeometry(QRect(1400,c-200,10,400))
         print("Klick")
 
-    def updateBall(self, x ,y):
-        self.detect_collision()
-        self.imageLabel3.setGeometry(x,y, 80, 80)
+    def updateBall(self):
+        print('Die positive Variable: ', self.positive)
+
+        #elif self.detect_collision()==False and not self.positive:
+        #    self.positive = True
+        if self.detect_collision():
+            if self.positive:
+                self.positive = False
+
+            elif self.positive == False:
+                print('TEST!!!!!!!!!!!!!!!!!!!!!!1!!!1')
+                self.positive = True
+
+
+        if self.positive == True:
+            self.ballMovementpositive()
+        elif self.positive == False:
+             self.ballMovementnegative()
+
+
+
+
+
+    def ballMovementpositive(self):
+        self.bX += 10
+        self.bY += 1
+        print("TEST")
+        self.imageLabel3.setGeometry(self.bX,self.bY, 80, 80)
+
+    def ballMovementnegative(self):
+        self.bX -= 10
+        #self.bY -= 1
+        self.imageLabel3.setGeometry(self.bX,self.bY, 80, 80)
 
 
     def detect_collision(self):
           #if self.imageLabel3.geometry().center()+80 == self.imageLabel2.geometry().intersects()
-          if self.imageLabel3.geometry().intersects(self.imageLabel2.geometry()):
-              print("INTERSECTION!")
-              return True
+          if self.positive:
+              if self.imageLabel3.geometry().intersected(self.imageLabel2.geometry()):
+                  print("INTERSECTION!")
+                  return True
+              else:
+                  return False
           else:
-              return False
+              if self.imageLabel3.geometry().intersected(self.imageLabel1.geometry()):
+                  print("INTERSECTION!")
+                  return True
+              else:
+                  return False
 
 
     def convert_cv_qt(self, cv_img):
 
         cv_img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
-        image = qimage2ndarray.array2qimage(cv_img)
+        cv_img = qimage2ndarray.array2qimage(cv_img)
         #img = QImage(cv_img, cv_img.shape[1], cv_img.shape[0], QImage.Format_RGB888)
         #pix = QPixmap.fromImage(cv_img)
         #pix = pix.scaled(self.lblVid.width(), self.lblVid.height(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
         #self.lblVid.setPixmap(pix)
-        return QPixmap.fromImage(image)
+        return cv_img
     """Convert from an opencv image to QPixmap"""
        # rgb_image = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
        # h, w, ch = rgb_image.shape
