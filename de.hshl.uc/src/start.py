@@ -9,7 +9,7 @@ from recognition.hand_detector import hand_detector
 # Setup the camera
 video = 'hands.mp4'
 handDetector = hand_detector()
-camera = Camera(0)
+camera = Camera(video)
 # camera.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
 # camera.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 240)
 camera.initialize()

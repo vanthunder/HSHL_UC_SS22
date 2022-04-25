@@ -293,7 +293,7 @@ class hand_detector:
         startPoint = (1000, 100)
         endPoint = (1400, 300)
         img = self.findHands(self, img)
-        img = cv2.rectangle(img, startPoint, endPoint, color, thickness)
+        #img = cv2.rectangle(img, startPoint, endPoint, color, thickness)
         lmlist = self.findPosition(self, img)
         handlist = lmlist
         hand_detector.handlist = lmlist

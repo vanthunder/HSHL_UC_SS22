@@ -13,6 +13,8 @@ import threading
 
 class local_client:
     Y = [11]
+    Player = 'Left'
+    tempTupel = ("", 0)
     def __init__(self) :
         # Choosing Nickname
         self.nickname = 'Client: '  # input("Choose your nickname: ")
@@ -38,6 +40,7 @@ class local_client:
                 message = self.client.recv(1024)
                 message = pickle.loads(message)
                 self.y = message
+                self.tempTupel = message
                 #message = self.client.recv(1024).decode('ascii')
                 print('Server: ', message)
                 if message == 'NICK':
@@ -71,19 +74,23 @@ class local_client:
     # print(message)
     # client.send(serial)
 
-    def sendcoordinate(self,yCoordiante):
-        print('Send: ', yCoordiante)
+    def sendcoordinate(self,Player ,yCoordiante):
+        print('Send: ', Player ,yCoordiante)
         self.Y = yCoordiante
-        print(self.Y)
-        serialY = pickle.dumps(yCoordiante)
-        self.client.send(serialY)
+        #print(self.Y)
+        playerCoordinates = (Player, yCoordiante)
+        serialPC = pickle.dumps(playerCoordinates)
+        #serialY = pickle.dumps(yCoordiante)
+        self.client.send(serialPC)
         # Starting Threads For Listening And Writing
 
     def main(self):
 
         lclient = local_client()
         receive_thread = threading.Thread(target=lclient.receive, args=())
+        print('TEST')
         receive_thread.start()
+
         write_thread = threading.Thread(target=lclient.write(), args=())
         write_thread.start()
 

@@ -26,6 +26,7 @@ class VideoThread(QThread):
     change_pixmap_signal = pyqtSignal(np.ndarray)
     update_label_signal = pyqtSignal(int)
     update_ball_signal = pyqtSignal()
+    update_player_2 = pyqtSignal(int)
     counter = int(1)
 
 
@@ -47,6 +48,9 @@ class VideoThread(QThread):
         gd = gesture_detector()
         lmList = []
         client = local_client()
+        # Left or Right
+        Player = input('Player: ')
+        client.Player = Player
         # capture from web cam
         while True:
             success, img = self.camera.cap.read()
@@ -73,8 +77,12 @@ class VideoThread(QThread):
                 if not lmList:
                     print()
                 else:
+                    # Send Tupel
                    client.sendcoordinate(lmList[0].__getitem__(2))
-                   self.update_label_signal.emit(client.Y)
+                   if client.tmpTupel.get(0) == Player:
+                      self.update_label_signal.emit(client.tmpTupel.get(1))
+                   else:
+                      self.update_player_2.emit(client.tmpTupel.get(1))
                    print()
                 #print(client.y)
                 #To Do receive Coordinate
@@ -193,6 +201,8 @@ class StartWindow(QMainWindow):
         self.imageLabel1.setGeometry(QRect(10,c-200,10,400))
         self.imageLabel2.setGeometry(QRect(1400,c-200,10,400))
         print("Klick")
+    def updatePositionPlayer2(self, y):
+        self.imageLabel2.setGeometry(QRect(1400,y-200,10,400))
 
     def updateBall(self):
         print('Die positive Variable: ', self.positive)
@@ -269,6 +279,7 @@ class StartWindow(QMainWindow):
         self.thread.change_pixmap_signal.connect(self.update_image)
         self.thread.update_label_signal.connect(self.updatePosition)
         self.thread.update_ball_signal.connect(self.updateBall)
+        self.thread.update_player_2.connect(self.updatePositionPlayer2)
         # start the thread
         self.thread.start()
         # self.update_timer.start(30)
