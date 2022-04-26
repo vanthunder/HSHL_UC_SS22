@@ -48,8 +48,9 @@ class local_client:
                 message = (pickle.loads(message))
                 packets = message
                 print("SERVERPACKET: ",packets)
-                for tuple in packets:
-                 self.TempTupel = tuple
+                if len(packets) <0:
+                    for tuple in packets:
+                     self.TempTupel = tuple
                 #self.settimeout(0.050)
                 #self.y = message
                 #self.tempTupel = message
