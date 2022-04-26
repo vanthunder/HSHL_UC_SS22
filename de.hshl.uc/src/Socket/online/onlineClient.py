@@ -44,15 +44,22 @@ class local_client:
                 #print(self.client)
                 # Receive Message From Server
                 # If 'NICK' Send Nickname
+                print('Vor Server Receive')
                 message = self.client.recv(102048)
+                print('Vor Message decode')
+                print(message)
 
                 message = (pickle.loads(message))
-                packets = message
-                self.pKg = packets
-                print("SERVERPACKET: ",packets)
-                if len(self.pKg) != 0:
-                    for tuple in packets:
-                        self.TempTupel = tuple
+                print('Vor Message decode1')
+                self.TempTupel = message
+                #packets = message
+                print('Vor Message decode2')
+                #self.pKg = packets
+                #print("SERVERPACKET: ",packets)
+                #self.TempTupel = message
+                #if len(self.pKg) != 0:
+                #    for tuple in packets:
+                #        self.TempTupel = tuple
                 #self.settimeout(0.050)
                 #self.y = message
                 #self.tempTupel = message
