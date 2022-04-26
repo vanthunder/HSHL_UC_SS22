@@ -14,7 +14,7 @@ testtupel = (1, 1)
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 server.bind((socket.gethostname(), 1666))
-server.listen()
+server.listen(120)
 print('Server started!')
 print('Booted: ', server.getsockname())
 
@@ -53,6 +53,8 @@ def handle(client):
             received_tupel = pickle.loads(message)  ## Fehler Code
             print("Message: ", received_tupel)
             received_tupel = pickle.dumps(received_tupel)
+
+
 
             broadcast(received_tupel)
             # packets.append(received_tupel)
@@ -111,7 +113,7 @@ def receive():
         # Start Handling Thread For Client
         thread = threading.Thread(target=handle, args=(client,))
         thread.start()
-        thread.join()
+        #thread.join()
 
 
 receive()
