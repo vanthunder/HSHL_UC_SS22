@@ -16,6 +16,7 @@ class local_client:
     player = 'Left'
     TempTupel = (player, 0)
     packets = []
+    nickname = "client"
     def __init__(self) :
         # Choosing Nickname
         self.nickname = 'Client: '  # input("Choose your nickname: ")
