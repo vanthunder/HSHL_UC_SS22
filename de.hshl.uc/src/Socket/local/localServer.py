@@ -11,8 +11,8 @@ testtupel = (1,1)
 
 # Starting Server
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(('127.0.0.2', 1666))
-server.listen()
+server.bind(('127.0.0.3', 1666))
+server.listen(120)
 print('Server started!')
 print('Booted: ', server.getsockname())
 
@@ -41,15 +41,21 @@ def broadcast(message):
 
 # Handling Messages From Clients
 def handle(client):
+    packets = []
     while True:
         try:
             # Broadcasting Messages
 
-            message = client.recv(1024)
+            message = client.recv(2048)
 
             received_tupel = pickle.loads(message)  ## Fehler Code
-            received_tupel = pickle.dumps(received_tupel)
-            broadcast(received_tupel)
+            #received_tupel = pickle.dumps(received_tupel)
+            packets.append(received_tupel)
+            # Player 1 Packet
+            if(len(packets) == 4):
+                serialPackets = pickle.dumps(packets)
+                broadcast(serialPackets)
+                packets.clear()
             # print('TUPLE: ', received_tupel)
             # Proof if message is a coordinate
             #if (type(received_tupel) == tuple):

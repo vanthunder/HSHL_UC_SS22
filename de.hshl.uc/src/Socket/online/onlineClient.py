@@ -15,6 +15,7 @@ class local_client:
     Y = [11]
     player = 'Left'
     TempTupel = (player, 0)
+    packets = []
     def __init__(self) :
         # Choosing Nickname
         self.nickname = 'Client: '  # input("Choose your nickname: ")
@@ -43,7 +44,11 @@ class local_client:
                 message = self.client.recv(2048)
 
                 message = (pickle.loads(message))
-                self.TempTupel = message
+                packets = message
+                print("SERVERPACKET: ",packets)
+                for tuple in packets:
+                 self.TempTupel = tuple
+                #self.settimeout(0.050)
                 #self.y = message
                 #self.tempTupel = message
                 #message = self.client.recv(1024).decode('ascii')
