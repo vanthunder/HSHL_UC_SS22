@@ -55,11 +55,6 @@ class local_client:
                 #self.tempTupel = message
                 #message = self.client.recv(1024).decode('ascii')
                 print('Server: ', message)
-                if message == 'NICK':
-                    self.client.send(self.nickname.encode('ascii'))
-                else:
-                    print(message)
-
             except:
                 # Close Connection When Error
                 print("An error occured!")
