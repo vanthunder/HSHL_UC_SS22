@@ -18,6 +18,7 @@ class local_client:
     packets = []
     #client = "Client"
     nickname = 'Client'
+    pkg = []
     def __init__(self) :
         # Choosing Nickname
         self.nickname = 'Client: '  # input("Choose your nickname: ")
@@ -47,10 +48,11 @@ class local_client:
 
                 message = (pickle.loads(message))
                 packets = message
+                self.pKg = packets
                 print("SERVERPACKET: ",packets)
-                if len(packets) >0:
+                if len(self.pKg) != 0:
                     for tuple in packets:
-                     self.TempTupel = tuple
+                        self.TempTupel = tuple
                 #self.settimeout(0.050)
                 #self.y = message
                 #self.tempTupel = message
