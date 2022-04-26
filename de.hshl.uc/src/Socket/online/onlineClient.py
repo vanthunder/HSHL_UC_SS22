@@ -78,6 +78,9 @@ class local_client:
         self.y = update
         print('Update!!!!: ',update)
 
+    def close_client(self):
+        self.client.close()
+
     # Sending Messages To Server
     def write(self):
         while True:
@@ -93,7 +96,8 @@ class local_client:
     def sendcoordinate(self,Player ,yCoordiante):
         print('Send: ', Player ,yCoordiante)
         self.Y = yCoordiante
-
+        receive_thread = threading.Thread(target=self.receive, args=())
+        receive_thread.start()
         #print(self.Y)
         playerCoordinates = (Player, yCoordiante)
         serialPC = pickle.dumps(playerCoordinates)

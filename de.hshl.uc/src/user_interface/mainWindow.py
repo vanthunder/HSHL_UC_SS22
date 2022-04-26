@@ -1,9 +1,10 @@
 import io
+import sys
 import threading
 
 import keyboard
 import qimage2ndarray as qimage2ndarray
-from PyQt5.QtWidgets import QGraphicsRectItem, QGraphicsView, QGraphicsProxyWidget
+from PyQt5.QtWidgets import QGraphicsRectItem, QGraphicsView, QGraphicsProxyWidget, QMessageBox
 from PyQt5 import QtGui, QtCore
 
 import numpy as np
@@ -12,6 +13,7 @@ from PIL import Image
 from PyQt5.QtCore import Qt, QThread, QTimer, pyqtSignal, pyqtSlot, QRectF, QRect
 from PyQt5.QtWidgets import QMainWindow, QWidget, QPushButton, QVBoxLayout, QApplication, QSlider, QLabel, QSizePolicy
 from PyQt5 import QtGui
+
 from pyqtgraph import ImageView
 from PyQt5.QtGui import QImage, QPalette, QPixmap, QPainter, QPen
 import cv2
@@ -57,11 +59,13 @@ class VideoThread(QThread):
 
         # Left or Right
         Player = 'Left'#input('Player: ')
+
         self.client.player = Player
         rThread = threading.Thread(target=self.start_receive, args=())
-        rThread.start()
+        #rThread.start()
         #self.starte_receive_loop.emit(self.client)
         # capture from web cam
+
         while True:
             success, img = self.camera.cap.read()
             #img.flags.writeable = False
@@ -88,8 +92,9 @@ class VideoThread(QThread):
                     print()
                 else:
                     # Send Tupel
+                   print('Send Coordinates form Main Window')
                    self.client.sendcoordinate(Player,lmList[0].__getitem__(2))
-
+                   print('Send Coordinates form Main Window 2')
                    print("Player:  ",self.client.TempTupel.__getitem__(0))
 
                    if self.client.TempTupel.__getitem__(0) == 'Left':
@@ -106,13 +111,14 @@ class VideoThread(QThread):
 
 class StartWindow(QMainWindow):
 
-    def __init__(self, camera=None, hand_detector=None):
+    def __init__(self, camera=None, hand_detector=None, local_cL = None):
         super().__init__()
         self.bX = 0
         self.bY = 0
         self.positive = True
         self.camera = camera
         self.hand_detector = hand_detector
+        self.local_cL = local_cL
         self.disply_width = 1920
         self.display_height = 1080
         self.setWindowTitle('Projekt: Ubi')
@@ -200,8 +206,21 @@ class StartWindow(QMainWindow):
 
         self.button_movie.clicked.connect(self.start_movie)
 
+    def closeEvent(self, event):
+        reply = QMessageBox.question(self, 'Window Close', 'Are you sure you want to close the window?',
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+        if reply == QMessageBox.Yes:
+            self.local_cL.close_client()
+            event.accept()
+
+            print('Window closed')
+        else:
+            event.ignore()
+
     # self.update_timer = QTimer()
     # self.update_timer.timeout.connect(self.update_movie)
+
 
     @pyqtSlot(np.ndarray)
     def update_image(self, cv_img):
@@ -284,23 +303,24 @@ class StartWindow(QMainWindow):
        # bytes_per_line = ch * w
        # convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
        # p = convert_to_Qt_format.scaled(self.disply_width, self.display_height, Qt.KeepAspectRatio)
-    def start_thread_receive(self,local_cl):
-        cl = local_cl
-        cl.receive()
+    def start_thread_receive(self, local_cla):
+        self.local_cL = local_cla
 
     def start_movie(self):
         # create the video capture thread
         self.thread = VideoThread(self.camera, self.hand_detector)
-        self.thread1 = threading.Thread()
+        #self.thread.client.client.close()
+        self.local_cL = self.thread.client
+        print(self.local_cL)
+        self.thread.starte_receive_loop.connect(self.start_thread_receive)
         # connect its signal to the update_image slot
         self.thread.change_pixmap_signal.connect(self.update_image)
         self.thread.update_label_signal.connect(self.updatePosition)
         self.thread.update_ball_signal.connect(self.updateBall)
         self.thread.update_player_2.connect(self.updatePositionPlayer2)
-#        self.thread1.starte_receive_loop.connect(self.start_thread_receive)
         # start the thread
         self.thread.start()
-        self.thread1.start()
+        #self.thread1.start()
         # self.update_timer.start(30)
 
 
