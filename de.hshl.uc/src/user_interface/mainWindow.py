@@ -8,7 +8,6 @@ from PyQt5.QtWidgets import QGraphicsRectItem, QGraphicsView, QGraphicsProxyWidg
 from PyQt5 import QtGui, QtCore
 
 import numpy as np
-from PIL import Image
 
 from PyQt5.QtCore import Qt, QThread, QTimer, pyqtSignal, pyqtSlot, QRectF, QRect
 from PyQt5.QtWidgets import QMainWindow, QWidget, QPushButton, QVBoxLayout, QApplication, QSlider, QLabel, QSizePolicy

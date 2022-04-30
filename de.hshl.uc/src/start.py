@@ -1,4 +1,5 @@
 import cv2
+import sys
 from PyQt5.QtWidgets import QApplication
 
 from model.camera import Camera
