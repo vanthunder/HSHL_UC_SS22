@@ -4,7 +4,8 @@ import threading
 
 import keyboard
 import qimage2ndarray as qimage2ndarray
-from PyQt5.QtWidgets import QGraphicsRectItem, QGraphicsView, QGraphicsProxyWidget, QMessageBox
+from PyQt5.QtWidgets import QGraphicsRectItem, QGraphicsView, QGraphicsProxyWidget, QMessageBox, QStackedLayout, \
+    QHBoxLayout
 from PyQt5 import QtGui, QtCore
 
 import numpy as np
@@ -14,7 +15,7 @@ from PyQt5.QtWidgets import QMainWindow, QWidget, QPushButton, QVBoxLayout, QApp
 from PyQt5 import QtGui
 
 from pyqtgraph import ImageView
-from PyQt5.QtGui import QImage, QPalette, QPixmap, QPainter, QPen
+from PyQt5.QtGui import QImage, QPalette, QPixmap, QPainter, QPen, QFont
 import cv2
 from pyqtgraph.Qt import QtCore
 
@@ -109,9 +110,11 @@ class VideoThread(QThread):
 
 
 class StartWindow(QMainWindow):
-
+    window_title = ""
     def __init__(self, camera=None, hand_detector=None, local_cL = None):
         super().__init__()
+        self.window_title = 'start'
+        self.fontA = QFont("Josefin Sans Medium", 24)
         self.bX = 0
         self.bY = 0
         self.positive = True
@@ -132,8 +135,82 @@ class StartWindow(QMainWindow):
         self.imageLabel.setBackgroundRole(QPalette.Base)
         self.imageLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.imageLabel.setScaledContents(True)
-
+        # Central Widget
         self.central_widget = QWidget()
+        self.layout_for_wids = QStackedLayout()
+
+        # Widgets
+        self.wid_start = QWidget()
+        self.wid1 = QWidget()
+        #self.wid_start.setStyleSheet("""background: blue;""")
+
+        # Layout Container for Widgets and Buttons
+        self.layout_for_wids.addWidget(self.wid_start)
+        self.layout_for_wids.addWidget(self.wid1)
+
+        # Info Label
+        self.info_Label_Container = QLabel()
+        self.info_Label_Container.setStyleSheet("margin-left: 10px; border-radius: 25px; background: #8BC1E9; color: black;")
+        self.info_Label_Container.setFont(self.fontA)
+        #self.info_Label_Container.setMaximumSize(100, 400)
+        self.info_Label_Container.setAutoFillBackground(True)
+        #self.info_Label_Container.setStyleSheet("""background: #ebef00;""")
+        # Date Label
+        self.date_label = QLabel()
+        self.date_label.setText("Montag")
+        self.date_label.setFont(self.fontA)
+        # Clock
+        self.clock_label = QLabel()
+        self.clock_label.setText("20:00")
+        self.clock_label.setFont(self.fontA)
+        # Temp
+        self.temp_label = QLabel()
+        self.temp_label.setText("24°C")
+        self.temp_label.setFont(self.fontA)
+        # Fact Label
+        self.fact_label = QLabel()
+        self.fact_label.setText("Lorem ipsum dolor sit amet, \nconsetetur sadipscing elitr, \nsed diam nonumy eirmod tempor invidunt \nut labore et dolore magna aliquyam \nerat, sed diam voluptua. \nAt vero eos et accusam et justo duo dolores et ea rebum. \nStet clita kasd gubergren, \nno sea takimata sanctus est Lorem ipsum dolor sit amet.")
+        self.fact_label.setFont(self.fontA)
+
+        # Hbox
+        self.mid_label_container = QLabel()
+        self.mid_label_container.layout = QHBoxLayout(self.mid_label_container)
+        # inner vbox
+        self.inner_vbox_label_container = QLabel()
+        self.inner_vbox_label_container.layout = QVBoxLayout(self.inner_vbox_label_container)
+        # Adds Buttons to the inner box
+        self.button_Opinion = QPushButton('Meinungsumfrage', self.inner_vbox_label_container)
+        self.button_Opinion.setStyleSheet("background-color: #B28BBC; border-style: thin; border-color: black; border-width: 5px; border-radius: 10px;")
+        self.button_Opinion.setMinimumSize(200,200)
+        self.button_Play = QPushButton('Spielesammlung', self.inner_vbox_label_container)
+        self.button_Play.setStyleSheet("background-color: #4B6E74; border-style: thin; border-color: black; border-width: 5px; border-radius: 10px;")
+        self.button_Play.setMinimumSize(200, 200)
+        self.inner_vbox_label_container.layout.addWidget(self.button_Opinion)
+        self.inner_vbox_label_container.layout.addWidget(self.button_Play)
+        # Adds the inner box to the outer box
+        self.mid_label_container.layout.addWidget(self.inner_vbox_label_container)
+        # Chat Container
+        # outer box
+        self.outer_chat_v_label = QLabel()
+        self.outer_chat_v_label.layout = QVBoxLayout(self.outer_chat_v_label)
+        self.outer_chat_v_label.setStyleSheet("border-radius: 25px; background: #F7AF9D; color: black;")
+        # inner box
+        self.inner_chat_label = QLabel()
+        self.inner_chat_label.setText("Lorem ipsum dolor sit amet, \nconsetetur sadipscing elitr, \nsed diam nonumy eirmod tempor invidunt \nut labore et dolore magna aliquyam \nerat, sed diam voluptua.")
+        self.inner_chat_label.setStyleSheet("border-radius: 25px; background: #EBEFF0; color: black;")
+        self.inner_chat_label.setMinimumWidth(800)
+        self.inner_chat_label.setFont(self.fontA)
+        # Adds the inner box to the outer box
+        self.outer_chat_v_label.layout.addWidget(self.inner_chat_label)
+        # Adds the chat to the midd label container
+        self.mid_label_container.layout.addWidget(self.outer_chat_v_label)
+
+
+
+
+
+
+
 
 
         # Pong paddle
@@ -195,15 +272,40 @@ class StartWindow(QMainWindow):
 
 
         #self.setScene(self.scene)
-        self.button_movie = QPushButton('Start Movie', self.central_widget)
+        self.button_movie = QPushButton('Start Movie', self.wid1)
         #self.pd = QGraphicsRectItem(1, 1, 20, 20, self.central_widget)
         # self.image_view = ImageView()
 
-        self.layout = QVBoxLayout(self.central_widget)
-        self.layout.addWidget(self.imageLabel)
+        self.wid_start.layout = QVBoxLayout(self.wid_start)
+        self.wid_start.layout.addWidget(self.info_Label_Container)
+        self.info_Label_Container.layout = QHBoxLayout(self.info_Label_Container)
+        self.info_Label_Container.layout.addWidget(self.date_label)
+        self.info_Label_Container.layout.addWidget(self.clock_label)
+        self.info_Label_Container.layout.addWidget(self.temp_label)
+        self.info_Label_Container.layout.addWidget(self.fact_label)
+        self.wid_start.layout.addWidget(self.mid_label_container)
+        self.wid1.layout = QVBoxLayout(self.wid1)
+        self.wid1.layout.addWidget(self.imageLabel)
+        self.wid1.layout.addWidget(self.button_movie)
+        self.wid1.setMinimumSize(1920, 1080)
+        self.central_widget.setLayout(self.layout_for_wids)
+
+
+        #self.layout = QVBoxLayout(self.central_widget)
+        #self.layout.addWidget(self.imageLabel)
         self.setCentralWidget(self.central_widget)
 
         self.button_movie.clicked.connect(self.start_movie)
+        self.button_Play.clicked.connect(self.start_Game)
+
+
+    def start_Game(self):
+        print("Test")
+        if self.window_title == 'start':
+            print("True")
+            self.window_title = 'game'
+            self.wid_start.hide()
+            self.wid1.show()
 
     def closeEvent(self, event):
         reply = QMessageBox.question(self, 'Window Close', 'Are you sure you want to close the window?',
