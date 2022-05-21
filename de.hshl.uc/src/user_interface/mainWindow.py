@@ -66,6 +66,7 @@ class VideoThread(QThread):
             if success:
                 # init Hand detector
                 # hd.findHands(img)
+                img = cv2.resize(img, (1920, 1080), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
                 img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
                 lmList = self.hand_detector.handlist
                 fps = self.camera.cap.get(cv2.CAP_PROP_FPS)
@@ -203,7 +204,7 @@ class StartWindow(QMainWindow):
         qt_img = self.convert_cv_qt(cv_img)
         self.pongWindow.imageLabel.setPixmap(QPixmap.fromImage(qt_img))
         self.startWindow.imageLabel.setPixmap(QPixmap.fromImage(qt_img))
-        self.startWindow.imageLabel.pixmap().scaled(1920, 1080)
+        #self.startWindow.imageLabel.pixmap().scaled(1920, 1080)
 
     def update_cursor(self, x, y):
         print(x, y)
@@ -331,6 +332,7 @@ class BackgroundFeed(QThread):
             if success:
                 # init Hand detector
                 # hd.findHands(img)
+                img = cv2.resize(img, (1920, 1080), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
                 img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
                 lmList = self.hand_detector.handlist
                 # print(lmList)
