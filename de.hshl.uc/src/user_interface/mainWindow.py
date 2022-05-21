@@ -120,7 +120,7 @@ class StartWindow(QMainWindow):
         self.disply_width = 1920
         self.display_height = 1080
         self.setWindowTitle('Projekt: Ubi')
-        self.setMinimumSize(1920, 1200)
+        self.setMaximumSize(1920, 1080)
         # Create Video Thread
         self.thread = BackgroundFeed(self.camera, self.hand_detector)
         # Update Label
