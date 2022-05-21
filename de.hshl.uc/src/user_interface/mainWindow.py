@@ -49,7 +49,7 @@ class VideoThread(QThread):
         lmList = []
         self.hand_detector.handlist = lmList
         video = 'hands.mp4'
-        self.camera = Camera(video)
+        self.camera = Camera(0)
         self.camera.initialize()
         # Left or Right
         Player = 'Left'  # input('Player: ')
@@ -198,6 +198,7 @@ class StartWindow(QMainWindow):
         qt_img = self.convert_cv_qt(cv_img)
         self.pongWindow.imageLabel.setPixmap(QPixmap.fromImage(qt_img))
         self.startWindow.imageLabel.setPixmap(QPixmap.fromImage(qt_img))
+        self.startWindow.imageLabel.pixmap().scaled(1920,1080)
 
     def updatePosition(self, c):
         self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 200, 10, 400))

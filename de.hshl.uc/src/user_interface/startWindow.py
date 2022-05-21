@@ -1,6 +1,7 @@
 from PyQt5 import QtCore
-from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont, QPalette
+from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QSizePolicy
 
 
 class startWindow(QWidget):
@@ -12,7 +13,11 @@ class startWindow(QWidget):
         # Adds an image lable to the background
         self.imageLabel = QLabel()
         self.imageLabel.setAutoFillBackground(True)
-        self.setMinimumSize(1920,1080)
+        self.setMinimumSize(1920, 1080)
+        self.imageLabel.setAlignment(Qt.AlignCenter)
+        self.imageLabel.setBackgroundRole(QPalette.Base)
+        self.imageLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.imageLabel.setScaledContents(True)
         # Info Label
         self.info_Label_Container = QLabel()
         self.info_Label_Container.setStyleSheet(
