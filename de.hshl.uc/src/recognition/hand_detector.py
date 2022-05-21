@@ -302,9 +302,9 @@ class hand_detector:
             img = cv2.circle(img, center, 20, (255, 255, 0), 2)
             # img = hand_detector.circleLoadAnimation(img, ANGLE_DELTA=360 // 8)
             # TO-DO: Implement Timer
-            if self.intersection(self, lmlist, x, y, startPoint, endPoint) == True:
-                counter += 1
-                color = (111,111,111)
+            #if self.intersection(self, lmlist, x, y, startPoint, endPoint) == True:
+            #    counter += 1
+            #    color = (111,111,111)
 
         return img
 def main(self):

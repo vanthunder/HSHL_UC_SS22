@@ -49,7 +49,7 @@ class VideoThread(QThread):
         lmList = []
         self.hand_detector.handlist = lmList
         video = 'hands.mp4'
-        self.camera = Camera(0)
+        self.camera = Camera(video)
         self.camera.initialize()
         # Left or Right
         Player = 'Left'  # input('Player: ')
@@ -69,8 +69,8 @@ class VideoThread(QThread):
                 img = cv2.resize(img, (1920, 1080), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
                 img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
                 lmList = self.hand_detector.handlist
-                fps = self.camera.cap.get(cv2.CAP_PROP_FPS)
-                cv2.putText(img_proc, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
+                #fps = self.camera.cap.get(cv2.CAP_PROP_FPS)
+                #cv2.putText(img_proc, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
                 # print(lmList)
                 gd.writeLmList(lmList)
                 # gd.print()
@@ -229,7 +229,6 @@ class StartWindow(QMainWindow):
                 self.positive = False
 
             elif self.positive == False:
-                print('TEST!!!!!!!!!!!!!!!!!!!!!!1!!!1')
                 self.positive = True
 
         if self.positive == True:
@@ -240,7 +239,6 @@ class StartWindow(QMainWindow):
     def ballMovementpositive(self):
         self.bX += 10
         self.bY += 1
-        print("TEST")
         self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
 
     def ballMovementnegative(self):
@@ -264,13 +262,8 @@ class StartWindow(QMainWindow):
                 return False
 
     def convert_cv_qt(self, cv_img):
-
         cv_img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
         cv_img = qimage2ndarray.array2qimage(cv_img)
-        # img = QImage(cv_img, cv_img.shape[1], cv_img.shape[0], QImage.Format_RGB888)
-        # pix = QPixmap.fromImage(cv_img)
-        # pix = pix.scaled(self.lblVid.width(), self.lblVid.height(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
-        # self.lblVid.setPixmap(pix)
         return cv_img
 
     """Convert from an opencv image to QPixmap"""

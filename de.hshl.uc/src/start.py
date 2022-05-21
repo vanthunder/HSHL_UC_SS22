@@ -1,10 +1,7 @@
 import cv2
 import sys
 
-import pandas as pd
 from PyQt5.QtWidgets import QApplication
-
-
 from model.camera import Camera
 from user_interface.mainWindow import StartWindow
 from recognition.hand_detector import hand_detector
