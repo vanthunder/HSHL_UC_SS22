@@ -3,6 +3,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QPalette
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QSizePolicy
 
+from user_interface.Tools.Cursor import Cursor
+
 
 class startWindow(QWidget):
     def __init__(self):
@@ -18,6 +20,8 @@ class startWindow(QWidget):
         self.imageLabel.setBackgroundRole(QPalette.Base)
         self.imageLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         self.imageLabel.setScaledContents(True)
+        # Adds the cursor
+        self.cursor = Cursor()
         # Info Label
         self.info_Label_Container = QLabel()
         self.info_Label_Container.setStyleSheet(

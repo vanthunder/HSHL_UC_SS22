@@ -125,6 +125,8 @@ class StartWindow(QMainWindow):
         self.thread = BackgroundFeed(self.camera, self.hand_detector)
         # Update Label
         self.thread.change_pixmap_signal.connect(self.update_image)
+        # Updates the Cursor
+        self.thread.change_cursor_position.connect(self.update_cursor)
         # Start Thread
         self.thread.start()
 
@@ -155,6 +157,7 @@ class StartWindow(QMainWindow):
         self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.clock_temp_vbox)
         self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.fact_label)
         self.startWindow.imageLabel.layout.addWidget(self.startWindow.mid_label_container)
+        self.startWindow.imageLabel.layout.addWidget(self.startWindow.cursor)
         self.pongWindow.layout = QVBoxLayout(self.pongWindow)
         self.pongWindow.layout.addWidget(self.pongWindow.imageLabel)
         self.pongWindow.layout.addWidget(self.pongWindow.button_movie)
@@ -192,13 +195,19 @@ class StartWindow(QMainWindow):
     # self.update_timer.timeout.connect(self.update_movie)
 
     @pyqtSlot(np.ndarray)
+
+
     def update_image(self, cv_img):
         """Updates the image_label with a new opencv image"""
         # self.pixmap_item.fromImage(self.convert_cv_qt(cv_img))
         qt_img = self.convert_cv_qt(cv_img)
         self.pongWindow.imageLabel.setPixmap(QPixmap.fromImage(qt_img))
         self.startWindow.imageLabel.setPixmap(QPixmap.fromImage(qt_img))
-        self.startWindow.imageLabel.pixmap().scaled(1920,1080)
+        self.startWindow.imageLabel.pixmap().scaled(1920, 1080)
+
+    def update_cursor(self, x, y):
+        print(x, y)
+        self.startWindow.cursor.move(x, y)
 
     def updatePosition(self, c):
         self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 200, 10, 400))
@@ -296,6 +305,7 @@ class StartWindow(QMainWindow):
 
 class BackgroundFeed(QThread):
     change_pixmap_signal = pyqtSignal(np.ndarray)
+    change_cursor_position = pyqtSignal(int, int)
     counter = int(1)
 
     def __init__(self, camera, hand_detector):
@@ -325,6 +335,13 @@ class BackgroundFeed(QThread):
                 lmList = self.hand_detector.handlist
                 # print(lmList)
                 gd.writeLmList(lmList)
+                if len(lmList) !=0:
+                    x = int(lmList[0].__getitem__(1))
+                    y = int(lmList[0].__getitem__(2))
+                    #print(x, "_", y)
+                    # Updates Cursor Coordinate from the lmList hands points
+                    # Tracks always the middle point
+                    self.change_cursor_position.emit(x, y)
                 # gd.print()
                 # cv2.imshow('Test', img)
                 self.change_pixmap_signal.emit(img_proc)
