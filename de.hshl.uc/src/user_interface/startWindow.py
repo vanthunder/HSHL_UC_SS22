@@ -9,6 +9,9 @@ class startWindow(QWidget):
         self.fontA = QFont("Josefin Sans Medium", 24)
         self.fontB = QFont("Josefin Sans Medium", 100)
         self.fontC = QFont("Josefin Sans Medium", 40)
+        # Adds an image lable to the background
+        self.imageLabel = QLabel()
+        self.imageLabel.setAutoFillBackground(True)
         # Info Label
         self.info_Label_Container = QLabel()
         self.info_Label_Container.setStyleSheet(

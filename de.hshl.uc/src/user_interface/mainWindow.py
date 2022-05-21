@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import QMessageBox, QStackedLayout, \
 
 # from Socket.local.localClient import local_client
 from Socket.online.onlineClient import local_client
+from model.camera import Camera
 from recognition.gesture_detector import gesture_detector
 from recognition.hand_detector import hand_detector
 from user_interface.pongScreen import pongScreen
@@ -46,7 +47,10 @@ class VideoThread(QThread):
         hd = hand_detector()
         gd = gesture_detector()
         lmList = []
-
+        self.hand_detector.handlist = lmList
+        video = 'hands.mp4'
+        self.camera = Camera(video)
+        self.camera.initialize()
         # Left or Right
         Player = 'Left'  # input('Player: ')
 
@@ -117,6 +121,13 @@ class StartWindow(QMainWindow):
         self.display_height = 1080
         self.setWindowTitle('Projekt: Ubi')
         self.setMinimumSize(1920, 1200)
+        # Create Video Thread
+        self.thread = BackgroundFeed(self.camera, self.hand_detector)
+        # Update Label
+        self.thread.change_pixmap_signal.connect(self.update_image)
+        # Start Thread
+        self.thread.start()
+
         # self.pixmap_item = QPixmap()
 
         # Central Widget
@@ -136,12 +147,14 @@ class StartWindow(QMainWindow):
 
         # Adds the eleemnets to the main viewport
         self.startWindow.layout = QVBoxLayout(self.startWindow)
-        self.startWindow.layout.addWidget(self.startWindow.info_Label_Container)
+        self.startWindow.layout.addWidget(self.startWindow.imageLabel)
+        self.startWindow.imageLabel.layout = QVBoxLayout(self.startWindow.imageLabel)
+        self.startWindow.imageLabel.layout.addWidget(self.startWindow.info_Label_Container)
         self.startWindow.info_Label_Container.layout = QHBoxLayout(self.startWindow.info_Label_Container)
         self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.date_label)
         self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.clock_temp_vbox)
         self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.fact_label)
-        self.startWindow.layout.addWidget(self.startWindow.mid_label_container)
+        self.startWindow.imageLabel.layout.addWidget(self.startWindow.mid_label_container)
         self.pongWindow.layout = QVBoxLayout(self.pongWindow)
         self.pongWindow.layout.addWidget(self.pongWindow.imageLabel)
         self.pongWindow.layout.addWidget(self.pongWindow.button_movie)
@@ -156,6 +169,7 @@ class StartWindow(QMainWindow):
 
     def start_Game(self):
         print("Test")
+        self.camera.close_camera()
         if self.window_title == 'start':
             print("True")
             self.window_title = 'game'
@@ -183,6 +197,7 @@ class StartWindow(QMainWindow):
         # self.pixmap_item.fromImage(self.convert_cv_qt(cv_img))
         qt_img = self.convert_cv_qt(cv_img)
         self.pongWindow.imageLabel.setPixmap(QPixmap.fromImage(qt_img))
+        self.startWindow.imageLabel.setPixmap(QPixmap.fromImage(qt_img))
 
     def updatePosition(self, c):
         self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 200, 10, 400))
@@ -220,7 +235,7 @@ class StartWindow(QMainWindow):
     def ballMovementnegative(self):
         self.bX -= 10
         # self.bY -= 1
-        self.pongWondow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
+        self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
 
     def detect_collision(self):
         # if self.imageLabel3.geometry().center()+80 == self.imageLabel2.geometry().intersects()
@@ -273,6 +288,45 @@ class StartWindow(QMainWindow):
         self.thread.start()
         # self.thread1.start()
         # self.update_timer.start(30)
+
+
+
+
+
+class BackgroundFeed(QThread):
+    change_pixmap_signal = pyqtSignal(np.ndarray)
+    counter = int(1)
+
+    def __init__(self, camera, hand_detector):
+        super().__init__()
+        self.camera = camera
+        self.hand_detector = hand_detector
+        hd = self.hand_detector
+        gd = gesture_detector()
+
+    # Camera Loop
+    def run(self):
+        print("Video Started")
+        hd = hand_detector()
+        gd = gesture_detector()
+        lmList = []
+        # rThread.start()
+        # self.starte_receive_loop.emit(self.client)
+        # capture from web cam
+
+        while True:
+            success, img = self.camera.cap.read()
+            # img.flags.writeable = False
+            if success:
+                # init Hand detector
+                # hd.findHands(img)
+                img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
+                lmList = self.hand_detector.handlist
+                # print(lmList)
+                gd.writeLmList(lmList)
+                # gd.print()
+                # cv2.imshow('Test', img)
+                self.change_pixmap_signal.emit(img_proc)
 
 
 if __name__ == '__main__':
