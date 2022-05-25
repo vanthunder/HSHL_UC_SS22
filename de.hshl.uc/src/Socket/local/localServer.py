@@ -2,6 +2,7 @@
 import pickle
 import socket
 import threading
+from pymongo import MongoClient
 
 host = '34.159.99.140'
 port = int(1666)
@@ -15,6 +16,27 @@ server.bind(('127.0.0.3', 1666))
 server.listen(120)
 print('Server started!')
 print('Booted: ', server.getsockname())
+
+
+
+uri = "mongodb://awd-cluster1-shard-00-00.kbtax.mongodb.net:27017,awd-cluster1-shard-00-01.kbtax.mongodb.net:27017,awd-cluster1-shard-00-02.kbtax.mongodb.net:27017/?ssl=true&replicaSet=atlas-59yop8-shard-0&authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority"
+client = MongoClient(uri,
+                     tls=True,
+                     tlsCertificateKeyFile='X509-cert-2736298636718940233.pem')
+db = client['Chat_Application']
+collection = db['Chatmessages']
+doc_count = collection.count_documents({})
+print(doc_count)
+y = []
+while True:
+    for x in collection.find():
+        #print(x)
+        document = x
+        if not(y.__contains__(document)):
+            print(document)
+            y.append(document)
+
+
 
 # Lists For Clients and Their Nicknames
 clients = []
@@ -44,6 +66,7 @@ def handle(client):
     packets = []
     while True:
         try:
+
             # Broadcasting Messages
 
             message = client.recv(2048)
