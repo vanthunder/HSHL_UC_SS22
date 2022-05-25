@@ -7,8 +7,17 @@ from PyQt5.QtWidgets import QWidget, QLabel, QSizePolicy, QVBoxLayout, QPushButt
 class pongScreen(QWidget):
     def __init__(self):
         super().__init__()
+        # Change the desired Resolution!
+        # Default:
+        #         w: 1920
+        #         h: 1080
+        # Beamer in use:
+        #         w: 1280
+        #         h: 750
+        width = 1280
+        height = 750
         self.imageLabel = QLabel()
-        self.imageLabel.setMinimumSize(1920, 1080)
+        self.imageLabel.setMinimumSize(width, height)
         self.imageLabel.setAutoFillBackground(True)
         self.imageLabel.setAlignment(Qt.AlignCenter)
         self.imageLabel.setBackgroundRole(QPalette.Base)

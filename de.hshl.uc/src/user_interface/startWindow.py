@@ -9,13 +9,22 @@ from user_interface.Tools.Cursor import Cursor
 class startWindow(QWidget):
     def __init__(self):
         super().__init__()
+        # Change the desired Resolution!
+        # Default:
+        #         w: 1920
+        #         h: 1080
+        # Beamer in use:
+        #         w: 1280
+        #         h: 750
+        width = 1280
+        height = 750
         self.fontA = QFont("Josefin Sans Medium", 24)
         self.fontB = QFont("Josefin Sans Medium", 100)
         self.fontC = QFont("Josefin Sans Medium", 40)
         # Adds an image lable to the background
         self.imageLabel = QLabel()
         self.imageLabel.setAutoFillBackground(True)
-        self.setMinimumSize(1920, 1080)
+        self.setMinimumSize(width, height)
         self.imageLabel.setAlignment(Qt.AlignCenter)
         self.imageLabel.setBackgroundRole(QPalette.Base)
         self.imageLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
@@ -80,7 +89,7 @@ class startWindow(QWidget):
         self.button_Opinion.setFont(self.fontA)
         self.button_Play = QPushButton('Spielesammlung', self.inner_vbox_label_container)
         self.button_Play.setStyleSheet(
-            "margin-left: 20px 40px; background-color: #4B6E74; border-style: thin; border-color: black; border-width: 5px; border-radius: 24px;")
+            "margin-left: 20px -40px; background-color: #4B6E74; border-style: thin; border-color: black; border-width: 5px; border-radius: 24px;")
         self.button_Play.setMinimumSize(100, 250)
         self.button_Play.setMaximumSize(400, 250)
         self.button_Play.setFont(self.fontA)
