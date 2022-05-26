@@ -9,6 +9,8 @@ export default () => {
     PermanentMarker_400Regular,
   });
 
+
+
   let fontSize = 24;
   let paddingVertical = 6;
 

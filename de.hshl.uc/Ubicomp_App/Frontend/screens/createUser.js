@@ -1,25 +1,41 @@
 import React,{useState} from "react";
 import { View, StyleSheet, TextInput, Button, Text } from "react-native";
 import { globalStyles } from "../styles/gobal";
+import app from "../App";
+
+
 
 const CreateUser = () => {
+
+
+
   const [name, setName] = useState();
   const [password, setPassword] = useState();
 
+
+
+
   const submitData = ()=>{
-    fetch("http://10.0.2.2:3000/send-data",{
+    fetch("http://34.159.99.140:1666/send-data",{
         method:"post",
         headers:{
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+         'Access-Control-Allow-Origin': '*'
         },
+
         body:JSON.stringify({
            name,
             password
         })
     })
+
     .then(response => response.json())
     .then(data => console.log(data));
 }
+
+
+
+
         
   
 
