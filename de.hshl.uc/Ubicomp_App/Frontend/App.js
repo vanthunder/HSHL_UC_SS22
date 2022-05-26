@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import AppLoading from 'expo-app-loading';
 import { useFonts, PermanentMarker_400Regular } from '@expo-google-fonts/permanent-marker';
 import Home from './screens/Home';
-
+import CreateUser from './screens/createUser';
 
 export default () => {
   let [fontsLoaded] = useFonts({
@@ -16,7 +16,7 @@ export default () => {
     return <AppLoading />;
   } 
   return (
-      <Home />
+      <CreateUser />
   );
 
 }
