@@ -6,6 +6,7 @@
     <mapping directory="$PROJECT_DIR$/Ubicomp_App/frontend" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/de.hshl.uc/App/Ubicomp_App" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/de.hshl.uc/App/Ubicomp_App/frontend" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/de.hshl.uc/App/frontend_" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/de.hshl.uc/Ubicomp_App/Ubicomp_App" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/de.hshl.uc/Ubicomp_App/Ubicomp_App/frontend" vcs="Git" />
   </component>
