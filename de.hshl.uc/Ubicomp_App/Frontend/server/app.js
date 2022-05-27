@@ -6,6 +6,7 @@ const cors = require('cors')
 const Server = require("socket.io")
 const socketio = require('socketio')
 require('./User')
+require('./Chat')
 
 app.use(bodyParser.json())
 
@@ -42,7 +43,8 @@ app.get('/jokes/random', (req, res) => {
 });
 
 
-const User = mongoose.model('user')
+//const User = mongoose.model('user')
+const Chat = mongoose.model('Chatmessages')
 
 
 const mongoUri = "mongodb+srv://Damon:UbiComp@awd-cluster1.kbtax.mongodb.net/?retryWrites=true&w=majority"
@@ -70,11 +72,11 @@ app.use(function (req, res, next) {
 app.get('/', function (req, res, next) {
 
     app.post('/send-data', (req, res) => {
-        const user = new User({
-            name: req.body.name,
-            password: req.body.password
+        const chat = new Chat({
+            user: req.body.name,
+            message: req.body.password
         })
-        user.save()
+        chat.save()
             .then(data => {
                 console.log(data)
                 res.send(data)
@@ -90,14 +92,13 @@ app.post('/', function (req, res, next) {
     // Handle the post for this route
 
     app.post('/send-data', (req, res) => {
-        const user = new User({
-            name: req.body.name,
-            password: req.body.password
+        const chat = new Chat({
+            user: req.body.name,
+            message: req.body.password
         })
-        user.save()
+        chat.save()
             .then(data => {
                 console.log(data)
-                res.send
                 res.send(data)
             }).catch(err => {
             console.log(err)
@@ -117,11 +118,11 @@ app.get('/', (req, res) => {
 
 
 app.post('/send-data', (req, res) => {
-    const user = new User({
-        name: req.body.name,
-        password: req.body.password
+    const chat = new Chat({
+        user: req.body.name,
+        message: req.body.password
     })
-    user.save()
+    chat.save()
         .then(data => {
             console.log(data)
             res.send(data)
@@ -155,7 +156,7 @@ app.post('/update', (req, res) => {
         })
 })
 app.use(express.json())
-app.use('/api/user', User)
+app.use('/api/user', Chat)
 app.use(cors(corsOptions));
 //const io = socketio(Server).sockets;
 const port = process.env.PORT || 1666;
@@ -163,4 +164,3 @@ const port = process.env.PORT || 1666;
 app.listen(port, () => {
     console.log('server running')
 })
-
