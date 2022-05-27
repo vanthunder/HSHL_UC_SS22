@@ -1,15 +1,15 @@
 const express = require('express')
-const app = express ()
+const app = express()
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-const cors = require ('cors')
-const  Server = require ("socket.io")
-const socketio = require ('socketio')
+const cors = require('cors')
+const Server = require("socket.io")
+const socketio = require('socketio')
 require('./User')
 
 app.use(bodyParser.json())
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:8080/");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -30,10 +30,10 @@ app.use((req, res, next) => {
 
 app.get('/jokes/random', (req, res) => {
     request(
-        { url: 'https://joke-api-strict-cors.appspot.com/jokes/random' },
+        {url: 'https://joke-api-strict-cors.appspot.com/jokes/random'},
         (error, response, body) => {
             if (error || response.statusCode !== 200) {
-                return res.status(500).json({ type: 'error', message: err.message });
+                return res.status(500).json({type: 'error', message: err.message});
             }
 
             res.json(JSON.parse(body));
@@ -42,56 +42,43 @@ app.get('/jokes/random', (req, res) => {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 const User = mongoose.model('user')
 
 
 const mongoUri = "mongodb+srv://Damon:UbiComp@awd-cluster1.kbtax.mongodb.net/?retryWrites=true&w=majority"
 
 
-
-mongoose.connect(mongoUri,{
-    useNewUrlParser:true,
-    useUnifiedTopology:true
+mongoose.connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: "Chat_Application"
 })
 
-mongoose.connection.on("connected",()=>{
+mongoose.connection.on("connected", () => {
     console.log("connected to MongoDB")
 })
-mongoose.connection.on("error",(err)=>{
-    console.log("error",err)
+mongoose.connection.on("error", (err) => {
+    console.log("error", err)
 })
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
-app.get('/', function(req, res, next)
-{
+app.get('/', function (req, res, next) {
 
-    app.post('/send-data',(req,res)=>{
+    app.post('/send-data', (req, res) => {
         const user = new User({
-            name:req.body.name,
-            password:req.body.password
+            name: req.body.name,
+            password: req.body.password
         })
         user.save()
-            .then(data=>{
+            .then(data => {
                 console.log(data)
                 res.send(data)
-            }).catch(err=>{
+            }).catch(err => {
             console.log(err)
         })
 
@@ -99,19 +86,20 @@ app.get('/', function(req, res, next)
     // Handle the get for this route
 });
 
-app.post('/', function(req, res, next) {
+app.post('/', function (req, res, next) {
     // Handle the post for this route
 
-    app.post('/send-data',(req,res)=>{
+    app.post('/send-data', (req, res) => {
         const user = new User({
-            name:req.body.name,
-            password:req.body.password
+            name: req.body.name,
+            password: req.body.password
         })
         user.save()
-            .then(data=>{
+            .then(data => {
                 console.log(data)
+                res.send
                 res.send(data)
-            }).catch(err=>{
+            }).catch(err => {
             console.log(err)
         })
 
@@ -119,63 +107,60 @@ app.post('/', function(req, res, next) {
 });
 
 
-
-
-app.get('/',(req,res)=>{
-    User.find({}).then(data=>{
+app.get('/', (req, res) => {
+    User.find({}).then(data => {
         res.send(data)
-    }).catch(err=>{
+    }).catch(err => {
         console.log(err)
     })
 })
 
 
-
-app.post('/send-data',(req,res)=>{
+app.post('/send-data', (req, res) => {
     const user = new User({
-        name:req.body.name,
-        password:req.body.password
+        name: req.body.name,
+        password: req.body.password
     })
     user.save()
-    .then(data=>{
-        console.log(data)
-        res.send(data)
-    }).catch(err=>{
+        .then(data => {
+            console.log(data)
+            res.send(data)
+        }).catch(err => {
         console.log(err)
     })
-    
+
 })
 
-app.post('/delete',(req,res)=>{
+app.post('/delete', (req, res) => {
     User.findByIdAndRemove(req.body.id)
-    .then(data=>{
-        console.log(data)
-        res.send("deleted")
-    }).catch(err=>{
+        .then(data => {
+            console.log(data)
+            res.send("deleted")
+        }).catch(err => {
         console.log(err)
     })
-    
+
 })
 
-app.post('/update',(req,res)=>{
-    User.findByIdAndUpdate(req.body.id,{
-        name:req.body.name,
-        password:req.body.password
-    }).then(data=>{
+app.post('/update', (req, res) => {
+    User.findByIdAndUpdate(req.body.id, {
+        name: req.body.name,
+        password: req.body.password
+    }).then(data => {
         console.log(data)
         res.send(data)
     })
-    .catch(err=>{
-        console.log(err)
-    })
+        .catch(err => {
+            console.log(err)
+        })
 })
 app.use(express.json())
 app.use('/api/user', User)
 app.use(cors(corsOptions));
-const io = socketio(Server).sockets;
+//const io = socketio(Server).sockets;
 const port = process.env.PORT || 1666;
-console.log(io.handshake.host);
-app.listen(port,()=>{
+//console.log(io.handshake.host);
+app.listen(port, () => {
     console.log('server running')
 })
 
