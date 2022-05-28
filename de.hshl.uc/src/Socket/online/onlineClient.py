@@ -9,12 +9,22 @@ import threading
 
 
 # Listening to Server and Sending Nickname
-
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 class local_client:
     Y = [11]
     player = 'Left'
     TempTupel = (player, 0)
+    TempChatList = [TempTupel]
     packets = []
     #client = "Client"
     nickname = 'Client'
@@ -26,7 +36,7 @@ class local_client:
         # Connecting To Server
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-        self.client.connect(('34.159.99.140', 1666))
+        self.client.connect(('34.159.99.140', 1667))
         #print(self.client)
         self.tuple = (1, 2)
         counter = 0
@@ -37,7 +47,6 @@ class local_client:
 
     def receive(self):
         while True:
-            print('TESSSSSSSSSSSSSSSSSSSSSSSSTTTTTTTTTTTTTTTTTTTTTTTTTTTHHHHHHHHHHHHHHHHHHHHHHHHHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!')
             try:
                 Y = 10
                 print(Y)
@@ -47,11 +56,22 @@ class local_client:
                 print('Vor Server Receive')
                 message = self.client.recv(102048)
                 print('Vor Message decode')
-                print(message)
-
                 message = (pickle.loads(message))
-                print('Vor Message decode1')
-                self.TempTupel = message
+                print(message)
+                # To-Do: Filter Mongo db message!
+                #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                if message[1].__getitem__(1) == "chat":
+                    print(bcolors.WARNING,"Chat: ",message, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", bcolors.ENDC)
+                    self.TempChatList = message
+                    print(bcolors.OKBLUE, "Chat: ", self.TempChatList,
+                          "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
+                          bcolors.ENDC)
+                    print(self.TempChatList)
+                else:
+                    print('Vor Message decode1')
+                    self.TempTupel = message
+
+
                 #packets = message
                 print('Vor Message decode2')
                 #self.pKg = packets

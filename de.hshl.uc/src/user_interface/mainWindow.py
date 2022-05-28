@@ -3,7 +3,7 @@ import threading
 import cv2
 import numpy as np
 import qimage2ndarray as qimage2ndarray
-from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QRect
+from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QRect, QMutex
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QApplication
 from PyQt5.QtWidgets import QMessageBox, QStackedLayout, \
@@ -18,17 +18,37 @@ from user_interface.pongScreen import pongScreen
 from user_interface.startWindow import startWindow
 
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
+
 class VideoThread(QThread):
+    ar = []
+    change_ab_signal = pyqtSignal(int)
     change_pixmap_signal = pyqtSignal(np.ndarray)
     update_label_signal = pyqtSignal(int)
     update_ball_signal = pyqtSignal()
     update_player_2 = pyqtSignal(int)
     starte_receive_loop = pyqtSignal(local_client)
+    #update_chat_signal = pyqtSignal()
     counter = int(1)
     client = local_client()
 
     def __init__(self, camera, hand_detector):
-        super().__init__()
+        super(VideoThread, self).__init__()
+        self.ser = False
+        self.state = 0
+        self._mutex = QMutex()
+        self.serialEnabled = True
         self.camera = camera
         self.hand_detector = hand_detector
         hd = self.hand_detector
@@ -59,11 +79,13 @@ class VideoThread(QThread):
         # rThread.start()
         # self.starte_receive_loop.emit(self.client)
         # capture from web cam
+        #self.update_chat_signal.emit()
 
         while True:
             success, img = self.camera.cap.read()
             # img.flags.writeable = False
             if success:
+                self.change_ab_signal.emit(1)
                 # init Hand detector
                 # hd.findHands(img)
                 img = cv2.resize(img, (1920, 1080), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
@@ -82,15 +104,22 @@ class VideoThread(QThread):
                 bY += 1 + speedY
                 # Bewege ball
                 self.update_ball_signal.emit()
+
                 # To Do send to server:
                 if not lmList:
                     print()
                 else:
+                    print(bcolors.FAIL, self.client.TempChatList,"EMITYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY", bcolors.ENDC)
+                    #self.update_chat.emit()
+                    if not self.client.TempChatList:
+                        print(bcolors.FAIL,"EMITYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY", bcolors.ENDC)
+
                     # Send Tupel
                     print('Send Coordinates form Main Window')
                     self.client.sendcoordinate(Player, lmList[0].__getitem__(2))
                     print('Send Coordinates form Main Window 2')
                     print("Player:  ", self.client.TempTupel.__getitem__(0))
+
 
                     if self.client.TempTupel.__getitem__(0) == 'Left':
                         self.update_label_signal.emit(self.client.TempTupel.__getitem__(1))
@@ -128,8 +157,15 @@ class StartWindow(QMainWindow):
         self.thread.change_pixmap_signal.connect(self.update_image)
         # Updates the Cursor
         self.thread.change_cursor_position.connect(self.update_cursor)
+        # Debug
+        self.thread.change_ab_signal.connect(self.update_chat_debug)
+        self.local_cL = self.thread.client
+        print(self.local_cL)
+        self.thread.change_lc.connect(self.start_thread_receive)
         # Start Thread
         self.thread.start()
+        # Chat
+        self.globalChat = []
 
         # self.pixmap_item = QPixmap()
 
@@ -148,6 +184,8 @@ class StartWindow(QMainWindow):
         self.layout_for_wids.addWidget(self.startWindow)
         self.layout_for_wids.addWidget(self.pongWindow)
 
+        # Debug
+
         # Adds the eleemnets to the main viewport
         self.startWindow.layout = QVBoxLayout(self.startWindow)
         self.startWindow.layout.addWidget(self.startWindow.imageLabel)
@@ -164,6 +202,7 @@ class StartWindow(QMainWindow):
         self.pongWindow.layout.addWidget(self.pongWindow.button_movie)
         self.pongWindow.setMinimumSize(1920, 1080)
         self.central_widget.setLayout(self.layout_for_wids)
+
         # self.layout = QVBoxLayout(self.central_widget)
         # self.layout.addWidget(self.imageLabel)
         self.setCentralWidget(self.central_widget)
@@ -173,12 +212,14 @@ class StartWindow(QMainWindow):
 
     def start_Game(self):
         print("Test")
+
         self.camera.close_camera()
         if self.window_title == 'start':
             print("True")
             self.window_title = 'game'
             self.startWindow.hide()
             self.pongWindow.show()
+
 
     def closeEvent(self, event):
         reply = QMessageBox.question(self, 'Window Close', 'Are you sure you want to close the window?',
@@ -276,7 +317,73 @@ class StartWindow(QMainWindow):
     def start_thread_receive(self, local_cla):
         self.local_cL = local_cla
 
+    def upchatlabel(self):
+        self.startWindow.inner_chat_label.move(400)
+        self.startWindow.inner_chat_label.setText("TEST111111111111111111111111!")
+        print(bcolors.BOLD,"TEST111111111111111111111111!",bcolors.ENDC)
+
+    # Only for debug!
+
+    def update_chat_debug(self, ab):
+        # uses dict
+        #Debug
+        atuple = ('Left', 0)
+        if ab[0] == atuple:
+            print('TRUE!!!!')
+            print(bcolors.HEADER, ab, bcolors.ENDC)
+
+
+        ac = []
+        ac = ab
+        #print(ac[1].__getitem__(0))
+
+
+        if not ab == tuple:
+            if not ab[0] == atuple:
+
+                abc = {'user': 'ab'}
+
+                dicta = {}
+                for x in range(len(list(ac))):
+                    print("!!!!!!!",x)
+
+                    dicta = list(ac)[x].__getitem__(0)
+
+                    user = list(iter(dicta))[1]
+
+                    chat = dicta.get(user)
+
+                    if not self.globalChat.__contains__(chat):
+                        self.globalChat.append(chat)
+
+                a = {}
+                a.values()
+
+                # print(ab.index())
+                ele = []
+                # for k, v in list(ac)[0].__getitem__(1).items():
+
+                # print(k, v)
+
+                # for x in ac:
+                #    ele.append(x[0])
+                # res_list = [x[0] for x in ac]
+                # x = list(ac)[0].__getitem__(1).count
+
+                print(bcolors.FAIL, self.globalChat, bcolors.ENDC)
+
+                # print(bcolors.FAIL, dicta.values(), bcolors.ENDC)
+                # print(bcolors.FAIL, ac[1], bcolors.ENDC)
+                self.startWindow.inner_chat_label.setText(str(self.globalChat))
+
+        #self.camera.close_camera()
+        #self.startWindow.inner_chat_label.setText("TEST!")
+        #self.startWindow.show()
+        #self.pongWindow.hide()
+
+
     def start_movie(self):
+
         # create the video capture thread
         self.thread = VideoThread(self.camera, self.hand_detector)
         # self.thread.client.client.close()
@@ -287,20 +394,37 @@ class StartWindow(QMainWindow):
         self.thread.change_pixmap_signal.connect(self.update_image)
         self.thread.update_label_signal.connect(self.updatePosition)
         self.thread.update_ball_signal.connect(self.updateBall)
+        #self.thread.update_chat_signal.connect(self.upchatlabel)
         self.thread.update_player_2.connect(self.updatePositionPlayer2)
+
+        #self.update_chat_debug()
+
         # start the thread
         self.thread.start()
         # self.thread1.start()
         # self.update_timer.start(30)
 
+class msg(object):
+    def __init__(self, message):
+        self.message = message
 
 
 
 
 class BackgroundFeed(QThread):
+    a = "a"
+    #change_ab_signal = pyqtSignal(str)
+    change_ab_signal = pyqtSignal(object)
     change_pixmap_signal = pyqtSignal(np.ndarray)
     change_cursor_position = pyqtSignal(int, int)
+    change_lc = pyqtSignal(local_client)
     counter = int(1)
+
+    client = local_client()
+
+    def start_receive(self):
+        self.client.receive()
+        print("THEADING!!!!!")
 
     def __init__(self, camera, hand_detector):
         super().__init__()
@@ -318,11 +442,19 @@ class BackgroundFeed(QThread):
         # rThread.start()
         # self.starte_receive_loop.emit(self.client)
         # capture from web cam
+        Player = 'Left'  # input('Player: ')
+
+        self.client.player = Player
+        self.client.sendcoordinate(Player, 100)
+        rThread = threading.Thread(target=self.start_receive, args=())
 
         while True:
+
             success, img = self.camera.cap.read()
             # img.flags.writeable = False
             if success:
+                print(bcolors.OKCYAN,'!!@@',self.client.TempChatList,bcolors.ENDC)
+                self.change_ab_signal.emit(self.client.TempChatList)
                 # init Hand detector
                 # hd.findHands(img)
                 img = cv2.resize(img, (1920, 1080), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
