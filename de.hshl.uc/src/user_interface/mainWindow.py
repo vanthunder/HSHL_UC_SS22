@@ -345,7 +345,7 @@ class StartWindow(QMainWindow):
 
                 dicta = {}
                 for x in range(len(list(ac))):
-                    print("!!!!!!!",x)
+
 
                     dicta = list(ac)[x].__getitem__(0)
 
@@ -449,7 +449,7 @@ class BackgroundFeed(QThread):
         rThread = threading.Thread(target=self.start_receive, args=())
 
         while True:
-
+            self.client.sendcoordinate(Player, 100)
             success, img = self.camera.cap.read()
             # img.flags.writeable = False
             if success:
