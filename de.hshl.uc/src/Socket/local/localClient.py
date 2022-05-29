@@ -30,6 +30,7 @@ class local_client:
         counter = 0
         self.Player = ""
         self.serial = pickle.dumps(self.tuple)
+        self.chat = []
         #self.tempTupel=(self.Player,2)
         #self.y = [2]
 
@@ -45,6 +46,9 @@ class local_client:
                 message = self.client.recv(2048)
 
                 message = (pickle.loads(message))
+                a = (1,1)
+                if(a.__contains__("chat_Tag")):
+                    print(message)
                 packets = message
                 print("SERVERPACKET: ",packets)
                 for tuple in packets:

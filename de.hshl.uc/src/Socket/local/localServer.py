@@ -2,12 +2,15 @@
 import pickle
 import socket
 import threading
+from pymongo import MongoClient
 
 host = '34.159.99.140'
 port = int(1666)
 # Only for debugging
 testList = []
 testtupel = (1,1)
+chat_Tag = "chat"
+chatContainer = []
 
 # Starting Server
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -15,6 +18,33 @@ server.bind(('127.0.0.3', 1666))
 server.listen(120)
 print('Server started!')
 print('Booted: ', server.getsockname())
+
+
+
+uri = "mongodb://awd-cluster1-shard-00-00.kbtax.mongodb.net:27017,awd-cluster1-shard-00-01.kbtax.mongodb.net:27017,awd-cluster1-shard-00-02.kbtax.mongodb.net:27017/?ssl=true&replicaSet=atlas-59yop8-shard-0&authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority"
+client = MongoClient(uri,
+                     tls=True,
+                     tlsCertificateKeyFile='X509-cert-2736298636718940233.pem')
+db = client['Chat_Application']
+collection = db['chatmessages']
+doc_count = collection.count_documents({})
+print(doc_count)
+y = []
+def update_Chat():
+    print("Update Chat")
+    for x in collection.find():
+        # print(x)
+        document = x
+        if not (y.__contains__(document)):
+            print(document)
+            chat = (document, chat_Tag)
+            chat_Text = chat
+            chatContainer.append(chat)
+            # chatContainer.append(chat, chat_Tag)
+            # Adds Container here!
+            y.append(document)
+
+
 
 # Lists For Clients and Their Nicknames
 clients = []
@@ -42,19 +72,29 @@ def broadcast(message):
 # Handling Messages From Clients
 def handle(client):
     packets = []
+    chatTag = "chat"
+
+
     while True:
         try:
+
             # Broadcasting Messages
-
-            message = client.recv(2048)
-
+            print("Test_Handle")
+            message = "client.recv(2048)"
+            print("Test_Handle")
+            update_Chat()
             received_tupel = pickle.loads(message)  ## Fehler Code
             #received_tupel = pickle.dumps(received_tupel)
             packets.append(received_tupel)
+
             # Player 1 Packet
             if(len(packets) == 4):
                 serialPackets = pickle.dumps(packets)
+                serialPackets_Chat = pickle.dumps(chatContainer)
                 broadcast(serialPackets)
+                broadcast(serialPackets_Chat)
+                # serial
+               # broadcast(chat)
                 packets.clear()
             # print('TUPLE: ', received_tupel)
             # Proof if message is a coordinate
@@ -81,11 +121,14 @@ def handle(client):
 # Receiving / Listening Function
 def receive():
     while True:
+
         # Accept Connection
         client, address = server.accept()
+
         print("Connected with {}".format(str(address)))
 
         # Request And Store Nickname
+
         client.send('NICK'.encode('utf8'))
 #        nickname = client.recv(1024).decode('ascii')
  #       nicknames.append(nickname)
@@ -99,6 +142,7 @@ def receive():
         # Start Handling Thread For Client
         thread = threading.Thread(target=handle, args=(client,))
         thread.start()
+
 
 
 
