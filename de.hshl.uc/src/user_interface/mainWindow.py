@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import QMessageBox, QStackedLayout, \
 
 # from Socket.local.localClient import local_client
 from Socket.online.onlineClient import local_client
+from Socket.online.Chat.Chat_Client_V01 import chat_client
 from model.camera import Camera
 from recognition.gesture_detector import gesture_detector
 from recognition.hand_detector import hand_detector
@@ -38,10 +39,10 @@ class VideoThread(QThread):
     update_label_signal = pyqtSignal(int)
     update_ball_signal = pyqtSignal()
     update_player_2 = pyqtSignal(int)
-    starte_receive_loop = pyqtSignal(local_client)
+    #starte_receive_loop = pyqtSignal(local_client)
     #update_chat_signal = pyqtSignal()
     counter = int(1)
-    client = local_client()
+    #client = local_client()
 
     def __init__(self, camera, hand_detector):
         super(VideoThread, self).__init__()
@@ -159,8 +160,8 @@ class StartWindow(QMainWindow):
         self.thread.change_cursor_position.connect(self.update_cursor)
         # Debug
         self.thread.change_ab_signal.connect(self.update_chat_debug)
-        self.local_cL = self.thread.client
-        print(self.local_cL)
+        self.chat_client = self.thread.client
+        print(self.chat_client)
         self.thread.change_lc.connect(self.start_thread_receive)
         # Start Thread
         self.thread.start()
@@ -389,7 +390,7 @@ class StartWindow(QMainWindow):
         # self.thread.client.client.close()
         self.local_cL = self.thread.client
         print(self.local_cL)
-        self.thread.starte_receive_loop.connect(self.start_thread_receive)
+        #self.thread.starte_receive_loop.connect(self.start_thread_receive)
         # connect its signal to the update_image slot
         self.thread.change_pixmap_signal.connect(self.update_image)
         self.thread.update_label_signal.connect(self.updatePosition)
@@ -417,10 +418,12 @@ class BackgroundFeed(QThread):
     change_ab_signal = pyqtSignal(object)
     change_pixmap_signal = pyqtSignal(np.ndarray)
     change_cursor_position = pyqtSignal(int, int)
-    change_lc = pyqtSignal(local_client)
+
+    ## LC
+    change_lc = pyqtSignal(chat_client)
     counter = int(1)
 
-    client = local_client()
+    client = chat_client()
 
     def start_receive(self):
         self.client.receive()
