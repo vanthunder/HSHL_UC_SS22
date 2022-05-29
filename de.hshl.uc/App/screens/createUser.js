@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import { View, StyleSheet, TextInput, Button, Text } from "react-native";
 import { globalStyles } from "../styles/gobal";
-import app from "../App";
+
 
 
 
@@ -47,7 +47,7 @@ const CreateUser = () => {
         onChangeText={text => setName(text)}
         placeholder="Name"
       />
-      <Text>name: {name} </Text>
+    
       <TextInput
         style={styles.input}
         value={password}

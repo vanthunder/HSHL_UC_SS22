@@ -1,54 +1,76 @@
-import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React,{useState} from "react";
+import { View, StyleSheet, TextInput, Button, Text } from "react-native";
+import { globalStyles } from "../styles/gobal";
 
 
-export default function Chat() {
+
+
+const Chat = () => {
+
+
+
+  const [name, setName] = useState();
+  const [password, setMessage] = useState();
+
+
+
+
+  const submitData = ()=>{
+    fetch("http://34.159.99.140:1666/send-data",{
+        method:"post",
+        headers:{
+          'Content-Type': 'application/json',
+         'Access-Control-Allow-Origin': '*'
+        },
+
+        body:JSON.stringify({
+           name,
+          
+        })
+    })
+
+    .then(response => response.json())
+    .then(data => console.log(data));
+}
+
+
+
+
+        
+  
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.boxOne}>Umfrage</Text>
-      <Text style={styles.boxTwo}>Spiele</Text>
-      <Text style={styles.boxThree}>Chat</Text>
+    <View style={globalStyles.container}>
+      <TextInput
+        style={styles.input}
+        value={name}
+        onChangeText={text => setName(text)}
+        placeholder="Name"
+      />
+      <TextInput
+        style={styles.input}
+        value={password}
+        onChangeText={text => setMessage(text)}
+        placeholder="Message"
+      />
+   <Button 
+        
+              mode="contained" 
+             title="senden"
+              onPress={() => submitData()}>
+r
+             </Button>
     </View>
   );
+};
 
-}const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#EBEFF0',
-      paddingBottom: 40,
-      paddingTop: 60,
-      paddingLeft: 20,
-      paddingRight: 20,
-    },
-    boxOne: {
-      flex: 1,
-      backgroundColor: '#8BC1E9',
-      margin: 30,
-      textAlign: 'center',
-      textAlignVertical: 'center',
-      borderRadius: 25,
-      fontFamily: "PermanentMarker_400Regular",
-      fontSize: 50,
-    },
-    boxTwo: {
-      flex: 1,
-      backgroundColor: '#B28BBC',
-      margin: 30,
-      textAlign: 'center',
-      textAlignVertical: 'center',
-      borderRadius: 25,
-      fontFamily: "PermanentMarker_400Regular",
-      fontSize: 50,
-    },
-    boxThree: {
-      flex: 1,
-      backgroundColor: '#4B6E74',
-      margin: 30,
-      textAlign: 'center',
-      textAlignVertical: 'center',
-      borderRadius: 25,
-      fontFamily: "PermanentMarker_400Regular",
-      fontSize: 50,
-    }
-  });
-  
+const styles = StyleSheet.create({
+  input: {
+    
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+});
+export default Chat
