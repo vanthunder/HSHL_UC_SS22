@@ -381,9 +381,8 @@ class StartWindow(QMainWindow):
 
                 if(self.altGroesseChat < len(self.globalChat)):
                     self.altGroesseChat = len(self.globalChat)
-                #    self.labelList.append(QLabel(self.globalChat[len(self.globalChat)]))
-                #    self.startWindow.formLayout.addRow(self.labelList[len(self.globalChat)])
-                print("hallo Kasim ", str(len(self.altGroesseChat)))
+                    self.labelList.append(QLabel(self.globalChat[self.altGroesseChat]))
+                    #self.startWindow.formLayout.addRow(self.labelList[self.altGroesseChat])
 
 
 
