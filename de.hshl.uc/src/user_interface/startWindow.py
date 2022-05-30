@@ -1,8 +1,7 @@
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QPalette
-from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QSizePolicy, QFormLayout, QGroupBox, \
-    QScrollArea
+from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QSizePolicy
 
 from user_interface.Tools.Cursor import Cursor
 
@@ -106,41 +105,13 @@ class startWindow(QWidget):
             "overflow: hidden;border-radius: 25px; background: #F7AF9D; color: black;")
         # inner box
         self.inner_chat_label = QLabel()
-        #self.inner_chat_label = QtWidgets.QScrollArea()
         self.inner_chat_label.setText(
             "Lorem ipsum dolor sit amet, \nconsetetur sadipscing elitr, \nsed diam nonumy eirmod tempor invidunt \nut labore et dolore magna aliquyam \nerat, sed diam voluptua.")
         self.inner_chat_label.setStyleSheet(
             "float: left; left: 20px; padding-right: opx; border-radius: 25px; background: #EBEFF0; color: black;")
         self.inner_chat_label.setMinimumWidth(800)
         self.inner_chat_label.setFont(self.fontA)
-
         # Adds the inner box to the outer box
-        #self.outer_chat_v_label.layout.addWidget(self.inner_chat_label)
-        # Adds the chat to the midd label container
-        #self.mid_label_container.layout.addWidget(self.outer_chat_v_label)
-
-
-        self.val_hallo = [1, 2, 3, 4, 6, 5]
-        self.groupBox = QGroupBox("This is a group")
-        self.labelList = []
-        self.formLayout = QFormLayout()
-
-        for i in range(len(self.val_hallo)):
-            self.labelList.append(QLabel("Label" + str(i)))
-            self.formLayout.addRow(self.labelList[i])
-
-        self.groupBox.setLayout(self.formLayout)
-        self.scroll = QScrollArea()
-        self.scroll.setWidget(self.groupBox)
-        self.scroll.setWidgetResizable(True)
-        self.scroll.setFixedHeight(400)
-        self.scroll.setStyleSheet(
-            "float: left; left: 20px; padding-right: opx; border-radius: 25px; background: #EBEFF0; color: black;")
-
-
-        # Adds the inner box to the outer box
-        self.outer_chat_v_label.layout.addWidget(self.scroll)
-        self.outer_chat_v_label.setMaximumWidth(400)
-        self.outer_chat_v_label.setMaximumHeight(400)
+        self.outer_chat_v_label.layout.addWidget(self.inner_chat_label)
         # Adds the chat to the midd label container
         self.mid_label_container.layout.addWidget(self.outer_chat_v_label)

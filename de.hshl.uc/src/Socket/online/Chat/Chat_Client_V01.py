@@ -55,7 +55,7 @@ class chat_client:
                 # Receive Message From Server
                 # If 'NICK' Send Nickname
                 print('Vor Server Receive')
-                message = self.client.recv(1048576)
+                message = self.client.recv(8192)
                 print('Vor Message decode')
                 message = (pickle.loads(message))
                 print(message)
@@ -123,7 +123,7 @@ class chat_client:
 
     def main(self):
 
-        lclient = local_client()
+        lclient = chat_client()
         receive_thread = threading.Thread(target=lclient.receive, args=())
         print('TEST')
         receive_thread.start()
@@ -134,5 +134,5 @@ class chat_client:
 
 
 if __name__ == "__main__":
-    c = local_client
-    c.main(self=local_client)
+    c = chat_client
+    c.main(self=chat_client)
