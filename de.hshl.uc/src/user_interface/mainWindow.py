@@ -3,13 +3,13 @@ import threading
 import cv2
 import numpy as np
 import qimage2ndarray as qimage2ndarray
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QRect, QMutex
 from PyQt5.QtGui import QPixmap, QFont
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QApplication
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QApplication, QLabel
 from PyQt5.QtWidgets import QMessageBox, QStackedLayout, \
     QHBoxLayout
 
-# from Socket.local.localClient import local_client
 from Socket.online.onlineClient import local_client
 from Socket.online.Chat.Chat_Client_V01 import chat_client
 from model.camera import Camera
@@ -29,7 +29,6 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-
 
 
 class VideoThread(QThread):
@@ -142,6 +141,7 @@ class StartWindow(QMainWindow):
         self.fontA = QFont("Josefin Sans Medium", 24)
         self.fontB = QFont("Josefin Sans Medium", 100)
         self.fontC = QFont("Josefin Sans Medium", 40)
+        self.altGroesseChat = 0
         self.bX = 0
         self.bY = 0
         self.positive = True
@@ -372,10 +372,29 @@ class StartWindow(QMainWindow):
                 # x = list(ac)[0].__getitem__(1).count
 
                 print(bcolors.FAIL, self.globalChat, bcolors.ENDC)
+                self.labelList = []
+
+                #for i in range(len(self.globalChat)):
+                #    self.labelList.append(QLabel(self.globalChat[i]))
+                #    self.startWindow.formLayout.addRow(self.labelList[i])
+
+
+                if(self.altGroesseChat < len(self.globalChat)):
+                    self.altGroesseChat = len(self.globalChat)
+                #    self.labelList.append(QLabel(self.globalChat[len(self.globalChat)]))
+                #    self.startWindow.formLayout.addRow(self.labelList[len(self.globalChat)])
+                print("hallo Kasim ", str(len(self.altGroesseChat)))
+
+
 
                 # print(bcolors.FAIL, dicta.values(), bcolors.ENDC)
                 # print(bcolors.FAIL, ac[1], bcolors.ENDC)
-                self.startWindow.inner_chat_label.setText(str(self.globalChat))
+                #for i in self.globalChat:
+
+
+                #self.startWindow.inner_chat_label.setText(str("\n".join(self.globalChat)))
+
+                #self.startWindow.inner_chat_label.setText(str(self.globalChat))
 
         #self.camera.close_camera()
         #self.startWindow.inner_chat_label.setText("TEST!")

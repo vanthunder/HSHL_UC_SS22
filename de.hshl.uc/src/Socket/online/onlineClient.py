@@ -57,13 +57,13 @@ class local_client:
                 print('Vor Server Receive')
                 message = self.client.recv(1048576)
                 print('Vor Message decode')
-                message = (pickle.loads(message))
+                message = pickle.loads(message)
                 print(message)
                 # To-Do: Filter Mongo db message!
                 #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 print('Vor Message CHAT')
                 if message[2].__getitem__(1) == "chat":
-                    print(bcolors.WARNING,"Chat_____: ", bcolors.ENDC)
+                    print(bcolors.WARNING, "Chat_____: ", bcolors.ENDC)
                     self.TempChatList = message
                     print(bcolors.OKBLUE, "Chat: ", self.TempChatList,bcolors.ENDC)
                     print(self.TempChatList)
