@@ -38,5 +38,20 @@ export const globalStyles = StyleSheet.create({
         borderRadius: 25,
         fontFamily: "PermanentMarker_400Regular",
         fontSize: 50,
+      },
+
+      Chatinput :{
+        height: 500,
+        margin: 12,
+        borderWidth: 5,
+        borderColor: '#F7AF9D',
+        borderRadius: 25,
+        padding: 10,
+        textAlign: 'center',
+      },
+
+      ButtonStyle :{
+        backgroundColor: '#4B6E74',
+        borderRadius: 25,
       }
   });

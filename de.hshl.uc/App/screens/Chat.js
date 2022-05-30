@@ -1,7 +1,6 @@
 import React,{useState} from "react";
-import { View, StyleSheet, TextInput, Button, Text } from "react-native";
+import { View, StyleSheet, TextInput, Button, Text, SafeAreaView } from "react-native";
 import { globalStyles } from "../styles/gobal";
-
 
 
 
@@ -41,36 +40,26 @@ const Chat = () => {
 
   return (
     <View style={globalStyles.container}>
+      
+      <Text style={globalStyles.boxThree}>Chat</Text>
+     
       <TextInput
-        style={styles.input}
+        style={globalStyles.Chatinput}
         value={name}
         onChangeText={text => setName(text)}
-        placeholder="Name"
+        placeholder="Hier können Sie tippen"
       />
-      <TextInput
-        style={styles.input}
-        value={password}
-        onChangeText={text => setMessage(text)}
-        placeholder="Message"
-      />
-   <Button 
-        
+
+      <Button 
+              style={globalStyles.ButtonStyle}
               mode="contained" 
-             title="senden"
+              title="senden"
               onPress={() => submitData()}>
-r
-             </Button>
+            r
+      </Button>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  input: {
-    
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-});
-export default Chat
+
+  export default Chat;
