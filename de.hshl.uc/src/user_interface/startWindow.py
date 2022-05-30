@@ -2,6 +2,7 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QPalette
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QSizePolicy
+from pyqtgraph.Qt import QtGui
 
 from user_interface.Tools.Cursor import Cursor
 
@@ -110,8 +111,20 @@ class startWindow(QWidget):
         self.inner_chat_label.setStyleSheet(
             "float: left; left: 20px; padding-right: opx; border-radius: 25px; background: #EBEFF0; color: black;")
         self.inner_chat_label.setMinimumWidth(800)
+
+        self.scrollArea = QtGui.QScrollArea()
+        self.scrollArea.setGeometry(QtCore.QRect(10, 10, 201, 121))
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setWidget(self.inner_chat_label)
+        self.outer_chat_v_label.setMaximumSize(400,500)
+        self.inner_vbox_label_container.setMaximumSize(600,600)
+        #self.mid_label_container.setStyleSheet("background: #EBEFF0;")
+        self.mid_label_container.setMaximumHeight(560)
+
+
+
         self.inner_chat_label.setFont(self.fontA)
         # Adds the inner box to the outer box
-        self.outer_chat_v_label.layout.addWidget(self.inner_chat_label)
+        self.outer_chat_v_label.layout.addWidget(self.scrollArea)
         # Adds the chat to the midd label container
         self.mid_label_container.layout.addWidget(self.outer_chat_v_label)

@@ -376,6 +376,7 @@ class StartWindow(QMainWindow):
                 # print(bcolors.FAIL, dicta.values(), bcolors.ENDC)
                 # print(bcolors.FAIL, ac[1], bcolors.ENDC)
                 self.startWindow.inner_chat_label.setText(str(self.globalChat))
+                self.startWindow.inner_chat_label.setText(str("\n".join(self.globalChat)))
 
         #self.camera.close_camera()
         #self.startWindow.inner_chat_label.setText("TEST!")
