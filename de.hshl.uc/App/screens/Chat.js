@@ -41,8 +41,8 @@ const Chat = () => {
 
   return (
     <KeyboardAwareScrollView>
-    <View style={globalStyles.container}>
-       <Text style={globalStyles.boxOne}>Chat</Text>
+    <View style={globalStyles.containerTwo}>
+       <Text style={globalStyles.boxFour}>Chat</Text>
        <View style={globalStyles.Chat}>
       
            <Text>1 2 3 Test</Text>
