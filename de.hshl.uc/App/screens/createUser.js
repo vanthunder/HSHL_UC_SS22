@@ -25,7 +25,7 @@ const CreateUser = () => {
 
         body:JSON.stringify({
            name,
-            password
+          
         })
     })
 
@@ -47,7 +47,6 @@ const CreateUser = () => {
         onChangeText={text => setName(text)}
         placeholder="Name"
       />
-    
       <TextInput
         style={styles.input}
         value={password}

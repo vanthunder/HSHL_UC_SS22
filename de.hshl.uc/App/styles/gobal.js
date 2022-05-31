@@ -40,18 +40,33 @@ export const globalStyles = StyleSheet.create({
         fontSize: 50,
       },
 
-      Chatinput :{
+      Chat :{
         height: 500,
         margin: 12,
         borderWidth: 5,
+        borderLeftWidth: 2,
+        borderRightWidth: 2,
         borderColor: '#F7AF9D',
         borderRadius: 25,
         padding: 10,
-        textAlign: 'center',
+        
       },
 
+     Chatinput :{
+       flexDirection: "row",
+       justifyContent: 'space-between',
+    paddingTop: 420,
+      },
+
+  
       ButtonStyle :{
-        backgroundColor: '#4B6E74',
+        backgroundColor: '#8BC1E9',
         borderRadius: 25,
+        alignItems: "center",
+        padding: 5,
+        marginBottom: 1,
+        width: 60,
+  
       }
+
   });

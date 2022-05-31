@@ -1,6 +1,7 @@
 import React,{useState} from "react";
-import { View, StyleSheet, TextInput, Button, Text, SafeAreaView } from "react-native";
+import { View, StyleSheet, TextInput, Button, Text, FlatList, TouchableOpacity} from "react-native";
 import { globalStyles } from "../styles/gobal";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 
@@ -9,7 +10,7 @@ const Chat = () => {
 
 
   const [name, setName] = useState();
-  const [password, setMessage] = useState();
+
 
 
 
@@ -39,25 +40,33 @@ const Chat = () => {
   
 
   return (
+    <KeyboardAwareScrollView>
     <View style={globalStyles.container}>
+       <Text style={globalStyles.boxOne}>Chat</Text>
+       <View style={globalStyles.Chat}>
       
-      <Text style={globalStyles.boxThree}>Chat</Text>
+           <Text>1 2 3 Test</Text>
+       
      
-      <TextInput
-        style={globalStyles.Chatinput}
-        value={name}
-        onChangeText={text => setName(text)}
-        placeholder="Hier können Sie tippen"
-      />
-
-      <Button 
-              style={globalStyles.ButtonStyle}
-              mode="contained" 
-              title="senden"
-              onPress={() => submitData()}>
-            r
-      </Button>
+        <View style={globalStyles.Chatinput}>
+         <TextInput
+          style={globalStyles.Message}
+          value={name}
+          onChangeText={text => setName(text)}
+          placeholder="Hier können Sie tippen"
+         />
+  
+         <TouchableOpacity
+           style={globalStyles.ButtonStyle}
+          onPress={() => submitData()}
+      >
+          <Text>Senden</Text>
+         </TouchableOpacity>
+       </View>
+      
+      </View>
     </View>
+    </KeyboardAwareScrollView>
   );
 };
 
