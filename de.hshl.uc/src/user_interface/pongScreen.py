@@ -17,7 +17,10 @@ class pongScreen(QWidget):
         width = 1280
         height = 750
         self.imageLabel = QLabel()
-        self.imageLabel.setMinimumSize(width, height)
+        self.setMinimumSize(width, height)
+        self.setMaximumSize(width, height)
+        #self.imageLabel.setMinimumSize(width, height)
+        #self.imageLabel.setMaximumSize(width, height)
         self.imageLabel.setAutoFillBackground(True)
         self.imageLabel.setAlignment(Qt.AlignCenter)
         self.imageLabel.setBackgroundRole(QPalette.Base)

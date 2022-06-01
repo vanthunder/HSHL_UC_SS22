@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButt
 from pyqtgraph.Qt import QtGui
 
 from user_interface.Tools.Cursor import Cursor
+from user_interface import global_specs
 
 
 class startWindow(QWidget):
@@ -17,6 +18,7 @@ class startWindow(QWidget):
         # Beamer in use:
         #         w: 1280
         #         h: 750
+
         width = 1280
         height = 750
         self.fontA = QFont("Josefin Sans Medium", 24)
@@ -26,6 +28,7 @@ class startWindow(QWidget):
         self.imageLabel = QLabel()
         self.imageLabel.setAutoFillBackground(True)
         self.setMinimumSize(width, height)
+        self.setMaximumSize(width, height)
         self.imageLabel.setAlignment(Qt.AlignCenter)
         self.imageLabel.setBackgroundRole(QPalette.Base)
         self.imageLabel.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)

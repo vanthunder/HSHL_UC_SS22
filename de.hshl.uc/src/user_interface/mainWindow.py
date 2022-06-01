@@ -89,7 +89,7 @@ class VideoThread(QThread):
                 self.change_ab_signal.emit(1)
                 # init Hand detector
                 # hd.findHands(img)
-                img = cv2.resize(img, (1920, 1080), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
+                img = cv2.resize(img, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
                 img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
                 lmList = self.hand_detector.handlist
                 #fps = self.camera.cap.get(cv2.CAP_PROP_FPS)
@@ -138,6 +138,8 @@ class StartWindow(QMainWindow):
 
     def __init__(self, camera=None, hand_detector=None, local_cL=None):
         super().__init__()
+        self.width = 1280
+        self.height = 750
         self.window_title = 'start'
         self.fontA = QFont("Josefin Sans Medium", 24)
         self.fontB = QFont("Josefin Sans Medium", 100)
@@ -148,10 +150,11 @@ class StartWindow(QMainWindow):
         self.camera = camera
         self.hand_detector = hand_detector
         self.local_cL = local_cL
-        self.disply_width = 1920
-        self.display_height = 1080
+        self.display_width = self.width
+        self.display_height = self.height
         self.setWindowTitle('Projekt: Ubi')
-        self.setMaximumSize(1920, 1080)
+        self.setMinimumSize(self.width, self.height)
+        self.setMaximumSize(self.width, self.height)
         # Create Video Thread
         self.thread = BackgroundFeed(self.camera, self.hand_detector)
         # Update Label
@@ -467,7 +470,7 @@ class BackgroundFeed(QThread):
                 self.change_ab_signal.emit(self.client.TempChatList)
                 # init Hand detector
                 # hd.findHands(img)
-                img = cv2.resize(img, (1920, 1080), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
+                img = cv2.resize(img, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
                 img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
                 lmList = self.hand_detector.handlist
                 # print(lmList)
