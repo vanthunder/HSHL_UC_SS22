@@ -88,12 +88,14 @@ class startWindow(QWidget):
         self.button_Opinion.setMinimumSize(100, 250)
         self.button_Opinion.setMaximumSize(400, 250)
         self.button_Opinion.setFont(self.fontA)
-        self.button_Play = QPushButton('Spielesammlung', self.inner_vbox_label_container)
+        #self.button_Play = QPushButton('Spielesammlung', self.inner_vbox_label_container)
+        self.button_Play = QLabel()
         self.button_Play.setStyleSheet(
             "margin-left: 20px -40px; background-color: #4B6E74; border-style: thin; border-color: black; border-width: 5px; border-radius: 24px;")
         self.button_Play.setMinimumSize(100, 250)
         self.button_Play.setMaximumSize(400, 250)
         self.button_Play.setFont(self.fontA)
+        # Add the two "buttons"
         self.inner_vbox_label_container.layout.addWidget(self.button_Opinion)
         self.inner_vbox_label_container.layout.addWidget(self.button_Play)
         # Adds the inner box to the outer box

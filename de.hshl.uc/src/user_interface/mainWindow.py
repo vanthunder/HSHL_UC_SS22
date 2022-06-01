@@ -209,7 +209,7 @@ class StartWindow(QMainWindow):
         self.setCentralWidget(self.central_widget)
         # Connects the button actions
         self.pongWindow.button_movie.clicked.connect(self.start_movie)
-        self.startWindow.button_Play.clicked.connect(self.start_Game)
+        # self.startWindow.button_Play.clicked.connect(self.start_Game)
 
     def start_Game(self):
         print("Test")
@@ -251,6 +251,10 @@ class StartWindow(QMainWindow):
     def update_cursor(self, x, y):
         print(x, y)
         self.startWindow.cursor.move(x, y)
+        if self.startWindow.cursor.geometry().intersects(self.startWindow.mid_label_container.geometry()):
+            # TODO: - Add counter
+            #       - Change btn color
+            self.start_Game()
 
     def updatePosition(self, c):
         self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 200, 10, 400))

@@ -55,7 +55,8 @@ class local_client:
                 # Receive Message From Server
                 # If 'NICK' Send Nickname
                 print('Vor Server Receive')
-                message = self.client.recv(1048576)
+                message = self.client.recv(102048)
+                #message = self.client.recv(1048576)
                 print('Vor Message decode')
                 message = pickle.loads(message)
                 print(message)
