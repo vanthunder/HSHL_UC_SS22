@@ -89,7 +89,12 @@ class startWindow(QWidget):
         self.button_Opinion.setMaximumSize(400, 250)
         self.button_Opinion.setFont(self.fontA)
         #self.button_Play = QPushButton('Spielesammlung', self.inner_vbox_label_container)
+        self.test_Label = QLabel()
+
         self.button_Play = QLabel()
+        self.button_Play.layout = QHBoxLayout(self.button_Play)
+        self.test_Label.setStyleSheet(
+            "background-color: #4B6E74;")
         self.button_Play.setStyleSheet(
             "margin-left: 20px -40px; background-color: #4B6E74; border-style: thin; border-color: black; border-width: 5px; border-radius: 24px;")
         self.button_Play.setMinimumSize(100, 250)
@@ -98,6 +103,7 @@ class startWindow(QWidget):
         # Add the two "buttons"
         self.inner_vbox_label_container.layout.addWidget(self.button_Opinion)
         self.inner_vbox_label_container.layout.addWidget(self.button_Play)
+        self.inner_vbox_label_container.layout.addWidget(self.test_Label)
         # Adds the inner box to the outer box
         self.mid_label_container.layout.addWidget(self.inner_vbox_label_container)
         # Chat Container

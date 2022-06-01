@@ -251,10 +251,12 @@ class StartWindow(QMainWindow):
     def update_cursor(self, x, y):
         print(x, y)
         self.startWindow.cursor.move(x, y)
-        if self.startWindow.cursor.geometry().intersects(self.startWindow.mid_label_container.geometry()):
+        if self.startWindow.cursor.geometry().intersected(self.startWindow.button_Play.geometry()):
             # TODO: - Add counter
             #       - Change btn color
             self.start_Game()
+            print()
+
 
     def updatePosition(self, c):
         self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 200, 10, 400))
