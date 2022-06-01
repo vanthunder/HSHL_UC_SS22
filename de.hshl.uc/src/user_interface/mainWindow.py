@@ -155,7 +155,7 @@ class StartWindow(QMainWindow):
         self.setWindowTitle('Projekt: Ubi')
         self.setMinimumSize(self.width, self.height)
         self.setMaximumSize(self.width, self.height)
-        self.loading = QMovie('loading-circle.gif')
+        self.loading = QMovie('Tools/loading-circle.gif')
         # Create Video Thread
         self.thread = BackgroundFeed(self.camera, self.hand_detector)
         # Update Label
@@ -190,6 +190,7 @@ class StartWindow(QMainWindow):
         self.layout_for_wids.addWidget(self.pongWindow)
 
         # Debug
+        self.startWindow.cursor.start_giph()
 
         # Adds the eleemnets to the main viewport
         self.startWindow.layout = QVBoxLayout(self.startWindow)
@@ -254,14 +255,16 @@ class StartWindow(QMainWindow):
 
     def update_cursor(self, x, y):
         print(x, y)
+
         self.startWindow.cursor.move(x, y)
         if self.startWindow.cursor.geometry().intersected(self.startWindow.button_Play.geometry()):
             self.startWindow.cursor.setStyleSheet('background-color: orange')
             # TODO: - Add counter
             self.start_Game()
             print()
-        else:
-            self.startWindow.cursor.setStyleSheet('background-color: yellow')
+
+        #else:
+        #    self.startWindow.cursor.setStyleSheet('background-color: yellow')
 
     def updatePosition(self, c):
         self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 200, 10, 400))

@@ -11,7 +11,7 @@ from recognition.hand_detector import hand_detector
 video = 'hands.mp4'
 handDetector = hand_detector()
 
-camera = Camera(0)
+camera = Camera(video)
 #width = camera.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
 #height = camera.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
 #camera.cap.set(3, 1920)
