@@ -27,6 +27,7 @@ class Cursor(QLabel):
 
 
 
+
     def setPosition(self, x, y):
         self.setGeometry(self.width, self.height, x, y)
 

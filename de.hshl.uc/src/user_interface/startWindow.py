@@ -21,9 +21,9 @@ class startWindow(QWidget):
 
         width = 1280
         height = 750
-        self.fontA = QFont("Josefin Sans Medium", 24)
-        self.fontB = QFont("Josefin Sans Medium", 100)
-        self.fontC = QFont("Josefin Sans Medium", 40)
+        self.fontA = QFont("Josefin Sans Medium", 14)
+        self.fontB = QFont("Josefin Sans Medium", 40)
+        self.fontC = QFont("Josefin Sans Medium", 20)
         # Adds an image lable to the background
         self.imageLabel = QLabel()
         self.imageLabel.setAutoFillBackground(True)
@@ -80,27 +80,30 @@ class startWindow(QWidget):
         # Hbox
         self.mid_label_container = QLabel()
         self.mid_label_container.layout = QHBoxLayout(self.mid_label_container)
+        self.mid_label_container.setMaximumHeight(100)
         # inner vbox
         self.inner_vbox_label_container = QLabel()
+        self.inner_vbox_label_container.setMaximumSize(200, 200)
         self.inner_vbox_label_container.layout = QVBoxLayout(self.inner_vbox_label_container)
         self.inner_vbox_label_container.setAlignment(QtCore.Qt.AlignCenter)
         # Adds Buttons to the inner box
         self.button_Opinion = QPushButton('Meinungsumfrage', self.inner_vbox_label_container)
         self.button_Opinion.setStyleSheet(
             "margin-left: 20px 40px; background-color: #B28BBC; border-style: thin; border-color: black; border-width: 5px; border-radius: 24px;")
-        self.button_Opinion.setMinimumSize(100, 250)
-        self.button_Opinion.setMaximumSize(400, 250)
+        self.button_Opinion.setMinimumSize(200, 200)
+        self.button_Opinion.setMaximumSize(200, 200)
         self.button_Opinion.setFont(self.fontA)
         #self.button_Play = QPushButton('Spielesammlung', self.inner_vbox_label_container)
         self.button_Play = QLabel()
         self.button_Play.layout = QHBoxLayout(self.button_Play)
         self.button_Play.setStyleSheet(
             "margin-left: 20px -40px; background-color: #4B6E74; border: 1px solid black; border-radius: 24px;")
-        self.button_Play.setMinimumSize(100, 250)
-        self.button_Play.setMaximumSize(400, 250)
+        self.button_Play.setMinimumSize(250, 150)
+        self.button_Play.setMaximumSize(250, 150)
         self.button_Play.setFont(self.fontA)
         # Add the two "buttons"
         self.inner_vbox_label_container.layout.addWidget(self.button_Opinion)
+        self.inner_vbox_label_container.setStyleSheet('background-color: blue')
         self.inner_vbox_label_container.layout.addWidget(self.button_Play)
         # Adds the inner box to the outer box
         self.mid_label_container.layout.addWidget(self.inner_vbox_label_container)
@@ -119,13 +122,13 @@ class startWindow(QWidget):
         self.inner_chat_label.setMinimumWidth(800)
 
         self.scrollArea = QtGui.QScrollArea()
-        self.scrollArea.setGeometry(QtCore.QRect(10, 10, 201, 121))
+        self.scrollArea.setGeometry(QtCore.QRect(10, 10, 100, 100))
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setWidget(self.inner_chat_label)
-        self.outer_chat_v_label.setMaximumSize(400,500)
-        self.inner_vbox_label_container.setMaximumSize(600,600)
+        self.outer_chat_v_label.setMaximumSize(300,400)
+        self.inner_vbox_label_container.setMaximumSize(300,600)
         #self.mid_label_container.setStyleSheet("background: #EBEFF0;")
-        self.mid_label_container.setMaximumHeight(560)
+        self.mid_label_container.setMaximumHeight(400)
 
 
 

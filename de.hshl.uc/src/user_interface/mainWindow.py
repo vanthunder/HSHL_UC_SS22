@@ -5,7 +5,7 @@ import numpy as np
 import qimage2ndarray as qimage2ndarray
 from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QRect, QMutex
 from PyQt5.QtGui import QPixmap, QFont, QMovie
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QApplication
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QApplication, QLabel, QGridLayout
 from PyQt5.QtWidgets import QMessageBox, QStackedLayout, \
     QHBoxLayout
 
@@ -193,21 +193,40 @@ class StartWindow(QMainWindow):
         # Debug
 
         # Adds the eleemnets to the main viewport
+        grid_layout = QGridLayout()
+        self.mid_label = QLabel()
+        self.mid_label.setText("TRUE")
         self.startWindow.layout = QVBoxLayout(self.startWindow)
         self.startWindow.layout.addWidget(self.startWindow.imageLabel)
-        self.startWindow.imageLabel.layout = QVBoxLayout(self.startWindow.imageLabel)
-        self.startWindow.imageLabel.layout.addWidget(self.startWindow.info_Label_Container)
+
+        self.startWindow.imageLabel.setLayout(grid_layout)
+
+
+        #self.startWindow.imageLabel.layout.addWidget(self.startWindow.info_Label_Container)
+
         self.startWindow.info_Label_Container.layout = QHBoxLayout(self.startWindow.info_Label_Container)
         self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.date_label)
         self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.clock_temp_vbox)
         self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.fact_label)
-        self.startWindow.imageLabel.layout.addWidget(self.startWindow.mid_label_container)
-        self.startWindow.imageLabel.layout.addWidget(self.startWindow.cursor)
+        grid_layout.addWidget(self.startWindow.info_Label_Container, 0, 0, 1, 3)
+
+        #self.startWindow.imageLabel.layout.addWidget(self.startWindow.mid_label_container)
+        #self.startWindow.imageLabel.layout.addWidget(self.startWindow.button_Play)
+
+        grid_layout.addWidget(self.startWindow.button_Play, 1, 0, -1, 1)
+        grid_layout.addWidget(self.startWindow.outer_chat_v_label, 1, 2, -1, 1)
+        grid_layout.addWidget(self.startWindow.cursor, 1, 0)
+
+        #self.startWindow.imageLabel.layout.addWidget(self.startWindow.cursor)
+
+        #self.startWindow.imageLabel.layout.addWidget(self.mid_label)
+
         self.pongWindow.layout = QVBoxLayout(self.pongWindow)
         self.pongWindow.layout.addWidget(self.pongWindow.imageLabel)
         self.pongWindow.layout.addWidget(self.pongWindow.button_movie)
         #self.pongWindow.setMinimumSize(1920, 1080)
         self.central_widget.setLayout(self.layout_for_wids)
+
 
         # self.layout = QVBoxLayout(self.central_widget)
         # self.layout.addWidget(self.imageLabel)
@@ -257,9 +276,12 @@ class StartWindow(QMainWindow):
         print(x, y)
 
         self.startWindow.cursor.move(x, y)
+        #self.startWindow.button_Play.move(x, y)
         if self.startWindow.cursor.geometry().intersected(self.startWindow.button_Play.geometry()):
             # TODO: - Add counter
             self.counter += 1
+            self.startWindow.cursor.setText(str(self.startWindow.cursor.geometry().getCoords()))
+            self.startWindow.button_Play.setText(str(self.startWindow.button_Play.geometry().getCoords()))
             print("counter:", self.counter)
             self.startWindow.cursor.load(self.counter)
             if self.counter > 100:
@@ -268,7 +290,7 @@ class StartWindow(QMainWindow):
         else:
             self.startWindow.cursor.reset_load()
             self.counter = 0;
-            self.start_Game()
+            #self.start_Game()
             print()
 
         #else:
