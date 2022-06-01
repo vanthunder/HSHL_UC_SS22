@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 import qimage2ndarray as qimage2ndarray
 from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QRect, QMutex
-from PyQt5.QtGui import QPixmap, QFont
+from PyQt5.QtGui import QPixmap, QFont, QMovie
 from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QApplication
 from PyQt5.QtWidgets import QMessageBox, QStackedLayout, \
     QHBoxLayout
@@ -155,6 +155,7 @@ class StartWindow(QMainWindow):
         self.setWindowTitle('Projekt: Ubi')
         self.setMinimumSize(self.width, self.height)
         self.setMaximumSize(self.width, self.height)
+        self.loading = QMovie('loading-circle.gif')
         # Create Video Thread
         self.thread = BackgroundFeed(self.camera, self.hand_detector)
         # Update Label
@@ -255,11 +256,12 @@ class StartWindow(QMainWindow):
         print(x, y)
         self.startWindow.cursor.move(x, y)
         if self.startWindow.cursor.geometry().intersected(self.startWindow.button_Play.geometry()):
+            self.startWindow.cursor.setStyleSheet('background-color: orange')
             # TODO: - Add counter
-            #       - Change btn color
             self.start_Game()
             print()
-
+        else:
+            self.startWindow.cursor.setStyleSheet('background-color: yellow')
 
     def updatePosition(self, c):
         self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 200, 10, 400))

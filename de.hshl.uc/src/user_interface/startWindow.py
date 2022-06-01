@@ -27,7 +27,7 @@ class startWindow(QWidget):
         # Adds an image lable to the background
         self.imageLabel = QLabel()
         self.imageLabel.setAutoFillBackground(True)
-        self.setMinimumSize(width, height)
+        self.setMaximumSize(width, height)
         self.setMaximumSize(width, height)
         self.imageLabel.setAlignment(Qt.AlignCenter)
         self.imageLabel.setBackgroundRole(QPalette.Base)

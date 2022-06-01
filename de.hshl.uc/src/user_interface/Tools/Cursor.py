@@ -1,3 +1,4 @@
+from PyQt5.QtGui import QMovie
 from PyQt5.QtWidgets import QLabel
 
 
@@ -9,7 +10,6 @@ class Cursor(QLabel):
         self.setMinimumSize(self.width, self.height)
         self.setMaximumSize(self.width, self.height)
         self.setStyleSheet("background: yellow")
-        self.geometry().intersects(self.rect())
 
     def setPosition(self, x, y):
         self.setGeometry(self.width, self.height, x, y)
