@@ -156,7 +156,7 @@ class StartWindow(QMainWindow):
         self.setWindowTitle('Projekt: Ubi')
         self.setMinimumSize(self.width, self.height)
         self.setMaximumSize(self.width, self.height)
-        self.loading = QMovie('loading-circle.gif')
+        self.loading = QMovie('Tools/loading-circle.gif')
         # Create Video Thread
         self.thread = BackgroundFeed(self.camera, self.hand_detector)
         # Update Label
@@ -255,6 +255,7 @@ class StartWindow(QMainWindow):
 
     def update_cursor(self, x, y):
         print(x, y)
+
         self.startWindow.cursor.move(x, y)
         if self.startWindow.cursor.geometry().intersected(self.startWindow.button_Play.geometry()):
             # TODO: - Add counter
@@ -267,6 +268,11 @@ class StartWindow(QMainWindow):
         else:
             self.startWindow.cursor.reset_load()
             self.counter = 0;
+            self.start_Game()
+            print()
+
+        #else:
+        #    self.startWindow.cursor.setStyleSheet('background-color: yellow')
 
     def updatePosition(self, c):
         self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 200, 10, 400))
