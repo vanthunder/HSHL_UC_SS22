@@ -204,7 +204,7 @@ class StartWindow(QMainWindow):
         self.pongWindow.layout = QVBoxLayout(self.pongWindow)
         self.pongWindow.layout.addWidget(self.pongWindow.imageLabel)
         self.pongWindow.layout.addWidget(self.pongWindow.button_movie)
-        self.pongWindow.setMinimumSize(1920, 1080)
+        #self.pongWindow.setMinimumSize(1920, 1080)
         self.central_widget.setLayout(self.layout_for_wids)
 
         # self.layout = QVBoxLayout(self.central_widget)
