@@ -147,6 +147,7 @@ class StartWindow(QMainWindow):
         self.bX = 0
         self.bY = 0
         self.positive = True
+        self.counter = 0
         self.camera = camera
         self.hand_detector = hand_detector
         self.local_cL = local_cL
@@ -256,12 +257,16 @@ class StartWindow(QMainWindow):
         print(x, y)
         self.startWindow.cursor.move(x, y)
         if self.startWindow.cursor.geometry().intersected(self.startWindow.button_Play.geometry()):
-            self.startWindow.cursor.setStyleSheet('background-color: orange')
             # TODO: - Add counter
-            self.start_Game()
-            print()
+            self.counter += 1
+            print("counter:", self.counter)
+            self.startWindow.cursor.load(self.counter)
+            if self.counter > 100:
+                self.start_Game()
+                self.counter = 0
         else:
-            self.startWindow.cursor.setStyleSheet('background-color: yellow')
+            self.startWindow.cursor.reset_load()
+            self.counter = 0;
 
     def updatePosition(self, c):
         self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 200, 10, 400))

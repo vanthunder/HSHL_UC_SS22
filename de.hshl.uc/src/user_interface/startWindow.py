@@ -99,7 +99,7 @@ class startWindow(QWidget):
         self.test_Label.setStyleSheet(
             "background-color: #4B6E74;")
         self.button_Play.setStyleSheet(
-            "margin-left: 20px -40px; background-color: #4B6E74; border-style: thin; border-color: black; border-width: 5px; border-radius: 24px;")
+            "margin-left: 20px -40px; background-color: #4B6E74; border: 1px solid black; border-radius: 24px;")
         self.button_Play.setMinimumSize(100, 250)
         self.button_Play.setMaximumSize(400, 250)
         self.button_Play.setFont(self.fontA)
