@@ -310,7 +310,7 @@ class StartWindow(QMainWindow):
 
     def updatePositionPlayer2(self, y):
         print(y, " TEST")
-        self.pongWindow.imageLabel2.setGeometry(QRect(1400, y - 100, 10, 200))
+        self.pongWindow.imageLabel2.setGeometry(QRect(1240, y - 100, 10, 200))
 
     def updateBall(self):
         print('Die positive Variable: ', self.positive)
