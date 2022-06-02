@@ -1,7 +1,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt, QRect
 from PyQt5.QtGui import QPalette, QPixmap
-from PyQt5.QtWidgets import QWidget, QLabel, QSizePolicy, QVBoxLayout, QPushButton
+from PyQt5.QtWidgets import QWidget, QLabel, QSizePolicy, QVBoxLayout, QPushButton, QGridLayout, QHBoxLayout
 
 
 class pongScreen(QWidget):
@@ -32,7 +32,8 @@ class pongScreen(QWidget):
         self.pad02 = QLabel
 
         # self.central_widget.a
-        self.layout = QVBoxLayout(self.imageLabel)
+        self.layout = QHBoxLayout(self.imageLabel)
+        #self.imageLabel.layout = QHBoxLayout(self.imageLabel)
         # Player 1 - Imagelabel 1 = paddle1
         self.imageLabel1 = QLabel()
         self.imageLabel1.setMaximumSize(10, 400)
@@ -63,8 +64,8 @@ class pongScreen(QWidget):
         # Adds paddles to the main image label
         #        self.imageLabel.setPixmap(self.pixmap_item)
         self.imageLabel.layout().addWidget(self.imageLabel1)
-        self.imageLabel.layout().addWidget(self.imageLabel2)
         self.imageLabel.layout().addWidget(self.imageLabel3)
+        self.imageLabel.layout().addWidget(self.imageLabel2)
         # self.imageLabel.layout().addWidget(self.imageLabelRect)
         # self.imageLabel.setParent(self.pad)
 

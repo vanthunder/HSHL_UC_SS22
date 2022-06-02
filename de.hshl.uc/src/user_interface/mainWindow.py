@@ -10,6 +10,8 @@ from PyQt5.QtWidgets import QMessageBox, QStackedLayout, \
     QHBoxLayout
 
 # from Socket.local.localClient import local_client
+from pyqtgraph import Qt
+
 from Socket.online.onlineClient import local_client
 from Socket.online.Chat.Chat_Client_V01 import chat_client
 from model.camera import Camera
@@ -235,6 +237,9 @@ class StartWindow(QMainWindow):
         self.pongWindow.button_movie.clicked.connect(self.start_movie)
         # self.startWindow.button_Play.clicked.connect(self.start_Game)
         self.pongWindow.imageLabel1.setGeometry(QRect(10, 200, 10, 400))
+        self.pongWindow.imageLabel2.setFixedWidth(10)
+        self.pongWindow.imageLabel2.move(400, 222)
+        #self.pongWindow.imageLabel2.setAlignment(Qt.AlignCenter)
 
 
     def start_Game(self):
