@@ -63,15 +63,15 @@ class local_client:
                 # To-Do: Filter Mongo db message!
                 #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 print('Vor Message CHAT')
-                if message[2].__getitem__(1) == "chat":
-                    print(bcolors.WARNING, "Chat_____: ", bcolors.ENDC)
-                    self.TempChatList = message
-                    print(bcolors.OKBLUE, "Chat: ", self.TempChatList,bcolors.ENDC)
-                    print(self.TempChatList)
-                else:
-                    print('Vor Message decode1')
-                    #self.TempTupel = message
-
+                #if message[2].__getitem__(1) == "chat":
+                #    print(bcolors.WARNING, "Chat_____: ", bcolors.ENDC)
+                #    self.TempChatList = message
+                #    print(bcolors.OKBLUE, "Chat: ", self.TempChatList,bcolors.ENDC)
+                #    print(self.TempChatList)
+                #else:
+                #    print('Vor Message decode1')
+                #    #
+                self.TempTupel = message
 
                 #packets = message
                 print('Vor Message decode2')

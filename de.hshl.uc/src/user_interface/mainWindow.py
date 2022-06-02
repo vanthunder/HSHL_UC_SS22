@@ -10,6 +10,8 @@ from PyQt5.QtWidgets import QMessageBox, QStackedLayout, \
     QHBoxLayout
 
 # from Socket.local.localClient import local_client
+from pyqtgraph import Qt
+
 from Socket.online.onlineClient import local_client
 from Socket.online.Chat.Chat_Client_V01 import chat_client
 from model.camera import Camera
@@ -41,10 +43,9 @@ class VideoThread(QThread):
     update_label_signal = pyqtSignal(int)
     update_ball_signal = pyqtSignal()
     update_player_2 = pyqtSignal(int)
-    #starte_receive_loop = pyqtSignal(local_client)
-    #update_chat_signal = pyqtSignal()
+    starte_receive_loop = pyqtSignal(local_client)
     counter = int(1)
-    #client = local_client()
+    client = local_client()
 
     def __init__(self, camera, hand_detector):
         super(VideoThread, self).__init__()
@@ -83,6 +84,7 @@ class VideoThread(QThread):
         # self.starte_receive_loop.emit(self.client)
         # capture from web cam
         #self.update_chat_signal.emit()
+
 
         while True:
             success, img = self.camera.cap.read()
@@ -236,6 +238,11 @@ class StartWindow(QMainWindow):
         # Connects the button actions
         self.pongWindow.button_movie.clicked.connect(self.start_movie)
         # self.startWindow.button_Play.clicked.connect(self.start_Game)
+        #self.pongWindow.imageLabel1.setGeometry(QRect(10, 200, 10, 400))
+        #self.pongWindow.imageLabel2.setFixedWidth(10)
+        #self.pongWindow.imageLabel2.move(400, 222)
+        #self.pongWindow.imageLabel2.setAlignment(Qt.AlignCenter)
+
 
     def start_Game(self):
         print("Test")
@@ -280,7 +287,6 @@ class StartWindow(QMainWindow):
         self.startWindow.cursor.move(x, y)
         #self.startWindow.button_Play.move(x, y)
         if self.startWindow.cursor.geometry().intersected(self.startWindow.button_Play.geometry()):
-            # TODO: - Add counter
             self.counter += 1
             self.startWindow.cursor.setText(str(self.startWindow.cursor.geometry().getCoords()))
             self.startWindow.button_Play.setText(str(self.startWindow.button_Play.geometry().getCoords()))
@@ -299,13 +305,14 @@ class StartWindow(QMainWindow):
         #    self.startWindow.cursor.setStyleSheet('background-color: yellow')
 
     def updatePosition(self, c):
-        self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 200, 10, 400))
+        self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 100, 10, 200))
+        #self.pongWindow.imageLabel2.setGeometry(QRect(1240, 200, 10, 200))
         # self.imageLabel2.setGeometry(QRect(1400,c-200,10,400))
         print("Klick")
 
     def updatePositionPlayer2(self, y):
         print(y, " TEST")
-        self.pongWindow.imageLabel2.setGeometry(QRect(1400, y - 200, 10, 400))
+        self.pongWindow.imageLabel2.setGeometry(QRect(1240, y - 100, 10, 200))
 
     def updateBall(self):
         print('Die positive Variable: ', self.positive)
@@ -373,6 +380,8 @@ class StartWindow(QMainWindow):
 
     def update_chat_debug(self, ab):
         # uses dict
+        self.vbar = self.startWindow.scrollArea.verticalScrollBar()
+        self.vbar.setValue(self.vbar.maximum())
         #Debug
         atuple = ('Left', 0)
         if ab[0] == atuple:
@@ -431,7 +440,8 @@ class StartWindow(QMainWindow):
 
 
     def start_movie(self):
-
+        self.pongWindow.button_movie.setVisible(False)
+        #self.pongWindow.imageLabel2.setGeometry(QRect(1240, 100, 10, 200))
         # create the video capture thread
         self.thread = VideoThread(self.camera, self.hand_detector)
         # self.thread.client.client.close()
@@ -500,6 +510,7 @@ class BackgroundFeed(QThread):
         self.client.player = Player
         self.client.sendcoordinate(Player, 100)
         rThread = threading.Thread(target=self.start_receive, args=())
+
 
         while True:
             self.client.sendcoordinate(Player, 100)
