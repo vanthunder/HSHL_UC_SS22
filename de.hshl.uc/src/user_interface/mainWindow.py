@@ -278,7 +278,6 @@ class StartWindow(QMainWindow):
         self.startWindow.cursor.move(x, y)
         #self.startWindow.button_Play.move(x, y)
         if self.startWindow.cursor.geometry().intersected(self.startWindow.button_Play.geometry()):
-            # TODO: - Add counter
             self.counter += 1
             self.startWindow.cursor.setText(str(self.startWindow.cursor.geometry().getCoords()))
             self.startWindow.button_Play.setText(str(self.startWindow.button_Play.geometry().getCoords()))
@@ -371,6 +370,8 @@ class StartWindow(QMainWindow):
 
     def update_chat_debug(self, ab):
         # uses dict
+        self.vbar = self.startWindow.scrollArea.verticalScrollBar()
+        self.vbar.setValue(self.vbar.maximum())
         #Debug
         atuple = ('Left', 0)
         if ab[0] == atuple:
