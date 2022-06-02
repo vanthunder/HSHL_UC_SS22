@@ -1,8 +1,14 @@
+import requests
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QPalette
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QSizePolicy
 from pyqtgraph.Qt import QtGui
+from datetime import datetime
+import pytz
+import json
+from requests import request
+
 
 from user_interface.Tools.Cursor import Cursor
 from user_interface import global_specs
@@ -48,20 +54,60 @@ class startWindow(QWidget):
         self.clock_temp_vbox = QLabel()
         self.clock_temp_vbox.layout = QVBoxLayout(self.clock_temp_vbox)
 
+
+
+        # Get Date and Time
+        timezone = pytz.timezone('Europe/Berlin')
+        now = datetime.now(timezone)
+        now.astimezone()
+        time = now.strftime("%H:%M")
+        get_date = now.date().strftime("%A")
+
+        match str(get_date):
+            case "Monday":
+                get_date = "Montag"
+            case "Tuesday":
+                get_date = "Dienstag"
+            case "Wednesday":
+                get_date = "Mittwoch"
+            case "Thursday":
+                get_date = "Donnerstag"
+            case "Friday":
+                get_date = "Freitag"
+            case "Saturday":
+                get_date = "Samstag"
+            case "Sunday":
+                get_date = "Sonntag"
+
         # Date Label
         self.date_label = QLabel()
-        self.date_label.setText("Montag")
+        self.date_label.setText(str(get_date))
         self.date_label.setFont(self.fontA)
         # Clock
         self.clock_label = QLabel()
-        self.clock_label.setText("20:00")
+        self.clock_label.setText(str(time))
         self.clock_label.setAlignment(QtCore.Qt.AlignCenter)
         # self.clock_label.setMinimumWidth(400)
         self.clock_label.setFont(self.fontB)
         self.clock_label.setStyleSheet("margin-bottom: 0px; color: white")
+
+        api_key = "34b02d4ce2b0b1319d917fa7d34a2f92"
+        base_url = "https://api.openweathermap.org/data/2.5/weather?q="
+        city_name = "lippstadt"
+
+        complete_url = base_url + city_name + "&appid=" + api_key
+
+        response = requests.get(complete_url)
+
+        data = response.json()
+
+        print("hier muss es hin: " + str(int(data["main"]["temp"] - (273.15))))
+
+
+
         # Temp
         self.temp_label = QLabel()
-        self.temp_label.setText("24°C")
+        self.temp_label.setText(str(int(data["main"]["temp"] - (273.15))) + "°C")
         self.temp_label.setAlignment(QtCore.Qt.AlignCenter)
         self.temp_label.setFont(self.fontC)
         self.temp_label.setStyleSheet("margin-top: 0px; color: white")
