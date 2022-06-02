@@ -1,5 +1,5 @@
 from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QRect
 from PyQt5.QtGui import QPalette, QPixmap
 from PyQt5.QtWidgets import QWidget, QLabel, QSizePolicy, QVBoxLayout, QPushButton
 
@@ -35,11 +35,13 @@ class pongScreen(QWidget):
         self.layout = QVBoxLayout(self.imageLabel)
         # Player 1 - Imagelabel 1 = paddle1
         self.imageLabel1 = QLabel()
-        self.imageLabel1.setMaximumSize(100, 400)
+        self.imageLabel1.setMaximumSize(10, 400)
+        #self.imageLabel1.setGeometry(QRect(10, 200, 10, 400))
         self.imageLabel1.setAutoFillBackground(True)
         # Player 2 - Imagelabel 2 = paddle2
         self.imageLabel2 = QLabel()
-        self.imageLabel2.setMaximumSize(100, 400)
+        self.imageLabel2.setMaximumSize(10, 400)
+        #self.imageLabel2.setGeometry(QRect(1270, 200, 10, 400))
         self.imageLabel2.setAutoFillBackground(True)
         # Ball - Imagelabel 3 = Ball
         self.imageLabel3 = QLabel('round label')
