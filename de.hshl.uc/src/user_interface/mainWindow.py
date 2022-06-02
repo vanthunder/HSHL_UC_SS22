@@ -18,6 +18,8 @@ from recognition.hand_detector import hand_detector
 from user_interface.pongScreen import pongScreen
 from user_interface.startWindow import startWindow
 
+from recognition.body_detector import body_detector
+
 
 class bcolors:
     HEADER = '\033[95m'
@@ -470,6 +472,8 @@ class BackgroundFeed(QThread):
 
     client = chat_client()
 
+
+
     def start_receive(self):
         self.client.receive()
         print("THEADING!!!!!")
@@ -491,6 +495,7 @@ class BackgroundFeed(QThread):
         # self.starte_receive_loop.emit(self.client)
         # capture from web cam
         Player = 'Left'  # input('Player: ')
+        bodyDetector = body_detector()
 
         self.client.player = Player
         self.client.sendcoordinate(Player, 100)
@@ -519,7 +524,8 @@ class BackgroundFeed(QThread):
                     self.change_cursor_position.emit(x, y)
                 # gd.print()
                 # cv2.imshow('Test', img)
-                self.change_pixmap_signal.emit(img_proc)
+                body_image_black = bodyDetector.findPose(img_proc)
+                self.change_pixmap_signal.emit(body_image_black)
 
 
 if __name__ == '__main__':

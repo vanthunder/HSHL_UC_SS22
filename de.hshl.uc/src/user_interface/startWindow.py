@@ -101,6 +101,7 @@ class startWindow(QWidget):
 
         data = response.json()
 
+        # -273.15 weil Kelvin zu Celsius
         print("hier muss es hin: " + str(int(data["main"]["temp"] - (273.15))))
 
 
