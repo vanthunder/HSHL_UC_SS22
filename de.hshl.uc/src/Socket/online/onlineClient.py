@@ -113,8 +113,14 @@ class local_client:
     # message = '{}: {}'.format(nickname, input(''))
     # print(message)
     # client.send(serial)
+    def sendReady(self, Player):
+        #Special number: 101100 defines Player is ready
+        readeyNumber = 101100
+        playerCoordinates = (Player, readeyNumber)
+        serialPC = pickle.dumps(playerCoordinates)
+        self.client.send(serialPC)
 
-    def sendcoordinate(self,Player ,yCoordiante):
+    def sendcoordinate(self, Player ,yCoordiante):
         print('Send: ', Player ,yCoordiante)
         self.Y = yCoordiante
         receive_thread = threading.Thread(target=self.receive, args=())

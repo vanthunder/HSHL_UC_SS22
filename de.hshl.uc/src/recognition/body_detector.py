@@ -2,6 +2,8 @@ import cv2
 import mediapipe as mp
 import numpy as np
 
+from recognition.hand_detector import hand_detector
+
 
 class body_detector():
 
@@ -21,15 +23,15 @@ class body_detector():
         self.mpPose = mp.solutions.pose
         self.pose = self.mpPose.Pose(self.mode, self.complex, self.smooth_landmarks, self.segmentation,
                                      self.smooth_segmentation, self.detectionCon, self.trackCon)
+        self.hd = hand_detector()
 
     def findPose(self, img, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.pose.process(imgRGB)
-
         width = 1280
         height = 750
-
         black_image = np.zeros((height, width, 3), np.uint8)
+        black_image= self.hd.findHandsAB(img, black_image)
 
         if self.results.pose_landmarks:
             if draw:

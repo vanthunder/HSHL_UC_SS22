@@ -1,7 +1,6 @@
 # Connection Data
 import pickle
 import socket
-import sys
 import threading
 
 from pymongo import collection
@@ -28,6 +27,7 @@ chat_Text = ("", "")
 clients = []
 nicknames = ['Server']
 Is_closed = 'False'
+
 
 def update_Chat():
     for x in collection.find():
@@ -63,11 +63,17 @@ def broadcast(message):
 # Handling Messages From Clients
 def handle(client):
     packets = []
+    playerLeft = False
+    playerRight = False
     while True:
         try:
             # Broadcasting Messages
             print(clients)
             message = client.recv(102048)
+            if playerLeft == True or playerRight == True:
+                abool = True
+                msg = pickle.dumps(abool)
+                broadcast(msg)
             update_Chat()
             received_tupel = pickle.loads(message)  ## Fehler Code
             print("Message: ", received_tupel)
@@ -102,7 +108,7 @@ def handle(client):
             clients.clear()
             client.close()
 
-            #To Do Close Thread
+            # To Do Close Thread
 
             # nickname = nicknames[index]
             # broadcast('{} left!'.format(nickname).encode('ascii'))
@@ -130,7 +136,7 @@ def receive():
         # Start Handling Thread For Client
         thread = threading.Thread(target=handle, args=(client,))
         thread.start()
-        #thread.join()
+        # thread.join()
 
 
 receive()

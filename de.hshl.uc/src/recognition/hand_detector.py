@@ -51,6 +51,20 @@ class hand_detector:
                     self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
         return img
 
+    def findHandsAB(self, img, img2, draw=True):
+        #print(img.dtype)
+        img = np.uint8(img)
+        imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        self.results = self.hands.process(imgRGB)
+        # print(self.results.multi_hand_landmarks)
+        # print(self.results.multi_hand_world_landmarks)
+
+        if self.results.multi_hand_landmarks:
+            for handLms in self.results.multi_hand_landmarks:
+                if draw:
+                    self.mpDraw.draw_landmarks(img2, handLms, self.mpHands.HAND_CONNECTIONS)
+        return img2
+
     def intersection(self, lmList, x, y, start_Point, end_Point):
         # X Range
         x_wert = False

@@ -91,11 +91,13 @@ class VideoThread(QThread):
             # img.flags.writeable = False
             if success:
                 self.change_ab_signal.emit(1)
+
                 # init Hand detector
                 # hd.findHands(img)
                 img = cv2.resize(img, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
                 img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
                 lmList = self.hand_detector.handlist
+
                 #fps = self.camera.cap.get(cv2.CAP_PROP_FPS)
                 #cv2.putText(img_proc, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
                 # print(lmList)
@@ -536,6 +538,8 @@ class BackgroundFeed(QThread):
                 # gd.print()
                 # cv2.imshow('Test', img)
                 body_image_black = bodyDetector.findPose(img_proc)
+                body_image_black = cv2.resize(body_image_black, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
+                #img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, body_image_black)
                 self.change_pixmap_signal.emit(body_image_black)
 
 
