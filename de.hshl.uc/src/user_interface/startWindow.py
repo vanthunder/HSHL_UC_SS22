@@ -143,7 +143,7 @@ class startWindow(QWidget):
         self.button_Play = QLabel()
         self.button_Play.layout = QHBoxLayout(self.button_Play)
         self.button_Play.setStyleSheet(
-            "margin-left: 20px -40px; background-color: #4B6E74; border: 1px solid black; border-radius: 24px;")
+            "margin-left: 20px -40px; background: #4B6E74; border: 1px solid black; border-radius: 24px;")
         self.button_Play.setMinimumSize(250, 150)
         self.button_Play.setMaximumSize(250, 150)
         self.button_Play.setFont(self.fontA)
@@ -167,10 +167,15 @@ class startWindow(QWidget):
             "float: left; left: 20px; padding-right: opx; border-radius: 25px; background: #EBEFF0; color: black;")
         self.inner_chat_label.setMinimumWidth(800)
 
+        # set the QScrollArea
         self.scrollArea = QtGui.QScrollArea()
         self.scrollArea.setGeometry(QtCore.QRect(10, 10, 100, 100))
         self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.scrollArea.setWidget(self.inner_chat_label)
+
+        # add the chat and the scroll area
         self.outer_chat_v_label.setMaximumSize(300,400)
         self.inner_vbox_label_container.setMaximumSize(300,600)
         #self.mid_label_container.setStyleSheet("background: #EBEFF0;")
