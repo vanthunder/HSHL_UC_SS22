@@ -36,12 +36,14 @@ class pongScreen(QWidget):
         #self.imageLabel.layout = QHBoxLayout(self.imageLabel)
         # Player 1 - Imagelabel 1 = paddle1
         self.imageLabel1 = QLabel()
-        self.imageLabel1.setMaximumSize(10, 400)
+        self.imageLabel1.setMinimumSize(10, 200)
+        self.imageLabel1.setMaximumSize(10, 200)
         #self.imageLabel1.setGeometry(QRect(10, 200, 10, 400))
         self.imageLabel1.setAutoFillBackground(True)
         # Player 2 - Imagelabel 2 = paddle2
         self.imageLabel2 = QLabel()
-        self.imageLabel2.setMaximumSize(10, 400)
+        self.imageLabel2.setMinimumSize(10, 200)
+        self.imageLabel2.setMaximumSize(10, 200)
         #self.imageLabel2.setGeometry(QRect(1270, 200, 10, 400))
         self.imageLabel2.setAutoFillBackground(True)
         # Ball - Imagelabel 3 = Ball
@@ -63,13 +65,15 @@ class pongScreen(QWidget):
 
         # Adds paddles to the main image label
         #        self.imageLabel.setPixmap(self.pixmap_item)
+        self.button_movie = QPushButton('Start Movie')
         self.imageLabel.layout().addWidget(self.imageLabel1)
         self.imageLabel.layout().addWidget(self.imageLabel3)
         self.imageLabel.layout().addWidget(self.imageLabel2)
+        #self.imageLabel.layout().addWidget(self.button_movie)
         # self.imageLabel.layout().addWidget(self.imageLabelRect)
         # self.imageLabel.setParent(self.pad)
 
         # self.setScene(self.scene)
-        self.button_movie = QPushButton('Start Movie')
+
         # self.pd = QGraphicsRectItem(1, 1, 20, 20, self.central_widget)
         # self.image_view = ImageView()

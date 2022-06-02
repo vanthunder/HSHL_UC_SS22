@@ -236,9 +236,9 @@ class StartWindow(QMainWindow):
         # Connects the button actions
         self.pongWindow.button_movie.clicked.connect(self.start_movie)
         # self.startWindow.button_Play.clicked.connect(self.start_Game)
-        self.pongWindow.imageLabel1.setGeometry(QRect(10, 200, 10, 400))
-        self.pongWindow.imageLabel2.setFixedWidth(10)
-        self.pongWindow.imageLabel2.move(400, 222)
+        #self.pongWindow.imageLabel1.setGeometry(QRect(10, 200, 10, 400))
+        #self.pongWindow.imageLabel2.setFixedWidth(10)
+        #self.pongWindow.imageLabel2.move(400, 222)
         #self.pongWindow.imageLabel2.setAlignment(Qt.AlignCenter)
 
 
@@ -303,14 +303,14 @@ class StartWindow(QMainWindow):
         #    self.startWindow.cursor.setStyleSheet('background-color: yellow')
 
     def updatePosition(self, c):
-        self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 200, 10, 200))
-        self.pongWindow.imageLabel2.setGeometry(QRect(1240, 200, 10, 200))
+        self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 100, 10, 200))
+        #self.pongWindow.imageLabel2.setGeometry(QRect(1240, 200, 10, 200))
         # self.imageLabel2.setGeometry(QRect(1400,c-200,10,400))
         print("Klick")
 
     def updatePositionPlayer2(self, y):
         print(y, " TEST")
-        self.pongWindow.imageLabel2.setGeometry(QRect(1400, y - 200, 10, 400))
+        self.pongWindow.imageLabel2.setGeometry(QRect(1400, y - 100, 10, 200))
 
     def updateBall(self):
         print('Die positive Variable: ', self.positive)
@@ -438,7 +438,8 @@ class StartWindow(QMainWindow):
 
 
     def start_movie(self):
-
+        self.pongWindow.button_movie.setVisible(False)
+        #self.pongWindow.imageLabel2.setGeometry(QRect(1240, 100, 10, 200))
         # create the video capture thread
         self.thread = VideoThread(self.camera, self.hand_detector)
         # self.thread.client.client.close()
