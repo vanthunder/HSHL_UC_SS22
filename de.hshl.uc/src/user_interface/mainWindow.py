@@ -39,10 +39,9 @@ class VideoThread(QThread):
     update_label_signal = pyqtSignal(int)
     update_ball_signal = pyqtSignal()
     update_player_2 = pyqtSignal(int)
-    #starte_receive_loop = pyqtSignal(local_client)
-    #update_chat_signal = pyqtSignal()
+    starte_receive_loop = pyqtSignal(local_client)
     counter = int(1)
-    #client = local_client()
+    client = local_client()
 
     def __init__(self, camera, hand_detector):
         super(VideoThread, self).__init__()
@@ -81,6 +80,7 @@ class VideoThread(QThread):
         # self.starte_receive_loop.emit(self.client)
         # capture from web cam
         #self.update_chat_signal.emit()
+
 
         while True:
             success, img = self.camera.cap.read()
@@ -234,6 +234,8 @@ class StartWindow(QMainWindow):
         # Connects the button actions
         self.pongWindow.button_movie.clicked.connect(self.start_movie)
         # self.startWindow.button_Play.clicked.connect(self.start_Game)
+        self.pongWindow.imageLabel1.setGeometry(QRect(10, 200, 10, 400))
+
 
     def start_Game(self):
         print("Test")
@@ -297,7 +299,8 @@ class StartWindow(QMainWindow):
         #    self.startWindow.cursor.setStyleSheet('background-color: yellow')
 
     def updatePosition(self, c):
-        self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 200, 10, 400))
+        self.pongWindow.imageLabel1.setGeometry(QRect(10, c - 200, 10, 200))
+        self.pongWindow.imageLabel2.setGeometry(QRect(1240, 200, 10, 200))
         # self.imageLabel2.setGeometry(QRect(1400,c-200,10,400))
         print("Klick")
 
@@ -495,6 +498,7 @@ class BackgroundFeed(QThread):
         self.client.player = Player
         self.client.sendcoordinate(Player, 100)
         rThread = threading.Thread(target=self.start_receive, args=())
+
 
         while True:
             self.client.sendcoordinate(Player, 100)
