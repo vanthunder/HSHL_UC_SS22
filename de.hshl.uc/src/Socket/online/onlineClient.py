@@ -3,8 +3,6 @@ import socket
 import threading
 
 
-
-
 # Only for debug
 
 
@@ -20,16 +18,19 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+
 class local_client:
+    canStart = False
     Y = [11]
     player = 'Left'
     TempTupel = (player, 0)
     TempChatList = [TempTupel]
     packets = []
-    #client = "Client"
+    # client = "Client"
     nickname = 'Client'
     pkg = []
-    def __init__(self) :
+
+    def __init__(self):
         # Choosing Nickname
         self.nickname = 'Client: '  # input("Choose your nickname: ")
 
@@ -37,67 +38,80 @@ class local_client:
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         self.client.connect(('34.159.99.140', 1667))
-        #print(self.client)
+        # print(self.client)
         self.tuple = (1, 2)
         counter = 0
         self.Player = ""
         self.serial = pickle.dumps(self.tuple)
-        #self.tempTupel=(self.Player,2)
-        #self.y = [2]
+        # self.tempTupel=(self.Player,2)
+        # self.y = [2]
+        receive_thread = threading.Thread(target=self.receive, args=())
+        receive_thread.start()
 
     def receive(self):
         while True:
-            try:
-                print(bcolors.WARNING, "Server_____: ", bcolors.ENDC)
-                Y = 10
-                print(Y)
-                #print(self.client)
-                # Receive Message From Server
-                # If 'NICK' Send Nickname
-                print('Vor Server Receive')
-                message = self.client.recv(102048)
-                #message = self.client.recv(1048576)
-                print('Vor Message decode')
-                message = pickle.loads(message)
-                print(message)
-                # To-Do: Filter Mongo db message!
-                #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                print('Vor Message CHAT')
-                #if message[2].__getitem__(1) == "chat":
-                #    print(bcolors.WARNING, "Chat_____: ", bcolors.ENDC)
-                #    self.TempChatList = message
-                #    print(bcolors.OKBLUE, "Chat: ", self.TempChatList,bcolors.ENDC)
-                #    print(self.TempChatList)
-                #else:
-                #    print('Vor Message decode1')
-                #    #
+
+            print(bcolors.WARNING, "Server_____: ", bcolors.ENDC)
+            Y = 10
+            print(Y)
+
+            # print(self.client)
+            # Receive Message From Server
+            # If 'NICK' Send Nickname
+            print('Vor Server Receive')
+            message = self.client.recv(102048)
+            # TODO Send 101100 for Player is Ready and 101101 for vice versa
+            # message = self.client.recv(1048576)
+            print('Vor Spiel Message decode')
+            message = pickle.loads(message)
+
+            print(message)
+            # To-Do: Filter Mongo db message!
+            # print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print('Vor Message CHAT')
+            # if message[2].__getitem__(1) == "chat":
+            #    print(bcolors.WARNING, "Chat_____: ", bcolors.ENDC)
+            #    self.TempChatList = message
+            #    print(bcolors.OKBLUE, "Chat: ", self.TempChatList,bcolors.ENDC)
+            #    print(self.TempChatList)
+            # else:
+            #    print('Vor Message decode1')
+            #    #
+            print(type(message) == bool, 'LKLKLKLKLKLKLKLKLKLKLK')  # True
+            if message is not bool:
                 self.TempTupel = message
 
-                #packets = message
-                print('Vor Message decode2')
-                #self.pKg = packets
-                #print("SERVERPACKET: ",packets)
-                #self.TempTupel = message
-                #if len(self.pKg) != 0:
-                #    for tuple in packets:
-                #        self.TempTupel = tuple
-                #self.settimeout(0.050)
-                #self.y = message
-                #self.tempTupel = message
-                #message = self.client.recv(1024).decode('ascii')
-                print('Server: ', message)
-            except:
-                # Close Connection When Error
-                print("An error occured!")
-                # client.close()
-                # break
+            if type(message) == bool:
+                print('QAQAQAQAQAQAQAQAQAQAQAQAQAQAQA')
+                self.canStart = True
+
+
+            # packets = message
+            print('Vor Message decode2')
+            # self.pKg = packets
+            # print("SERVERPACKET: ",packets)
+            # self.TempTupel = message
+            # if len(self.pKg) != 0:
+            #    for tuple in packets:
+            #        self.TempTupel = tuple
+            # self.settimeout(0.050)
+            # self.y = message
+            # self.tempTupel = message
+            # message = self.client.recv(1024).decode('ascii')
+            print('Server: ', message)
+
+            # Close Connection When Error
+            print("An error occured!")
+            # client.close()
+            # break
+
     def upadteA(self):
         self.y.clear()
         print(self.y)
 
     def updateCoordinate(self, update):
         self.y = update
-        print('Update!!!!: ',update)
+        print('Update!!!!: ', update)
 
     def close_client(self):
         self.client.close()
@@ -106,29 +120,28 @@ class local_client:
     def write(self):
         while True:
             message = '{}: {}'.format(self.nickname, input(''))
-            #self.sendcoordinate(10)
+            # self.sendcoordinate(10)
             print(message)
-            #self.client.send(self.serial)
+            # self.client.send(self.serial)
 
     # message = '{}: {}'.format(nickname, input(''))
     # print(message)
     # client.send(serial)
     def sendReady(self, Player):
-        #Special number: 101100 defines Player is ready
+        # Special number: 101100 defines Player is ready
         readeyNumber = 101100
         playerCoordinates = (Player, readeyNumber)
         serialPC = pickle.dumps(playerCoordinates)
         self.client.send(serialPC)
 
-    def sendcoordinate(self, Player ,yCoordiante):
-        print('Send: ', Player ,yCoordiante)
+    def sendcoordinate(self, Player, yCoordiante):
+        print('Send: ', Player, yCoordiante)
         self.Y = yCoordiante
-        receive_thread = threading.Thread(target=self.receive, args=())
-        receive_thread.start()
-        #print(self.Y)
+
+        # print(self.Y)
         playerCoordinates = (Player, yCoordiante)
         serialPC = pickle.dumps(playerCoordinates)
-        #serialY = pickle.dumps(yCoordiante)
+        # serialY = pickle.dumps(yCoordiante)
         self.client.send(serialPC)
         # Starting Threads For Listening And Writing
 
@@ -141,7 +154,6 @@ class local_client:
 
         write_thread = threading.Thread(target=lclient.write(), args=())
         write_thread.start()
-
 
 
 if __name__ == "__main__":

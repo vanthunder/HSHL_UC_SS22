@@ -62,8 +62,10 @@ class VideoThread(QThread):
         self.client.receive()
         print("THEADING!!!!!")
 
+
     # Camera Loop
     def run(self):
+
         bX = 0
         bY = 0
         speedX = 10
@@ -80,63 +82,71 @@ class VideoThread(QThread):
 
         self.client.player = Player
         rThread = threading.Thread(target=self.start_receive, args=())
-        # rThread.start()
+        #rThread.start()
         # self.starte_receive_loop.emit(self.client)
         # capture from web cam
         #self.update_chat_signal.emit()
+        self.client.sendReady('Left')
+        #self.client.sendcoordinate('Left', 111)
 
 
+        print("SRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR")
         while True:
             success, img = self.camera.cap.read()
             # img.flags.writeable = False
-            if success:
-                self.change_ab_signal.emit(1)
+            print(self.client.canStart, '222222222222222222222222222222222222')
+            if self.client.canStart == True:
 
-                # init Hand detector
-                # hd.findHands(img)
-                img = cv2.resize(img, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
-                img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
-                lmList = self.hand_detector.handlist
+                if success:
 
-                #fps = self.camera.cap.get(cv2.CAP_PROP_FPS)
-                #cv2.putText(img_proc, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
-                # print(lmList)
-                gd.writeLmList(lmList)
-                # gd.print()
-                # cv2.imshow('Test', img)
-                self.change_pixmap_signal.emit(img_proc)
+                    #self.client.canStart = False
+                    self.change_ab_signal.emit(1)
 
-                # Game Loop
-                bX += 1 + speedX
-                bY += 1 + speedY
-                # Bewege ball
-                self.update_ball_signal.emit()
+                    # init Hand detector
+                    # hd.findHands(img)
+                    img = cv2.resize(img, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
+                    img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
+                    lmList = self.hand_detector.handlist
 
-                # To Do send to server:
-                if not lmList:
-                    print()
-                else:
-                    print(bcolors.FAIL, self.client.TempChatList,"EMITYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY", bcolors.ENDC)
-                    #self.update_chat.emit()
-                    if not self.client.TempChatList:
-                        print(bcolors.FAIL,"EMITYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY", bcolors.ENDC)
+                    #fps = self.camera.cap.get(cv2.CAP_PROP_FPS)
+                    #cv2.putText(img_proc, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
+                    # print(lmList)
+                    gd.writeLmList(lmList)
+                    # gd.print()
+                    # cv2.imshow('Test', img)
+                    self.change_pixmap_signal.emit(img_proc)
 
-                    # Send Tupel
-                    print('Send Coordinates form Main Window')
-                    self.client.sendcoordinate(Player, lmList[0].__getitem__(2))
-                    print('Send Coordinates form Main Window 2')
-                    print("Player:  ", self.client.TempTupel.__getitem__(0))
+                    # Game Loop
+                    bX += 1 + speedX
+                    bY += 1 + speedY
+                    # Bewege ball
+                    self.update_ball_signal.emit()
 
-
-                    if self.client.TempTupel.__getitem__(0) == 'Left':
-                        self.update_label_signal.emit(self.client.TempTupel.__getitem__(1))
+                    # To Do send to server:
+                    if not lmList:
+                        print()
                     else:
-                        self.update_player_2.emit(self.client.TempTupel.__getitem__(1))
-                    print()
-                # print(client.y)
-                # To Do receive Coordinate
+                        print(bcolors.FAIL, self.client.TempChatList,"EMITYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY", bcolors.ENDC)
+                        #self.update_chat.emit()
+                        if not self.client.TempChatList:
+                            print(bcolors.FAIL,"EMITYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY", bcolors.ENDC)
 
-                # Updates the label
+                        # Send Tupel
+                        print('Send Coordinates form Main Window')
+                        self.client.sendcoordinate(Player, lmList[0].__getitem__(2))
+                        print('Send Coordinates form Main Window 2')
+                        print("Player:  ", self.client.TempTupel.__getitem__(0))
+
+
+                        if self.client.TempTupel.__getitem__(0) == 'Left':
+                            self.update_label_signal.emit(self.client.TempTupel.__getitem__(1))
+                        else:
+                            self.update_player_2.emit(self.client.TempTupel.__getitem__(1))
+                        print()
+                    # print(client.y)
+                    # To Do receive Coordinate
+
+                    # Updates the label
 
 
 class StartWindow(QMainWindow):
@@ -244,6 +254,7 @@ class StartWindow(QMainWindow):
         #self.pongWindow.imageLabel2.setFixedWidth(10)
         #self.pongWindow.imageLabel2.move(400, 222)
         #self.pongWindow.imageLabel2.setAlignment(Qt.AlignCenter)
+        self.start_Game()
 
 
     def start_Game(self):

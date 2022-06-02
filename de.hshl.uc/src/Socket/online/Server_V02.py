@@ -70,10 +70,7 @@ def handle(client):
             # Broadcasting Messages
             print(clients)
             message = client.recv(102048)
-            if playerLeft == True or playerRight == True:
-                abool = True
-                msg = pickle.dumps(abool)
-                broadcast(msg)
+
             update_Chat()
             received_tupel = pickle.loads(message)  ## Fehler Code
             print("Message: ", received_tupel)
