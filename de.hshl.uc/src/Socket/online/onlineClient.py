@@ -66,12 +66,9 @@ class local_client:
             print('Vor Spiel Message decode')
             if not message == None:
                 message = pickle.loads(message)
-            if message == None:
-                message = ("ball", 0, 0)
 
-            if message.__getitem__(0) == "ball":
-                print(message)
-                self.ballcoords = message
+            #TODO: Check if it is a bool!
+
 
             print(message)
             # To-Do: Filter Mongo db message!
@@ -86,9 +83,14 @@ class local_client:
             #    print('Vor Message decode1')
             #    #
             print(type(message) == bool, 'LKLKLKLKLKLKLKLKLKLKLK')  # True
-            if message is not bool:
-                print(bcolors.HEADER,message, 'TempTupel wird mit dieser Variable überschrieben!',bcolors.ENDC)  # True
-                self.TempTupel = message
+
+            if type(message) is not bool:
+                if type(message.__getitem__(0)) is str:
+                    print(bcolors.HEADER,message, 'TempTupel wird mit dieser Variable überschrieben!',bcolors.ENDC)  # True
+                    self.TempTupel = message
+                if type(message.__getitem__(0)) is not str:
+                    print(message)
+                    self.ballcoords = message
             #TODO: Programm breaks after start!
             if type(message) == bool:
                 print('QAQAQAQAQAQAQAQAQAQAQAQAQAQAQA')

@@ -120,7 +120,7 @@ class VideoThread(QThread):
                     bX += 1 + speedX
                     bY += 1 + speedY
                     # Bewege ball
-                    self.update_ball_signal.emit(self.client.ballcoords.__getitem__(1),self.client.ballcoords.__getitem__(2))
+                    self.update_ball_signal.emit(self.client.ballcoords.__getitem__(0),self.client.ballcoords.__getitem__(1))
 
                     # To Do send to server:
                     if not lmList:
