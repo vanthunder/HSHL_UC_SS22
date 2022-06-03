@@ -39,7 +39,8 @@ class Server:
         self.Is_closed = 'False'
         self.msgTuple = ("",1)
         self.receive()
-
+        # Ball start Coordinates
+        self.ballStartCoords = (625, 375)
 
     def update_Chat(self):
         print("Update_Chat")
@@ -109,7 +110,8 @@ class Server:
                     print('Das ist ein OK!!!!!!!!!!!!!')
                     msg = pickle.dumps(self.playerLeft)
                     self.broadcast(msg)
-                    self.playerLeft = False
+                    # One of them must be different because of bool bug in the client!
+                    self.playerLeft = True
                     self.playerRight = False
                    # broadcast(playerLeft)
                # broadcast(chatTuple)
