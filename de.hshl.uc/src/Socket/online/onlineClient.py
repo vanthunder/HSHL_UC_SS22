@@ -29,6 +29,7 @@ class local_client:
     # client = "Client"
     nickname = 'Client'
     pkg = []
+    ballcoords = ("ball",111,111)
 
     def __init__(self):
         # Choosing Nickname
@@ -64,6 +65,9 @@ class local_client:
             # message = self.client.recv(1048576)
             print('Vor Spiel Message decode')
             message = pickle.loads(message)
+            if message.__getitem__(0) == "ball":
+                print(message)
+                self.ballcoords = message
 
             print(message)
             # To-Do: Filter Mongo db message!
@@ -79,6 +83,7 @@ class local_client:
             #    #
             print(type(message) == bool, 'LKLKLKLKLKLKLKLKLKLKLK')  # True
             if message is not bool:
+                print(bcolors.HEADER,message, 'TempTupel wird mit dieser Variable überschrieben!',bcolors.ENDC)  # True
                 self.TempTupel = message
             #TODO: Programm breaks after start!
             if type(message) == bool:

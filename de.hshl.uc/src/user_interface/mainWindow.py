@@ -41,7 +41,7 @@ class VideoThread(QThread):
     change_ab_signal = pyqtSignal(int)
     change_pixmap_signal = pyqtSignal(np.ndarray)
     update_label_signal = pyqtSignal(int)
-    update_ball_signal = pyqtSignal()
+    update_ball_signal = pyqtSignal(int, int)
     update_player_2 = pyqtSignal(int)
     starte_receive_loop = pyqtSignal(local_client)
     counter = int(1)
@@ -120,7 +120,7 @@ class VideoThread(QThread):
                     bX += 1 + speedX
                     bY += 1 + speedY
                     # Bewege ball
-                    self.update_ball_signal.emit()
+                    self.update_ball_signal.emit(self.client.ballcoords.__getitem__(1),self.client.ballcoords.__getitem__(2))
 
                     # To Do send to server:
                     if not lmList:
@@ -327,22 +327,23 @@ class StartWindow(QMainWindow):
         print(y, " TEST")
         self.pongWindow.imageLabel2.setGeometry(QRect(1240, y - 100, 10, 200))
 
-    def updateBall(self):
+    def updateBall(self, x ,y):
         print('Die positive Variable: ', self.positive)
 
         # elif self.detect_collision()==False and not self.positive:
         #    self.positive = True
-        if self.detect_collision():
-            if self.positive:
-                self.positive = False
+        #if self.detect_collision():
+        #    if self.positive:
+        #        self.positive = False
 
-            elif self.positive == False:
-                self.positive = True
+        #    elif self.positive == False:
+        #        self.positive = True
 
-        if self.positive == True:
-            self.ballMovementpositive()
-        elif self.positive == False:
-            self.ballMovementnegative()
+        #if self.positive == True:
+        #    self.ballMovementpositive()
+        #elif self.positive == False:
+        #    self.ballMovementnegative()
+        self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
 
     def ballMovementpositive(self):
         self.bX += 10
