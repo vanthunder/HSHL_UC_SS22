@@ -37,7 +37,7 @@ class local_client:
         # Connecting To Server
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-        self.client.connect(('34.159.99.140', 1667))
+        self.client.connect(('34.159.165.27', 1667))
         # print(self.client)
         self.tuple = (1, 2)
         counter = 0
@@ -80,7 +80,7 @@ class local_client:
             print(type(message) == bool, 'LKLKLKLKLKLKLKLKLKLKLK')  # True
             if message is not bool:
                 self.TempTupel = message
-
+            #TODO: Programm breaks after start!
             if type(message) == bool:
                 print('QAQAQAQAQAQAQAQAQAQAQAQAQAQAQA')
                 self.canStart = True

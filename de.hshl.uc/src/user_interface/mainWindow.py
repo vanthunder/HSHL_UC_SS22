@@ -135,7 +135,7 @@ class VideoThread(QThread):
                         print('Send Coordinates form Main Window')
                         self.client.sendcoordinate(Player, lmList[0].__getitem__(2))
                         print('Send Coordinates form Main Window 2')
-                        print("Player:  ", self.client.TempTupel.__getitem__(0))
+                        #print("Player:  ", self.client.TempTupel.__getitem__(0))
 
 
                         if self.client.TempTupel.__getitem__(0) == 'Left':
