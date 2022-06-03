@@ -64,7 +64,11 @@ class local_client:
             # TODO Send 101100 for Player is Ready and 101101 for vice versa
             # message = self.client.recv(1048576)
             print('Vor Spiel Message decode')
-            message = pickle.loads(message)
+            if not message == None:
+                message = pickle.loads(message)
+            if message == None:
+                message = ("ball", 0, 0)
+
             if message.__getitem__(0) == "ball":
                 print(message)
                 self.ballcoords = message
