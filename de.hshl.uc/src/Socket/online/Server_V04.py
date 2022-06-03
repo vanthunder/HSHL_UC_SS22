@@ -3,11 +3,15 @@ import pickle
 import socket
 import sys
 import threading
+from typing import Tuple
 
 from pymongo import MongoClient, collection
 
 
 class Server:
+    x = 625
+    y = 375
+
     def __init__(self):
 
         self.host = '34.159.99.140'
@@ -41,6 +45,44 @@ class Server:
         self.receive()
         # Ball start Coordinates
         self.ballStartCoords = (625, 375)
+        self.positive = True
+        self.canStart = False
+        self.x = 0
+        self.y = 0
+
+    def updateBall(self):
+        #print('Die positive Variable: ', self.positive)
+
+        # elif self.detect_collision()==False and not self.positive:
+        #    self.positive = True
+        #if self.detect_collision():
+        #    if self.positive:
+        #        self.positive = False
+
+        #    elif self.positive == False:
+        #        self.positive = True
+
+        #if self.positive == True:
+        self.ballStartCoords = self.ballMovementpositive()
+        #elif self.positive == False:
+        #    self.ballStartCoords = self.ballMovementnegative()
+
+        return self.ballStartCoords
+
+    def ballMovementpositive(self):
+        #self.x += 10
+        #self.y += 1
+        coords = ("ball", 10, 10)
+        return coords
+        #self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
+
+    def ballMovementnegative(self):
+        bX = 10
+        # self.bY -= 1
+        #self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
+
+
+
 
     def update_Chat(self):
         print("Update_Chat")
@@ -106,13 +148,17 @@ class Server:
                # print("Message: ", received_tupel)
                 received_tupel = pickle.dumps(message)
                # chatTuple = pickle.dumps(chatContainer)
-                if self.playerLeft == self.playerRight:
+                if self.playerLeft or self.playerRight:
                     print('Das ist ein OK!!!!!!!!!!!!!')
                     msg = pickle.dumps(self.playerLeft)
                     self.broadcast(msg)
                     # One of them must be different because of bool bug in the client!
                     self.playerLeft = True
                     self.playerRight = False
+                    self.canStart = True
+                if self.canStart == True:
+                    msg = pickle.dumps("ball",1,1)
+                    self.broadcast(msg)
                    # broadcast(playerLeft)
                # broadcast(chatTuple)
                 print(self.msgTuple, " DER TUPLE!!!!!")
@@ -148,7 +194,7 @@ class Server:
             except:
                 print('close Client')
                 # Removing And Closing Clients
-                index = self.clients.index(client)
+                self.index = self.clients.index(client)
                 self.clients.remove(client)
                 self.clients.clear()
                 client.close()
