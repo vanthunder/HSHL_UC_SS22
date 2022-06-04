@@ -25,6 +25,7 @@ class Server:
     startCounter = 0
     xPositive = True
     yPositive = True
+    ballstartcoords = (625,375)
 
     def __init__(self):
 
@@ -83,6 +84,12 @@ class Server:
             self.yPositive = True
         elif collisionObject == 'bandeU':
             self.yPositive = False
+        elif collisionObject == 'torL':
+            self.xC = self.ballStartCoords.__getitem__(1)
+            self.yC = self.ballStartCoords.__getitem__(2)
+        elif collisionObject == 'torR':
+            self.xC = self.ballStartCoords.__getitem__(1)
+            self.yC = self.ballStartCoords.__getitem__(2)
 
 
 
