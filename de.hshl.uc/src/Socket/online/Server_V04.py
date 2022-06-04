@@ -23,6 +23,8 @@ class Server:
     yC = 500
     canStart = False
     startCounter = 0
+    xPositive = True
+    yPositive = True
 
     def __init__(self):
 
@@ -73,24 +75,45 @@ class Server:
         #    elif self.positive == False:
         #        self.positive = True
 
-        #if self.positive == True:
-        self.ballMovementpositive()
+        if collisionObject == 'paddleR':
+            self.xPositive = False
+        elif collisionObject == 'paddleL':
+            self.xPositive = True
+        elif collisionObject == 'bandeO':
+            self.yPositive = True
+        elif collisionObject == 'bandeU':
+            self.yPositive = False
+
+
+
+        if self.xPositive == True:
+            self.ballMovementpositivex()
+        elif self.xPositive == False:
+            self.ballMovementnegativex()
+
+        if self.yPositive:
+            self.ballMovementpositivey()
+        elif self.yPositive == False:
+            self.ballMovementnegativey()
+
         #elif self.positive == False:
         #    self.ballStartCoords = self.ballMovementnegative()
 
 
 
-    def ballMovementpositive(self):
-
+    def ballMovementpositivex(self):
         self.xC += 2
+        #self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
+    def ballMovementpositivey(self):
         self.yC += 2
         #self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
 
-    def ballMovementnegative(self):
-        bX = 10
-        self.bY -= 1
+    def ballMovementnegativex(self):
+        self.xC -= 2
         #self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
-
+    def ballMovementnegativey(self):
+        self.yC -= 2
+        # self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
 
 
 
@@ -188,7 +211,7 @@ class Server:
             ## Ball code
             if self.canStart == True:
                 print('Can Start', self.xC, self.yC)
-                self.updateBall()
+                self.updateBall(message.__getitem__(1))
                 #self.ballMovementpositive()
                 #self.x += 10
                 msg = (self.xC, self.yC)
@@ -197,7 +220,7 @@ class Server:
                # broadcast(playerLeft)
            # broadcast(chatTuple)
             print(self.msgTuple, " DER TUPLE!!!!!")
-            if not self.msgTuple.__getitem__(1) == 101100 and not self.msgTuple.__getitem__(1) == 101101:
+            if not self.msgTuple.__getitem__(1) == 101100 and not self.msgTuple.__getitem__(1) == 101101 and not self.msgTuple.__getitem__(0) == 'ball':
                 self.broadcast(received_tupel)
            # if playerLeft == True:
             # print('TEST')

@@ -148,7 +148,8 @@ class local_client:
         self.client.send(serialPC)
 
     def sendCollision(self, collObject):
-        serialPC = pickle.dumps(collObject)
+        coll = ("ball", collObject)
+        serialPC = pickle.dumps(coll)
         self.client.send(serialPC)
 
     def sendcoordinate(self, Player, yCoordiante):
