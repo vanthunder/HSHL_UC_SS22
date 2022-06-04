@@ -3,6 +3,7 @@ import pickle
 import socket
 import sys
 import threading
+import time
 from typing import Tuple
 
 from pymongo import MongoClient, collection
@@ -159,6 +160,7 @@ class Server:
                 ## Client start code
                 print(bcolors.HEADER, "Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC)
                 if self.playerLeft or self.playerRight:
+                    time.sleep(2)
                     print('Das ist ein OK!!!!!!!!!!!!!')
                     msg = pickle.dumps(self.playerLeft)
                     self.broadcast(msg)
