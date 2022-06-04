@@ -6,7 +6,16 @@ import threading
 from typing import Tuple
 
 from pymongo import MongoClient, collection
-
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 class Server:
     xC = 500
@@ -148,6 +157,7 @@ class Server:
                 received_tupel = pickle.dumps(message)
                # chatTuple = pickle.dumps(chatContainer)
                 ## Client start code
+                print(bcolors.HEADER, "Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC)
                 if self.playerLeft or self.playerRight:
                     print('Das ist ein OK!!!!!!!!!!!!!')
                     msg = pickle.dumps(self.playerLeft)
@@ -168,7 +178,7 @@ class Server:
                    # broadcast(playerLeft)
                # broadcast(chatTuple)
                 print(self.msgTuple, " DER TUPLE!!!!!")
-                if not self.msgTuple.__getitem__(1) == 101100 or not self.msgTuple.__getitem__(1) == 101101:
+                if not self.msgTuple.__getitem__(1) == 101100 and not self.msgTuple.__getitem__(1) == 101101:
                     self.broadcast(received_tupel)
                # if playerLeft == True:
                 # print('TEST')
