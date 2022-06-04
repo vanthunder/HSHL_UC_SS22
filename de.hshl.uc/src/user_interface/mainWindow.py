@@ -389,22 +389,22 @@ class StartWindow(QMainWindow):
             # Collision Paddle Right!
             if self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.imageLabel2.geometry()):
                 print("INTERSECTION!")
-                self.client.sendCollison("paddleR")
+                self.local_cL.sendCollision("paddleR")
                 return True
             # Collision Paddle Left
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.imageLabel1.geometry()):
                 print("INTERSECTION!")
-                self.client.sendCollison("paddleL")
+                self.local_cl.sendCollision("paddleL")
                 return True
             # Collision Bande Oben
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeOben.geometry()):
                 print("INTERSECTION!")
-                self.client.sendCollison("bandeO")
+                self.local_cl.sendCollision("bandeO")
                 return True
             # Collision Bande Unten
-            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeUntnen.geometry()):
+            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeUnten.geometry()):
                 print("INTERSECTION!")
-                self.client.sendCollison("bandeU")
+                self.local_cL.sendCollision("bandeU")
                 return True
             else:
                 return False
