@@ -60,7 +60,8 @@ class local_client:
             # Receive Message From Server
             # If 'NICK' Send Nickname
             print('Vor Server Receive')
-            message = self.client.recv(102048)
+            #message = self.client.recv(102048)
+            message = self.client.recv(8192)
             # TODO Send 101100 for Player is Ready and 101101 for vice versa
             # message = self.client.recv(1048576)
             print('Vor Spiel Message decode')

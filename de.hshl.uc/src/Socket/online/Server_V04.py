@@ -132,7 +132,7 @@ class Server:
                 print(bcolors.WARNING, "Oben", "Player L: ", self.playerLeft, " Player R: ", self.playerRight,
                       bcolors.ENDC,
                       self.startCounter)
-                message = client.recv(102048)
+                message = client.recv(8192)
 
                # print("Update_Chat")
                # update_Chat()
