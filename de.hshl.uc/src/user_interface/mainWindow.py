@@ -277,9 +277,9 @@ class StartWindow(QMainWindow):
         self.start_Game()
 
 
+
     def start_Game(self):
         print("Test")
-
         self.camera.close_camera()
         if self.window_title == 'start':
             print("True")
@@ -347,7 +347,12 @@ class StartWindow(QMainWindow):
         print(y, " TEST")
         self.pongWindow.imageLabel2.setGeometry(QRect(1240, y - 100, 10, 200))
 
-    def updateBall(self, x ,y):
+    def updateBall(self, x, y):
+        self.pongWindow.bandeOben.setVisible(True)
+        self.pongWindow.bandeUnten.setVisible(True)
+        self.pongWindow.bandeOben.setGeometry(0, 0, 80, 80)
+        self.pongWindow.bandeUnten.setGeometry(0, 720, 80, 80)
+
         print('Die positive Variable: ', self.positive)
 
         # elif self.detect_collision()==False and not self.positive:
@@ -363,7 +368,10 @@ class StartWindow(QMainWindow):
         #    self.ballMovementpositive()
         #elif self.positive == False:
         #    self.ballMovementnegative()
+
+
         self.pongWindow.imageLabel3.setGeometry(x, y, 80, 80)
+        self.detect_collision()
 
     def ballMovementpositive(self):
         self.bX += 10
@@ -378,17 +386,29 @@ class StartWindow(QMainWindow):
     def detect_collision(self):
         # if self.imageLabel3.geometry().center()+80 == self.imageLabel2.geometry().intersects()
         if self.positive:
+            # Collision Paddle Right!
             if self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.imageLabel2.geometry()):
                 print("INTERSECTION!")
+                self.client.sendCollison("paddleR")
                 return True
-            else:
-                return False
-        else:
-            if self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.imageLabel1.geometry()):
+            # Collision Paddle Left
+            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.imageLabel1.geometry()):
                 print("INTERSECTION!")
+                self.client.sendCollison("paddleL")
+                return True
+            # Collision Bande Oben
+            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeOben.geometry()):
+                print("INTERSECTION!")
+                self.client.sendCollison("bandeO")
+                return True
+            # Collision Bande Unten
+            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeUntnen.geometry()):
+                print("INTERSECTION!")
+                self.client.sendCollison("bandeU")
                 return True
             else:
                 return False
+
 
     def convert_cv_qt(self, cv_img):
         cv_img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)

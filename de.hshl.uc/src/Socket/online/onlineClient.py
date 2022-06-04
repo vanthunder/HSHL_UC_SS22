@@ -147,6 +147,10 @@ class local_client:
         print(bcolors.OKBLUE,playerCoordinates, "Send to Server!", bcolors.ENDC)
         self.client.send(serialPC)
 
+    def sendCollision(self, collObject):
+        serialPC = pickle.dumps(collObject)
+        self.client.send(serialPC)
+
     def sendcoordinate(self, Player, yCoordiante):
         print('Send: ', Player, yCoordiante)
         self.Y = yCoordiante

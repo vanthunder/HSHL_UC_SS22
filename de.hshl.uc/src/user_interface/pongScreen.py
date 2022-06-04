@@ -54,6 +54,21 @@ class pongScreen(QWidget):
         self.imageLabel3.setAutoFillBackground(True)
         self.imageLabel3.setStyleSheet("border: 3px solid blue; border-radius: 40px;")
 
+        #Bande oben
+        self.bandeOben = QLabel()
+        self.bandeOben.setMinimumSize(width, 10)
+        self.bandeOben.setMaximumSize(width, 10)
+        self.bandeOben.setAutoFillBackground(True)
+        self.bandeOben.setVisible(False)
+        # Bande unten
+        self.bandeUnten = QLabel()
+        self.bandeUnten.setMinimumSize(width, 10)
+        self.bandeUnten.setMaximumSize(width, 10)
+        self.bandeUnten.setAutoFillBackground(True)
+        self.bandeUnten.setStyleSheet("background:blue")
+        self.bandeUnten.setVisible(False)
+
+
         self.imageLabelRect = QtCore.QRectF(100, 100, 20, 20)
         # self.paint = QPainter(self.imageLabelRect)
         # ball
@@ -69,6 +84,10 @@ class pongScreen(QWidget):
         self.imageLabel.layout().addWidget(self.imageLabel1)
         self.imageLabel.layout().addWidget(self.imageLabel3)
         self.imageLabel.layout().addWidget(self.imageLabel2)
+        self.imageLabel.layout().addWidget(self.bandeOben)
+        self.imageLabel.layout().addWidget(self.bandeUnten)
+        #self.bandeUnten.geometry().setX(0)
+       # self.bandeUnten.setGeometry(QtCore.QRect(0, 0, 0, 0))
         #self.imageLabel.layout().addWidget(self.button_movie)
         # self.imageLabel.layout().addWidget(self.imageLabelRect)
         # self.imageLabel.setParent(self.pad)
