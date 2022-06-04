@@ -120,7 +120,9 @@ class VideoThread(QThread):
                     bX += 1 + speedX
                     bY += 1 + speedY
                     # Bewege ball
+                    print(bcolors.FAIL, self.client.ballcoords.__getitem__(0), bcolors.ENDC)
                     self.update_ball_signal.emit(self.client.ballcoords.__getitem__(0),self.client.ballcoords.__getitem__(1))
+                    #self.update_ball_signal.emit(500, 500)
 
                     # To Do send to server:
                     if not lmList:
@@ -343,7 +345,7 @@ class StartWindow(QMainWindow):
         #    self.ballMovementpositive()
         #elif self.positive == False:
         #    self.ballMovementnegative()
-        self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
+        self.pongWindow.imageLabel3.setGeometry(x, y, 80, 80)
 
     def ballMovementpositive(self):
         self.bX += 10

@@ -88,8 +88,8 @@ class local_client:
                 if type(message.__getitem__(0)) is str:
                     print(bcolors.HEADER,message, 'TempTupel wird mit dieser Variable überschrieben!',bcolors.ENDC)  # True
                     self.TempTupel = message
-                if type(message.__getitem__(0)) is not str:
-                    print(message)
+                elif type(message.__getitem__(0)) is not str:
+                    print(bcolors.OKGREEN,message, 'Ball wird mit dieser Variable überschrieben!',bcolors.ENDC)
                     self.ballcoords = message
             #TODO: Programm breaks after start!
             if type(message) == bool:
