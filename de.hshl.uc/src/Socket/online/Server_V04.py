@@ -147,6 +147,7 @@ class Server:
                # print("Message: ", received_tupel)
                 received_tupel = pickle.dumps(message)
                # chatTuple = pickle.dumps(chatContainer)
+                ## Client start code
                 if self.playerLeft or self.playerRight:
                     print('Das ist ein OK!!!!!!!!!!!!!')
                     msg = pickle.dumps(self.playerLeft)
@@ -155,8 +156,9 @@ class Server:
                     self.playerLeft = True
                     self.playerRight = False
                     self.canStart = True
+                ## Ball code
                 if self.canStart == True:
-                    print('Can Start', self.x, self.yC)
+                    print('Can Start', self.xC, self.yC)
                     self.updateBall()
                     #self.ballMovementpositive()
                     #self.x += 10
