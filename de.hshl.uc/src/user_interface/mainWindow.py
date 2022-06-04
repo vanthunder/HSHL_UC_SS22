@@ -62,7 +62,7 @@ class VideoThread(QThread):
         self.client.receive()
         print("THEADING!!!!!")
 
-    def videoLoop(self):
+    def videoLoop(self, Player):
         bX = 0
         bY = 0
         speedX = 10
@@ -75,10 +75,10 @@ class VideoThread(QThread):
         self.camera = Camera(video)
         self.camera.initialize()
         # Left or Right
-        Player = 'Left'  # input('Player: ')
+        #Player = 'Left'  # input('Player: ')
 
-        self.client.player = Player
-        rThread = threading.Thread(target=self.start_receive, args=())
+        #self.client.player = Player
+
         # rThread.start()
         # self.starte_receive_loop.emit(self.client)
         # capture from web cam
@@ -154,9 +154,14 @@ class VideoThread(QThread):
 
     # Camera Loop
     def run(self):
+        Player = 'Left'  # input('Player: ')
+
+        self.client.player = Player
+        rThread = threading.Thread(target=self.start_receive, args=())
         self.client.sendReady('Left')
         if self.client.canStart == True:
-            self.videoLoop()
+            print(bcolors.WARNING, "Starte VideoLoop", bcolors.ENDC)
+            self.videoLoop(Player)
 
 
 
