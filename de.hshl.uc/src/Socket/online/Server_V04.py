@@ -22,6 +22,7 @@ class Server:
     xC = 500
     yC = 500
     canStart = False
+    startCounter = 2
 
     def __init__(self):
 
@@ -160,14 +161,16 @@ class Server:
                 ## Client start code
                 print(bcolors.HEADER, "Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC)
                 if self.playerLeft or self.playerRight:
-                    time.sleep(2)
-                    print('Das ist ein OK!!!!!!!!!!!!!')
-                    msg = pickle.dumps(self.playerLeft)
-                    self.broadcast(msg)
-                    # One of them must be different because of bool bug in the client!
-                    self.playerLeft = True
-                    self.playerRight = False
-                    self.canStart = True
+                    if self.startCounter == 2:
+                        time.sleep(2)
+                        print('Das ist ein OK!!!!!!!!!!!!!')
+                        msg = pickle.dumps(self.playerLeft)
+                        self.broadcast(msg)
+                        # One of them must be different because of bool bug in the client!
+                        self.playerLeft = True
+                        self.playerRight = False
+                        self.canStart = True
+                    self.startCounter += 1
                 ## Ball code
                 if self.canStart == True:
                     print('Can Start', self.xC, self.yC)
