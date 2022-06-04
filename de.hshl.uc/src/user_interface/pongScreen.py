@@ -67,6 +67,18 @@ class pongScreen(QWidget):
         self.bandeUnten.setAutoFillBackground(True)
         self.bandeUnten.setStyleSheet("background:blue")
         self.bandeUnten.setVisible(False)
+        # Tor links
+        self.torleft = QLabel()
+        self.torleft.setMinimumSize(10, height)
+        self.torleft.setMaximumSize(10, height)
+        self.torleft.setAutoFillBackground(True)
+        #self.torleft.setVisible(False)
+        # Tor rechts
+        self.torRight = QLabel()
+        self.torRight.setMinimumSize(10, height)
+        self.torRight.setMaximumSize(10, height)
+        self.torRight.setAutoFillBackground(True)
+        #self.torRight.setVisible(False)
 
 
         self.imageLabelRect = QtCore.QRectF(100, 100, 20, 20)
@@ -86,6 +98,8 @@ class pongScreen(QWidget):
         self.imageLabel.layout().addWidget(self.imageLabel2)
         self.imageLabel.layout().addWidget(self.bandeOben)
         self.imageLabel.layout().addWidget(self.bandeUnten)
+        self.imageLabel.layout().addWidget(self.torleft)
+        self.imageLabel.layout().addWidget(self.torRight)
         #self.bandeUnten.geometry().setX(0)
        # self.bandeUnten.setGeometry(QtCore.QRect(0, 0, 0, 0))
         #self.imageLabel.layout().addWidget(self.button_movie)

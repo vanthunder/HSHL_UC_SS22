@@ -345,13 +345,17 @@ class StartWindow(QMainWindow):
 
     def updatePositionPlayer2(self, y):
         print(y, " TEST")
-        self.pongWindow.imageLabel2.setGeometry(QRect(1240, y - 100, 10, 200))
+        self.pongWindow.imageLabel2.setGeometry(QRect(1220, y - 100, 10, 200))
 
     def updateBall(self, x, y):
         self.pongWindow.bandeOben.setVisible(True)
         self.pongWindow.bandeUnten.setVisible(True)
         self.pongWindow.bandeOben.setGeometry(0, 0, 80, 80)
         self.pongWindow.bandeUnten.setGeometry(0, 720, 80, 80)
+        self.pongWindow.torleft.setVisible(True)
+        self.pongWindow.torRight.setVisible(True)
+        self.pongWindow.torleft.setGeometry(0, 0, 80, 80)
+        self.pongWindow.torRight.setGeometry(1248, 0, 80, 80)
 
         print('Die positive Variable: ', self.positive)
 
@@ -394,17 +398,27 @@ class StartWindow(QMainWindow):
             # Collision Paddle Left
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.imageLabel1.geometry()):
                 print("INTERSECTION!")
-                self.local_cl.sendCollision("paddleL")
+                self.local_cL.sendCollision("paddleL")
                 return True
             # Collision Bande Oben
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeOben.geometry()):
                 print("INTERSECTION!")
-                self.local_cl.sendCollision("bandeO")
+                self.local_cL.sendCollision("bandeO")
                 return True
             # Collision Bande Unten
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeUnten.geometry()):
                 print("INTERSECTION!")
                 self.local_cL.sendCollision("bandeU")
+                return True
+            # Collision Bande Oben
+            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torleft.geometry()):
+                print("INTERSECTION!")
+                self.local_cL.sendCollision("torL")
+                return True
+            # Collision Bande Unten
+            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torRight.geometry()):
+                print("INTERSECTION!")
+                self.local_cL.sendCollision("torR")
                 return True
             else:
                 return False
