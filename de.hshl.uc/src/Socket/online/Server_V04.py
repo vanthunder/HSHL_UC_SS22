@@ -22,7 +22,7 @@ class Server:
     xC = 500
     yC = 500
     canStart = False
-    startCounter = 2
+    startCounter = 0
 
     def __init__(self):
 
@@ -129,11 +129,15 @@ class Server:
             try:
                 # Broadcasting Messages
                 print(self.clients)
+                print(bcolors.WARNING, "Oben", "Player L: ", self.playerLeft, " Player R: ", self.playerRight,
+                      bcolors.ENDC,
+                      self.startCounter)
                 message = client.recv(102048)
 
                # print("Update_Chat")
                # update_Chat()
                # print("Update_Chat")
+
 
                 message = pickle.loads(message)
                 self.msgTuple = message
@@ -153,14 +157,16 @@ class Server:
                     elif message.__getitem__(1) == 101101:
                         self.playerRight = False
 
+
+
                 if self.playerRight:
                     print('TRUE!!!!!!!!!!!!!!!!!!!')
                # print("Message: ", received_tupel)
                 received_tupel = pickle.dumps(message)
                # chatTuple = pickle.dumps(chatContainer)
                 ## Client start code
-                print(bcolors.HEADER, "Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC)
-                if self.playerLeft or self.playerRight:
+                print(bcolors.HEADER, "Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC, self.startCounter)
+                if self.playerLeft == self.playerRight:
                     if self.startCounter == 2:
                         time.sleep(2)
                         print('Das ist ein OK!!!!!!!!!!!!!')
@@ -170,7 +176,10 @@ class Server:
                         self.playerLeft = True
                         self.playerRight = False
                         self.canStart = True
-                    self.startCounter += 1
+                    print("Counter wird gesetzt!")
+                    self.startCounter = 2
+
+
                 ## Ball code
                 if self.canStart == True:
                     print('Can Start', self.xC, self.yC)
@@ -211,6 +220,8 @@ class Server:
                 #    writeList(received_tupel)
                 # else:
                 #    broadcast(message)
+                print(bcolors.BOLD, "Unten","Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC,
+                    self.startCounter)
 
             except:
                 print('close Client')
