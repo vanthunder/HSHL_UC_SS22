@@ -168,7 +168,7 @@ class Server:
                    # broadcast(playerLeft)
                # broadcast(chatTuple)
                 print(self.msgTuple, " DER TUPLE!!!!!")
-                if not self.msgTuple.__getitem__(1) == 101100 or not self.msgTuple.__getitem__(1) == 101101:
+                if not self.msgTuple.__getitem__(1) == 101100 and not self.msgTuple.__getitem__(1) == 101101:
                     self.broadcast(received_tupel)
                # if playerLeft == True:
                 # print('TEST')
