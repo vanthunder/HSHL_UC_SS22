@@ -132,14 +132,17 @@ class Server:
             print(bcolors.WARNING, "Oben", "Player L: ", self.playerLeft, " Player R: ", self.playerRight,
                   bcolors.ENDC,
                   self.startCounter)
-            message = client.recv(8192)
+            if self.startCounter == 0:
+                message = client.recv(8192)
+                print(message)
+                message = pickle.loads(message)
 
            # print("Update_Chat")
            # update_Chat()
            # print("Update_Chat")
 
-
-            message = pickle.loads(message)
+            print(message)
+            #message = pickle.loads(message)
             self.msgTuple = message
            # print("Update_Chat!")
            # Checks if one player is ready
@@ -176,8 +179,10 @@ class Server:
                     self.playerLeft = True
                     self.playerRight = False
                     self.canStart = True
-                print("Counter wird gesetzt!")
-                self.startCounter = 2
+                    self.startCounter = 0
+                else:
+                    print("Counter wird gesetzt!")
+                    self.startCounter += 1
 
 
             ## Ball code
