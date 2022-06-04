@@ -9,8 +9,9 @@ from pymongo import MongoClient, collection
 
 
 class Server:
-    x = 625
-    y = 375
+    x = 500
+    y = 500
+    canStart = False
 
     def __init__(self):
 
@@ -47,8 +48,7 @@ class Server:
         self.ballStartCoords = (625, 375)
         self.positive = True
         self.canStart = False
-        self.x = 0
-        self.y = 0
+
 
     def updateBall(self):
         #print('Die positive Variable: ', self.positive)
@@ -63,17 +63,16 @@ class Server:
         #        self.positive = True
 
         #if self.positive == True:
-        self.ballStartCoords = self.ballMovementpositive()
+        self.ballMovementpositive()
         #elif self.positive == False:
         #    self.ballStartCoords = self.ballMovementnegative()
 
-        return self.ballStartCoords
+
 
     def ballMovementpositive(self):
-        #self.x += 10
-        #self.y += 1
-        coords = ("ball", 10, 10)
-        return coords
+
+        self.x += 10
+        self.y += 1
         #self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
 
     def ballMovementnegative(self):
@@ -157,7 +156,12 @@ class Server:
                     self.playerRight = False
                     self.canStart = True
                 if self.canStart == True:
-                    msg = pickle.dumps("ball",1,1)
+                    print('Can Start', self.x)
+                    self.updateBall()
+                    #self.ballMovementpositive()
+                    #self.x += 10
+                    msg = (self.x, self.y)
+                    msg = pickle.dumps(msg)
                     self.broadcast(msg)
                    # broadcast(playerLeft)
                # broadcast(chatTuple)
