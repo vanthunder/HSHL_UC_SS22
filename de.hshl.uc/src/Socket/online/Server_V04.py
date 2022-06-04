@@ -61,7 +61,7 @@ class Server:
         self.canStart = False
 
 
-    def updateBall(self):
+    def updateBall(self, collisionObject):
         #print('Die positive Variable: ', self.positive)
 
         # elif self.detect_collision()==False and not self.positive:
@@ -82,13 +82,13 @@ class Server:
 
     def ballMovementpositive(self):
 
-        self.xC += 10
-        self.yC += 1
+        self.xC += 2
+        self.yC += 2
         #self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
 
     def ballMovementnegative(self):
         bX = 10
-        # self.bY -= 1
+        self.bY -= 1
         #self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
 
 
@@ -132,14 +132,17 @@ class Server:
             print(bcolors.WARNING, "Oben", "Player L: ", self.playerLeft, " Player R: ", self.playerRight,
                   bcolors.ENDC,
                   self.startCounter)
-            message = client.recv(8192)
+            if self.startCounter == 0:
+                message = client.recv(102048)
+                print(message)
+                message = pickle.loads(message)
 
            # print("Update_Chat")
            # update_Chat()
            # print("Update_Chat")
 
-
-            message = pickle.loads(message)
+            print(message)
+            #message = pickle.loads(message)
             self.msgTuple = message
            # print("Update_Chat!")
            # Checks if one player is ready
@@ -166,9 +169,9 @@ class Server:
            # chatTuple = pickle.dumps(chatContainer)
             ## Client start code
             print(bcolors.HEADER, "Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC, self.startCounter)
-            if self.playerLeft == self.playerRight:
-                if self.startCounter == 2:
-                    time.sleep(2)
+            if self.playerLeft or self.playerRight:
+                if self.startCounter == 1:
+                    #time.sleep(0.5)
                     print('Das ist ein OK!!!!!!!!!!!!!')
                     msg = pickle.dumps(self.playerLeft)
                     self.broadcast(msg)
@@ -176,8 +179,10 @@ class Server:
                     self.playerLeft = True
                     self.playerRight = False
                     self.canStart = True
-                print("Counter wird gesetzt!")
-                self.startCounter = 2
+                    self.startCounter = 0
+                else:
+                    print("Counter wird gesetzt!")
+                    self.startCounter += 1
 
 
             ## Ball code
