@@ -126,116 +126,116 @@ class Server:
         #playerLeft = False
         #playerRight = False
         while True:
-            try:
-                # Broadcasting Messages
-                print(self.clients)
-                print(bcolors.WARNING, "Oben", "Player L: ", self.playerLeft, " Player R: ", self.playerRight,
-                      bcolors.ENDC,
-                      self.startCounter)
-                message = client.recv(8192)
 
-               # print("Update_Chat")
-               # update_Chat()
-               # print("Update_Chat")
+            # Broadcasting Messages
+            print(self.clients)
+            print(bcolors.WARNING, "Oben", "Player L: ", self.playerLeft, " Player R: ", self.playerRight,
+                  bcolors.ENDC,
+                  self.startCounter)
+            message = client.recv(8192)
 
-
-                message = pickle.loads(message)
-                self.msgTuple = message
-               # print("Update_Chat!")
-               # Checks if one player is ready
-               # If the number is 101100 the player is ready
-               # If the number is 101101 the player is not ready
-               # if message == tuple:
-                if message.__getitem__(0) == 'Left':
-                    if message.__getitem__(1) == 101100:
-                        self.playerLeft = True
-                    elif message.__getitem__(1) == 101101:
-                        self.playerLeft = False
-                elif message.__getitem__(0) == 'Right':
-                    if message.__getitem__(1) == 101100:
-                        self.playerRight = True
-                    elif message.__getitem__(1) == 101101:
-                        self.playerRight = False
+           # print("Update_Chat")
+           # update_Chat()
+           # print("Update_Chat")
 
 
-
-                if self.playerRight:
-                    print('TRUE!!!!!!!!!!!!!!!!!!!')
-               # print("Message: ", received_tupel)
-                received_tupel = pickle.dumps(message)
-               # chatTuple = pickle.dumps(chatContainer)
-                ## Client start code
-                print(bcolors.HEADER, "Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC, self.startCounter)
-                if self.playerLeft == self.playerRight:
-                    if self.startCounter == 2:
-                        time.sleep(2)
-                        print('Das ist ein OK!!!!!!!!!!!!!')
-                        msg = pickle.dumps(self.playerLeft)
-                        self.broadcast(msg)
-                        # One of them must be different because of bool bug in the client!
-                        self.playerLeft = True
-                        self.playerRight = False
-                        self.canStart = True
-                    print("Counter wird gesetzt!")
-                    self.startCounter = 2
+            message = pickle.loads(message)
+            self.msgTuple = message
+           # print("Update_Chat!")
+           # Checks if one player is ready
+           # If the number is 101100 the player is ready
+           # If the number is 101101 the player is not ready
+           # if message == tuple:
+            if message.__getitem__(0) == 'Left':
+                if message.__getitem__(1) == 101100:
+                    self.playerLeft = True
+                elif message.__getitem__(1) == 101101:
+                    self.playerLeft = False
+            elif message.__getitem__(0) == 'Right':
+                if message.__getitem__(1) == 101100:
+                    self.playerRight = True
+                elif message.__getitem__(1) == 101101:
+                    self.playerRight = False
 
 
-                ## Ball code
-                if self.canStart == True:
-                    print('Can Start', self.xC, self.yC)
-                    self.updateBall()
-                    #self.ballMovementpositive()
-                    #self.x += 10
-                    msg = (self.xC, self.yC)
-                    msg = pickle.dumps(msg)
+
+            if self.playerRight:
+                print('TRUE!!!!!!!!!!!!!!!!!!!')
+           # print("Message: ", received_tupel)
+            received_tupel = pickle.dumps(message)
+           # chatTuple = pickle.dumps(chatContainer)
+            ## Client start code
+            print(bcolors.HEADER, "Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC, self.startCounter)
+            if self.playerLeft == self.playerRight:
+                if self.startCounter == 2:
+                    time.sleep(2)
+                    print('Das ist ein OK!!!!!!!!!!!!!')
+                    msg = pickle.dumps(self.playerLeft)
                     self.broadcast(msg)
-                   # broadcast(playerLeft)
-               # broadcast(chatTuple)
-                print(self.msgTuple, " DER TUPLE!!!!!")
-                if not self.msgTuple.__getitem__(1) == 101100 and not self.msgTuple.__getitem__(1) == 101101:
-                    self.broadcast(received_tupel)
-               # if playerLeft == True:
-                # print('TEST')
-                # allReady = True
-                # print("Alle Clients sind TRUE")
-                # msg = pickle.dumps(allReady)
-                # broadcast(msg)
-               # If statemnt if all players are ready sent start command to clients
+                    # One of them must be different because of bool bug in the client!
+                    self.playerLeft = True
+                    self.playerRight = False
+                    self.canStart = True
+                print("Counter wird gesetzt!")
+                self.startCounter = 2
 
-                # broadcast(msg)
 
-                # packets.append(received_tupel)
-                # Player 1 Packet
+            ## Ball code
+            if self.canStart == True:
+                print('Can Start', self.xC, self.yC)
+                self.updateBall()
+                #self.ballMovementpositive()
+                #self.x += 10
+                msg = (self.xC, self.yC)
+                msg = pickle.dumps(msg)
+                self.broadcast(msg)
+               # broadcast(playerLeft)
+           # broadcast(chatTuple)
+            print(self.msgTuple, " DER TUPLE!!!!!")
+            if not self.msgTuple.__getitem__(1) == 101100 and not self.msgTuple.__getitem__(1) == 101101:
+                self.broadcast(received_tupel)
+           # if playerLeft == True:
+            # print('TEST')
+            # allReady = True
+            # print("Alle Clients sind TRUE")
+            # msg = pickle.dumps(allReady)
+            # broadcast(msg)
+           # If statemnt if all players are ready sent start command to clients
 
-                # if(len(packets) == 2):
-                #    serialPackets = pickle.dumps(packets)
-                #    print(packets)
-                #    broadcast(serialPackets)
-                #    packets.clear()
+            # broadcast(msg)
 
-                # print('TUPLE: ', received_tupel)
-                # Proof if message is a coordinate
-                # if (type(received_tupel) == tuple):
-                #    print("Tuple detectet")
-                #    writeList(received_tupel)
-                # else:
-                #    broadcast(message)
-                print(bcolors.BOLD, "Unten","Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC,
-                    self.startCounter)
+            # packets.append(received_tupel)
+            # Player 1 Packet
 
-            except:
-                print('close Client')
-                # Removing And Closing Clients
-                self.index = self.clients.index(client)
-                self.clients.remove(client)
-                self.clients.clear()
-                client.close()
+            # if(len(packets) == 2):
+            #    serialPackets = pickle.dumps(packets)
+            #    print(packets)
+            #    broadcast(serialPackets)
+            #    packets.clear()
 
-                # To Do Close Thread
+            # print('TUPLE: ', received_tupel)
+            # Proof if message is a coordinate
+            # if (type(received_tupel) == tuple):
+            #    print("Tuple detectet")
+            #    writeList(received_tupel)
+            # else:
+            #    broadcast(message)
+            print(bcolors.BOLD, "Unten","Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC,
+                self.startCounter)
 
-                # nickname = nicknames[index]
-                # broadcast('{} left!'.format(nickname).encode('ascii'))
-                # nicknames.remove(nickname)
+
+            #print('close Client')
+            # Removing And Closing Clients
+            #self.index = self.clients.index(client)
+            #self.clients.remove(client)
+            #self.clients.clear()
+            #client.close()
+
+            # To Do Close Thread
+
+            # nickname = nicknames[index]
+            # broadcast('{} left!'.format(nickname).encode('ascii'))
+            # nicknames.remove(nickname)
 
 
     # Receiving / Listening Function

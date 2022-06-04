@@ -144,6 +144,7 @@ class local_client:
         readeyNumber = 101100
         playerCoordinates = (Player, readeyNumber)
         serialPC = pickle.dumps(playerCoordinates)
+        print(bcolors.OKBLUE,playerCoordinates, "Send to Server!", bcolors.ENDC)
         self.client.send(serialPC)
 
     def sendcoordinate(self, Player, yCoordiante):
