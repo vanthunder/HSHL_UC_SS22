@@ -158,10 +158,13 @@ class VideoThread(QThread):
 
         self.client.player = Player
         rThread = threading.Thread(target=self.start_receive, args=())
+        #rThread.start()
+        #self.client.receive()
         self.client.sendReady('Left')
-        if self.client.canStart == True:
-            print(bcolors.WARNING, "Starte VideoLoop", bcolors.ENDC)
-            self.videoLoop(Player)
+        while True:
+            if self.client.canStart == True:
+                print(bcolors.WARNING, "Starte VideoLoop", bcolors.ENDC)
+                self.videoLoop(Player)
 
 
 
