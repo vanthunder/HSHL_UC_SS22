@@ -192,7 +192,7 @@ class Server:
            # chatTuple = pickle.dumps(chatContainer)
             ## Client start code
             print(bcolors.HEADER, "Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC, self.startCounter)
-            if self.playerLeft or self.playerRight:
+            if self.playerLeft == self.playerRight:
                 if self.startCounter == 1:
                     #time.sleep(0.5)
                     print('Das ist ein OK!!!!!!!!!!!!!')
@@ -210,7 +210,7 @@ class Server:
 
             ## Ball code
             if self.canStart == True:
-                print('Can Start', self.xC, self.yC)
+                print('Can Start', self.xC, self.yC, message.__getitem__(1))
                 self.updateBall(message.__getitem__(1))
                 #self.ballMovementpositive()
                 #self.x += 10
