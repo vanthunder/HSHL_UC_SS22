@@ -25,7 +25,7 @@ class Server:
     startCounter = 0
     xPositive = True
     yPositive = True
-    ballstartcoords = (625,375)
+    ballStartCoords = (625,375)
 
     def __init__(self):
 
@@ -99,11 +99,11 @@ class Server:
             self.ballMovementnegativey()
 
         if collisionObject == 'torL':
-            self.xC = self.ballStartCoords.__getitem__(1)
-            self.yC = self.ballStartCoords.__getitem__(2)
+            self.xC = self.ballStartCoords.__getitem__(0)
+            self.yC = self.ballStartCoords.__getitem__(1)
         elif collisionObject == 'torR':
-            self.xC = self.ballStartCoords.__getitem__(1)
-            self.yC = self.ballStartCoords.__getitem__(2)
+            self.xC = self.ballStartCoords.__getitem__(0)
+            self.yC = self.ballStartCoords.__getitem__(1)
 
         #elif self.positive == False:
         #    self.ballStartCoords = self.ballMovementnegative()
