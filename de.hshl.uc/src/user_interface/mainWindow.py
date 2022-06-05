@@ -410,6 +410,16 @@ class StartWindow(QMainWindow):
                 print("INTERSECTION!")
                 self.local_cL.sendCollision("bandeU")
                 return True
+                # Collision Bande Oben
+            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torLeft.geometry()):
+                print("INTERSECTION!")
+                self.local_cL.sendCollision("torL")
+                return True
+            # Collision Bande Unten
+            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torRight.geometry()):
+                print("INTERSECTION!")
+                self.local_cL.sendCollision("torR")
+                return True
             else:
                 return False
 
