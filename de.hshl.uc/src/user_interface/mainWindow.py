@@ -352,9 +352,9 @@ class StartWindow(QMainWindow):
         self.pongWindow.bandeUnten.setVisible(True)
         self.pongWindow.bandeOben.setGeometry(0, 0, 80, 80)
         self.pongWindow.bandeUnten.setGeometry(0, 720, 80, 80)
-        self.pongWindow.torleft.setVisible(True)
+        self.pongWindow.torLeft.setVisible(True)
         self.pongWindow.torRight.setVisible(True)
-        self.pongWindow.torleft.setGeometry(0, 0, 80, 80)
+        self.pongWindow.torLeft.setGeometry(0, 0, 80, 80)
         self.pongWindow.torRight.setGeometry(1248, 0, 80, 80)
 
         print('Die positive Variable: ', self.positive)
