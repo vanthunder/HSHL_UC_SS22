@@ -274,7 +274,7 @@ class StartWindow(QMainWindow):
         #self.pongWindow.imageLabel2.setFixedWidth(10)
         #self.pongWindow.imageLabel2.move(400, 222)
         #self.pongWindow.imageLabel2.setAlignment(Qt.AlignCenter)
-        self.start_Game()
+        #self.start_Game()
 
 
 
