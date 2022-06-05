@@ -117,6 +117,8 @@ class local_client:
             # client.close()
             # break
 
+
+
     def upadteA(self):
         self.y.clear()
         print(self.y)
