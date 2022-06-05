@@ -68,10 +68,10 @@ class pongScreen(QWidget):
         self.bandeUnten.setStyleSheet("background:blue")
         self.bandeUnten.setVisible(False)
         # Tor links
-        self.torleft = QLabel()
-        self.torleft.setMinimumSize(10, height)
-        self.torleft.setMaximumSize(10, height)
-        self.torleft.setAutoFillBackground(True)
+        self.torLeft = QLabel()
+        self.torLeft.setMinimumSize(10, height)
+        self.torLeft.setMaximumSize(10, height)
+        self.torLeft.setAutoFillBackground(True)
         #self.torleft.setVisible(False)
         # Tor rechts
         self.torRight = QLabel()
