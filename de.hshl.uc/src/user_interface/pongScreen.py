@@ -98,7 +98,7 @@ class pongScreen(QWidget):
         self.imageLabel.layout().addWidget(self.imageLabel2)
         self.imageLabel.layout().addWidget(self.bandeOben)
         self.imageLabel.layout().addWidget(self.bandeUnten)
-        self.imageLabel.layout().addWidget(self.torleft)
+        self.imageLabel.layout().addWidget(self.torLeft)
         self.imageLabel.layout().addWidget(self.torRight)
         #self.bandeUnten.geometry().setX(0)
        # self.bandeUnten.setGeometry(QtCore.QRect(0, 0, 0, 0))
