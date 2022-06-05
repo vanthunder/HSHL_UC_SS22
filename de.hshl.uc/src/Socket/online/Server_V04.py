@@ -84,12 +84,7 @@ class Server:
             self.yPositive = True
         elif collisionObject == 'bandeU':
             self.yPositive = False
-        elif collisionObject == 'torL':
-            self.xC = self.ballStartCoords.__getitem__(1)
-            self.yC = self.ballStartCoords.__getitem__(2)
-        elif collisionObject == 'torR':
-            self.xC = self.ballStartCoords.__getitem__(1)
-            self.yC = self.ballStartCoords.__getitem__(2)
+
 
 
 
@@ -102,6 +97,13 @@ class Server:
             self.ballMovementpositivey()
         elif self.yPositive == False:
             self.ballMovementnegativey()
+
+        if collisionObject == 'torL':
+            self.xC = self.ballStartCoords.__getitem__(1)
+            self.yC = self.ballStartCoords.__getitem__(2)
+        elif collisionObject == 'torR':
+            self.xC = self.ballStartCoords.__getitem__(1)
+            self.yC = self.ballStartCoords.__getitem__(2)
 
         #elif self.positive == False:
         #    self.ballStartCoords = self.ballMovementnegative()
