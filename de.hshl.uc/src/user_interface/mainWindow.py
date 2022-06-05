@@ -338,7 +338,7 @@ class StartWindow(QMainWindow):
         #    self.startWindow.cursor.setStyleSheet('background-color: yellow')
 
     def updatePosition(self, c):
-        self.pongWindow.imageLabel1.setGeometry(QRect(1000, c - 100, 10, 200))
+        self.pongWindow.imageLabel1.setGeometry(QRect(100, c - 100, 10, 200))
         #self.pongWindow.imageLabel2.setGeometry(QRect(1240, 200, 10, 200))
         # self.imageLabel2.setGeometry(QRect(1400,c-200,10,400))
         print("Klick")
