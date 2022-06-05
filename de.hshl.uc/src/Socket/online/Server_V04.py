@@ -1,12 +1,11 @@
 # Connection Data
 import pickle
 import socket
-import sys
 import threading
-import time
-from typing import Tuple
 
-from pymongo import MongoClient, collection
+from pymongo import collection
+
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -18,6 +17,7 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+
 class Server:
     xC = 500
     yC = 500
@@ -25,7 +25,9 @@ class Server:
     startCounter = 0
     xPositive = True
     yPositive = True
-    ballStartCoords = (625,375)
+    ballStartCoords = (625, 375)
+    playerLeft = False
+    playerRight = False
 
     def __init__(self):
 
@@ -37,8 +39,8 @@ class Server:
 
         # Bools for Player
         # Asks is the player is ready
-        self.playerLeft = False
-        self.playerRight = False
+        # self.playerLeft = False
+        # self.playerRight = False
 
         # Starting Server
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -56,20 +58,19 @@ class Server:
         self.clients = []
         self.nicknames = ['Server']
         self.Is_closed = 'False'
-        self.msgTuple = ("",1)
+        self.msgTuple = ("", 1)
         self.receive()
         # Ball start Coordinates
         self.ballStartCoords = (625, 375)
         self.positive = True
         self.canStart = False
 
-
     def updateBall(self, collisionObject):
-        #print('Die positive Variable: ', self.positive)
+        # print('Die positive Variable: ', self.positive)
 
         # elif self.detect_collision()==False and not self.positive:
         #    self.positive = True
-        #if self.detect_collision():
+        # if self.detect_collision():
         #    if self.positive:
         #        self.positive = False
 
@@ -84,9 +85,6 @@ class Server:
             self.yPositive = True
         elif collisionObject == 'bandeU':
             self.yPositive = False
-
-
-
 
         if self.xPositive == True:
             self.ballMovementpositivex()
@@ -105,26 +103,24 @@ class Server:
             self.xC = self.ballStartCoords.__getitem__(0)
             self.yC = self.ballStartCoords.__getitem__(1)
 
-        #elif self.positive == False:
+        # elif self.positive == False:
         #    self.ballStartCoords = self.ballMovementnegative()
-
-
 
     def ballMovementpositivex(self):
         self.xC += 2
-        #self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
+        # self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
+
     def ballMovementpositivey(self):
         self.yC += 2
-        #self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
+        # self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
 
     def ballMovementnegativex(self):
         self.xC -= 2
-        #self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
+        # self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
+
     def ballMovementnegativey(self):
         self.yC -= 2
         # self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
-
-
 
     def update_Chat(self):
         print("Update_Chat")
@@ -140,23 +136,18 @@ class Server:
                 # Adds Container here!
                 self.y.append(document)
 
-
-
-
-
     # Sending Messages To All Connected Clients
-    def broadcast(self,message):
+    def broadcast(self, message):
         for client in self.clients:
             # print(message)
             client.send(message)
             print("Server send: ", message, " to Client")
 
-
     # Handling Messages From Clients
     def handle(self, client):
         self.packets = []
-        #playerLeft = False
-        #playerRight = False
+        # playerLeft = False
+        # playerRight = False
         while True:
             try:
                 # Broadcasting Messages
@@ -169,18 +160,18 @@ class Server:
                     print(message)
                     message = pickle.loads(message)
 
-               # print("Update_Chat")
-               # update_Chat()
-               # print("Update_Chat")
+                # print("Update_Chat")
+                # update_Chat()
+                # print("Update_Chat")
 
                 print(message)
-                #message = pickle.loads(message)
+                # message = pickle.loads(message)
                 self.msgTuple = message
-               # print("Update_Chat!")
-               # Checks if one player is ready
-               # If the number is 101100 the player is ready
-               # If the number is 101101 the player is not ready
-               # if message == tuple:
+                # print("Update_Chat!")
+                # Checks if one player is ready
+                # If the number is 101100 the player is ready
+                # If the number is 101101 the player is not ready
+                # if message == tuple:
                 if message.__getitem__(0) == 'Left':
                     if message.__getitem__(1) == 101100:
                         self.playerLeft = True
@@ -192,18 +183,17 @@ class Server:
                     elif message.__getitem__(1) == 101101:
                         self.playerRight = False
 
-
-
                 if self.playerRight:
                     print('TRUE!!!!!!!!!!!!!!!!!!!')
-               # print("Message: ", received_tupel)
+                # print("Message: ", received_tupel)
                 received_tupel = pickle.dumps(message)
-               # chatTuple = pickle.dumps(chatContainer)
+                # chatTuple = pickle.dumps(chatContainer)
                 ## Client start code
-                print(bcolors.HEADER, "Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC, self.startCounter)
+                print(bcolors.HEADER, "Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC,
+                      self.startCounter)
                 if self.playerLeft == self.playerRight:
                     if self.startCounter == 1:
-                        #time.sleep(0.5)
+                        # time.sleep(0.5)
                         print('Das ist ein OK!!!!!!!!!!!!!')
                         msg = pickle.dumps(self.playerLeft)
                         self.broadcast(msg)
@@ -216,20 +206,20 @@ class Server:
                         print("Counter wird gesetzt!")
                         self.startCounter += 1
 
-
                 ## Ball code
                 if self.canStart == True:
                     print('Can Start', self.xC, self.yC, message.__getitem__(1))
                     self.updateBall(message.__getitem__(1))
-                    #self.ballMovementpositive()
-                    #self.x += 10
+                    # self.ballMovementpositive()
+                    # self.x += 10
                     msg = (self.xC, self.yC)
                     msg = pickle.dumps(msg)
                     self.broadcast(msg)
-                   # broadcast(playerLeft)
-               # broadcast(chatTuple)
+                # broadcast(playerLeft)
+                # broadcast(chatTuple)
                 print(self.msgTuple, " DER TUPLE!!!!!")
-                if not self.msgTuple.__getitem__(1) == 101100 and not self.msgTuple.__getitem__(1) == 101101 and not self.msgTuple.__getitem__(0) == 'ball':
+                if not self.msgTuple.__getitem__(1) == 101100 and not self.msgTuple.__getitem__(
+                        1) == 101101 and not self.msgTuple.__getitem__(0) == 'ball':
                     self.broadcast(received_tupel)
 
             except:
@@ -242,19 +232,18 @@ class Server:
                 client.close()
                 self.reset()
 
-
                 # To Do Close Thread
 
                 # nickname = nicknames[index]
                 # broadcast('{} left!'.format(nickname).encode('ascii'))
                 # nicknames.remove(nickname)
-           # if playerLeft == True:
+            # if playerLeft == True:
             # print('TEST')
             # allReady = True
             # print("Alle Clients sind TRUE")
             # msg = pickle.dumps(allReady)
             # broadcast(msg)
-           # If statemnt if all players are ready sent start command to clients
+            # If statemnt if all players are ready sent start command to clients
 
             # broadcast(msg)
 
@@ -274,16 +263,15 @@ class Server:
             #    writeList(received_tupel)
             # else:
             #    broadcast(message)
-            print(bcolors.BOLD, "Unten","Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC,
-                self.startCounter)
+            print(bcolors.BOLD, "Unten", "Player L: ", self.playerLeft, " Player R: ", self.playerRight, bcolors.ENDC,
+                  self.startCounter)
 
-
-            #print('close Client')
+            # print('close Client')
             # Removing And Closing Clients
-            #self.index = self.clients.index(client)
-            #self.clients.remove(client)
-            #self.clients.clear()
-            #client.close()
+            # self.index = self.clients.index(client)
+            # self.clients.remove(client)
+            # self.clients.clear()
+            # client.close()
 
             # To Do Close Thread
 
@@ -299,6 +287,9 @@ class Server:
         self.xPositive = True
         self.yPositive = True
         self.ballStartCoords = (625, 375)
+        self.playerLeft = False
+        self.playerRight = False
+        print(bcolors.WARNING, "Sever Reset wurde durchgeführt!", bcolors.ENDC)
 
     # Receiving / Listening Function
     def receive(self):
@@ -323,16 +314,12 @@ class Server:
             thread.start()
             # thread.join()
 
-
-
     def main(self):
 
         server_inst = Server()
         receive_thread = threading.Thread(target=server_inst.receive, args=())
         print('TEST')
         receive_thread.start()
-
-
 
 
 if __name__ == "__main__":
