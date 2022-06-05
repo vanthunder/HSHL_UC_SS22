@@ -234,12 +234,13 @@ class Server:
 
             except:
                 print('close Client')
+                self.reset()
                 # Removing And Closing Clients
                 index = self.clients.index(client)
                 self.clients.remove(client)
                 self.clients.clear()
                 client.close()
-                self.rest()
+                self.reset()
 
 
                 # To Do Close Thread

@@ -154,13 +154,13 @@ class VideoThread(QThread):
 
     # Camera Loop
     def run(self):
-        Player = 'Left'  # input('Player: ')
+        Player = 'Right'  # input('Player: ')
 
         self.client.player = Player
         rThread = threading.Thread(target=self.start_receive, args=())
         #rThread.start()
         #self.client.receive()
-        self.client.sendReady('Left')
+        self.client.sendReady('Right')
         while True:
             if self.client.canStart == True:
                 print(bcolors.WARNING, "Starte VideoLoop", bcolors.ENDC)
