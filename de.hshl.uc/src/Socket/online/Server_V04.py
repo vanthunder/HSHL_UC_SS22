@@ -231,6 +231,7 @@ class Server:
                 self.clients.clear()
                 client.close()
                 self.reset()
+                #message = None
 
                 # To Do Close Thread
 
