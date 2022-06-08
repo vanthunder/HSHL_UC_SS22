@@ -2,6 +2,7 @@ import threading
 
 import cv2
 import numpy as np
+import pytz
 import qimage2ndarray as qimage2ndarray
 from PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QRect, QMutex
 from PyQt5.QtGui import QPixmap, QFont, QMovie
@@ -21,6 +22,8 @@ from user_interface.pongScreen import pongScreen
 from user_interface.startWindow import startWindow
 
 from recognition.body_detector import body_detector
+from datetime import datetime
+import requests
 
 
 class bcolors:
@@ -72,7 +75,7 @@ class VideoThread(QThread):
         lmList = []
         self.hand_detector.handlist = lmList
         video = 'hands.mp4'
-        self.camera = Camera(video)
+        self.camera = Camera(0)
         self.camera.initialize()
         # Left or Right
         #Player = 'Left'  # input('Player: ')
@@ -154,13 +157,13 @@ class VideoThread(QThread):
 
     # Camera Loop
     def run(self):
-        Player = 'Left'  # input('Player: ')
+        Player = 'Right'  # input('Player: ')
 
         self.client.player = Player
         rThread = threading.Thread(target=self.start_receive, args=())
         #rThread.start()
         #self.client.receive()
-        self.client.sendReady('Left')
+        self.client.sendReady('Right')
         while True:
             if self.client.canStart == True:
                 print(bcolors.WARNING, "Starte VideoLoop", bcolors.ENDC)
@@ -205,6 +208,7 @@ class StartWindow(QMainWindow):
         print(self.chat_client)
         self.thread.change_lc.connect(self.start_thread_receive)
         # Start Thread
+        self.thread.update_infolabel.connect(self.update_infolabel)
         self.thread.start()
         # Chat
         self.globalChat = []
@@ -274,7 +278,7 @@ class StartWindow(QMainWindow):
         #self.pongWindow.imageLabel2.setFixedWidth(10)
         #self.pongWindow.imageLabel2.move(400, 222)
         #self.pongWindow.imageLabel2.setAlignment(Qt.AlignCenter)
-        self.start_Game()
+        #self.start_Game()
 
 
 
@@ -423,6 +427,32 @@ class StartWindow(QMainWindow):
             else:
                 return False
 
+    def update_infolabel(self):
+        # Get Date and Time
+        timezone = pytz.timezone('Europe/Berlin')
+        now = datetime.now(timezone)
+        now.astimezone()
+        time = now.strftime("%H:%M")
+        get_date = now.date().strftime("%A")
+
+        match str(get_date):
+            case "Monday":
+                get_date = "Montag"
+            case "Tuesday":
+                get_date = "Dienstag"
+            case "Wednesday":
+                get_date = "Mittwoch"
+            case "Thursday":
+                get_date = "Donnerstag"
+            case "Friday":
+                get_date = "Freitag"
+            case "Saturday":
+                get_date = "Samstag"
+            case "Sunday":
+                get_date = "Sonntag"
+
+        self.startWindow.clock_label.setText(str(time))
+        self.startWindow.date_label.setText(str(get_date))
 
     def convert_cv_qt(self, cv_img):
         cv_img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
@@ -543,7 +573,7 @@ class BackgroundFeed(QThread):
     change_ab_signal = pyqtSignal(object)
     change_pixmap_signal = pyqtSignal(np.ndarray)
     change_cursor_position = pyqtSignal(int, int)
-
+    update_infolabel = pyqtSignal()
     ## LC
     change_lc = pyqtSignal(chat_client)
     counter = int(1)
@@ -581,10 +611,12 @@ class BackgroundFeed(QThread):
 
 
         while True:
+
             self.client.sendcoordinate(Player, 100)
             success, img = self.camera.cap.read()
             # img.flags.writeable = False
             if success:
+                self.update_infolabel.emit()
                 print(bcolors.OKCYAN,'!!@@',self.client.TempChatList,bcolors.ENDC)
                 self.change_ab_signal.emit(self.client.TempChatList)
                 # init Hand detector

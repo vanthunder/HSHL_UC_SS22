@@ -95,10 +95,8 @@ class startWindow(QWidget):
         base_url = "https://api.openweathermap.org/data/2.5/weather?q="
         city_name = "lippstadt"
 
-        complete_url = base_url + city_name + "&appid=" + api_key
-
-        response = requests.get(complete_url)
-
+        self.complete_url = base_url + city_name + "&appid=" + api_key
+        response = requests.get(self.complete_url)
         data = response.json()
 
         # -273.15 weil Kelvin zu Celsius
