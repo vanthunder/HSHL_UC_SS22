@@ -7,12 +7,16 @@
     <orderEntry type="jdk" jdkName="Python 3.10 (HSHL_UC_SS22)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PyDocumentationSettings">
+    <option name="format" value="PLAIN" />
+    <option name="myDocStringFormat" value="Plain" />
+  </component>
   <component name="PyNamespacePackagesService">
     <option name="namespacePackageFolders">
       <list>
         <option value="$MODULE_DIR$/de.hshl.uc/src/recognition" />
-        <option value="$MODULE_DIR$/de.hshl.uc/src/user_interface" />
         <option value="$MODULE_DIR$/de.hshl.uc/src/model" />
+        <option value="$MODULE_DIR$/de.hshl.uc/src/user_interface" />
       </list>
     </option>
   </component>

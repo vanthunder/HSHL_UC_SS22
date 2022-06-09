@@ -27,7 +27,7 @@ def receive():
 
         except:
             # Close Connection When Error
-            print("An error occured!")
+            print("An error occured! - New_Client.py")
             client.close()
             break
 

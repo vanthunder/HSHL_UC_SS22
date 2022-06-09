@@ -9,14 +9,26 @@ import threading
 
 
 # Listening to Server and Sending Nickname
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
-
-class local_client:
+class chat_client:
     Y = [11]
     player = 'Left'
     TempTupel = (player, 0)
+    TempChatList = [TempTupel]
     packets = []
-    nickname = "client"
+    #client = "Client"
+    nickname = 'Client'
+    pkg = []
     def __init__(self) :
         # Choosing Nickname
         self.nickname = 'Client: '  # input("Choose your nickname: ")
@@ -24,45 +36,51 @@ class local_client:
         # Connecting To Server
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-        self.client.connect(('127.0.0.3', 1666))
+        self.client.connect(('34.159.99.140', 1668))
         #print(self.client)
         self.tuple = (1, 2)
         counter = 0
         self.Player = ""
         self.serial = pickle.dumps(self.tuple)
-        self.chat = []
         #self.tempTupel=(self.Player,2)
         #self.y = [2]
 
     def receive(self):
         while True:
-            print('TESSSSSSSSSSSSSSSSSSSSSSSSTTTTTTTTTTTTTTTTTTTTTTTTTTTHHHHHHHHHHHHHHHHHHHHHHHHHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!')
             try:
+                print(bcolors.WARNING, "Server_____: ", bcolors.ENDC)
                 Y = 10
                 print(Y)
                 #print(self.client)
                 # Receive Message From Server
                 # If 'NICK' Send Nickname
-                message = self.client.recv(2048)
-
+                print('Vor Server Receive')
+                message = self.client.recv(8192)
+                print('Vor Message decode')
                 message = (pickle.loads(message))
-                a = (1,1)
-                if(a.__contains__("chat_Tag")):
-                    print(message)
-                packets = message
-                print("SERVERPACKET: ",packets)
-                for tuple in packets:
-                 self.TempTupel = tuple
+                print(message)
+                # To-Do: Filter Mongo db message!
+                #print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                print('Vor Message CHAT')
+                print(bcolors.WARNING,"Chat_____: ", bcolors.ENDC)
+                self.TempChatList = message
+                print(bcolors.OKBLUE, "Chat: ", self.TempChatList,bcolors.ENDC)
+                print(self.TempChatList)
+
+
+                #packets = message
+                print('Vor Message decode2')
+                #self.pKg = packets
+                #print("SERVERPACKET: ",packets)
+                #self.TempTupel = message
+                #if len(self.pKg) != 0:
+                #    for tuple in packets:
+                #        self.TempTupel = tuple
                 #self.settimeout(0.050)
                 #self.y = message
                 #self.tempTupel = message
                 #message = self.client.recv(1024).decode('ascii')
                 print('Server: ', message)
-                if message == 'NICK':
-                    self.client.send(self.nickname.encode('ascii'))
-                else:
-                    print(message)
-
             except:
                 # Close Connection When Error
                 print("An error occured!")
@@ -75,6 +93,9 @@ class local_client:
     def updateCoordinate(self, update):
         self.y = update
         print('Update!!!!: ',update)
+
+    def close_client(self):
+        self.client.close()
 
     # Sending Messages To Server
     def write(self):
@@ -91,7 +112,8 @@ class local_client:
     def sendcoordinate(self,Player ,yCoordiante):
         print('Send: ', Player ,yCoordiante)
         self.Y = yCoordiante
-
+        receive_thread = threading.Thread(target=self.receive, args=())
+        receive_thread.start()
         #print(self.Y)
         playerCoordinates = (Player, yCoordiante)
         serialPC = pickle.dumps(playerCoordinates)
@@ -101,7 +123,7 @@ class local_client:
 
     def main(self):
 
-        lclient = local_client()
+        lclient = chat_client()
         receive_thread = threading.Thread(target=lclient.receive, args=())
         print('TEST')
         receive_thread.start()
@@ -112,5 +134,5 @@ class local_client:
 
 
 if __name__ == "__main__":
-    c = local_client
-    c.main(self=local_client)
+    c = chat_client
+    c.main(self=chat_client)
