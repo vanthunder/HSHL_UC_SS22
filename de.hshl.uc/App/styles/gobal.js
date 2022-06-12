@@ -15,6 +15,7 @@ export const globalStyles = StyleSheet.create({
         backgroundColor: '#EBEFF0',
         paddingBottom: 10,
         paddingTop: 60,
+        fontFamily: "JosefineSansMedium"
       
       },
       boxOne: {
@@ -24,7 +25,7 @@ export const globalStyles = StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center',
         borderRadius: 25,
-        fontFamily: "PermanentMarker_400Regular",
+        fontFamily: "PermanentMarker",
         fontSize: 50,
       },
       boxTwo: {
@@ -34,7 +35,7 @@ export const globalStyles = StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center',
         borderRadius: 25,
-        fontFamily: "PermanentMarker_400Regular",
+        fontFamily: "PPermanentMarker",
         fontSize: 50,
       },
       boxThree: {
@@ -44,7 +45,7 @@ export const globalStyles = StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center',
         borderRadius: 25,
-        fontFamily: "PermanentMarker_400Regular",
+        fontFamily: "PermanentMarker",
         fontSize: 50,
       },
       boxFour: {
@@ -54,7 +55,7 @@ export const globalStyles = StyleSheet.create({
         textAlign: 'center',
         textAlignVertical: 'center',
         borderRadius: 25,
-        fontFamily: "PermanentMarker_400Regular",
+        fontFamily: "PermanentMarker",
         fontSize: 50,
         margin: 20,
       },
@@ -68,14 +69,13 @@ export const globalStyles = StyleSheet.create({
         borderColor: '#F7AF9D',
         borderRadius: 25,
         padding: 10,
-        
       },
 
      Chatinput :{
        flexDirection: "row",
        justifyContent: 'space-between',
        paddingTop: 420,
-       
+       fontFamily: "PermanentMarker",
       },
 
   
@@ -87,7 +87,6 @@ export const globalStyles = StyleSheet.create({
         marginBottom: 1,
         width: 60,
         height: 30
-  
       }
 
   });

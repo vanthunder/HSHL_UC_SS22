@@ -45,15 +45,17 @@ const Chat = () => {
        <Text style={globalStyles.boxFour}>Chat</Text>
        <View style={globalStyles.Chat}>
       
-           <Text>1 2 3 Test</Text>
+           <Text style={{fontFamily: 'JosefineSansMedium'}}>
+           1 2 3 Test
+           </Text>
        
      
         <View style={globalStyles.Chatinput}>
          <TextInput
-          style={globalStyles.Message}
+          style={{fontFamily: 'JosefineSansMedium'}}
           value={name}
           onChangeText={text => setName(text)}
-          placeholder="Hier können Sie tippen"
+          placeholder="Ihre Nachricht"
          />
   
          <TouchableOpacity
