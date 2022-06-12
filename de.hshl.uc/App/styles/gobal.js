@@ -81,12 +81,11 @@ export const globalStyles = StyleSheet.create({
   
       ButtonStyle :{
         backgroundColor: '#8BC1E9',
-        borderRadius: 25,
+        borderRadius: 10,
         alignItems: "center",
-        padding: 5,
-        marginBottom: 1,
-        width: 60,
-        height: 30
+        padding: 8,
+        width: 35,
+        height: 35
       }
 
   });

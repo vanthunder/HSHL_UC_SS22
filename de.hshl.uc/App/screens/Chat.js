@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import { View, StyleSheet, TextInput, Button, Text, FlatList, TouchableOpacity} from "react-native";
 import { globalStyles } from "../styles/gobal";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-
+import { Ionicons } from '@expo/vector-icons'; 
 
 
 const Chat = () => {
@@ -60,9 +60,8 @@ const Chat = () => {
   
          <TouchableOpacity
            style={globalStyles.ButtonStyle}
-          onPress={() => submitData()}
-      >
-          <Text>Senden</Text>
+          onPress={() => submitData()}>
+          <Ionicons name="send" size={18} color="black" />
          </TouchableOpacity>
        </View>
       
