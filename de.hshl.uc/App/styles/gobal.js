@@ -3,47 +3,50 @@ import { StyleSheet } from 'react-native';
 export const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#EBEFF0',
-        paddingBottom: 40,
-        paddingTop: 60,
+        backgroundColor: '#FFFFFF',
+        paddingBottom: 30,
+        paddingTop: 30,
         paddingLeft: 20,
         paddingRight: 20,
       },
      
       containerTwo: {
         flex: 1,
-        backgroundColor: '#EBEFF0',
+        backgroundColor: '#FFFFFF',
         paddingBottom: 10,
-        paddingTop: 60,
-        fontFamily: "JosefineSansMedium"
+        paddingTop: 10,
+    
       
       },
+    Titel: {
+      fontFamily: "PermanentMarker",
+      fontSize: 50,
+    },
       boxOne: {
-        flex: 1,
+        height: 175,
         backgroundColor: '#8BC1E9',
         margin: 30,
-        textAlign: 'center',
-        textAlignVertical: 'center',
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 25,
+        
+      },
+      boxTwo: {
+        height: 175,
+        backgroundColor: '#B28BBC',
+        margin: 30,
+        justifyContent: "center",
+        alignItems: "center",
         borderRadius: 25,
         fontFamily: "PermanentMarker",
         fontSize: 50,
       },
-      boxTwo: {
-        flex: 1,
-        backgroundColor: '#B28BBC',
-        margin: 30,
-        textAlign: 'center',
-        textAlignVertical: 'center',
-        borderRadius: 25,
-        fontFamily: "PPermanentMarker",
-        fontSize: 50,
-      },
       boxThree: {
-        flex: 1,
+        height: 175,
         backgroundColor: '#4B6E74',
         margin: 30,
-        textAlign: 'center',
-        textAlignVertical: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         borderRadius: 25,
         fontFamily: "PermanentMarker",
         fontSize: 50,
@@ -51,7 +54,7 @@ export const globalStyles = StyleSheet.create({
       boxFour: {
         flex: 1,
         backgroundColor: '#8BC1E9',
-        height: 150,
+        height: 175,
         textAlign: 'center',
         textAlignVertical: 'center',
         borderRadius: 25,
@@ -61,7 +64,7 @@ export const globalStyles = StyleSheet.create({
       },
 
       Chat :{
-        height: 500,
+        height: 400,
         margin: 20,
         borderWidth: 5,
         borderLeftWidth: 2,
@@ -74,8 +77,7 @@ export const globalStyles = StyleSheet.create({
      Chatinput :{
        flexDirection: "row",
        justifyContent: 'space-between',
-       paddingTop: 420,
-       fontFamily: "PermanentMarker",
+       paddingTop: 320,
       },
 
   

@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
-import Home from './screens/Home';
-import Chat from './screens/Chat';
+import Navigator from './routes/homeStack'
 
 export default () => {
   let [fontsLoaded] = useFonts({
@@ -17,7 +16,7 @@ export default () => {
     return <AppLoading />;
   } 
   return (
-      <Chat />
+      <Navigator />
   );
 
 }
