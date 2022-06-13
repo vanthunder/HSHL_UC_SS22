@@ -23,6 +23,7 @@ from user_interface.startWindow import startWindow
 
 from recognition.body_detector import body_detector
 from datetime import datetime
+import time
 import requests
 
 
@@ -123,6 +124,14 @@ class VideoThread(QThread):
                 print(bcolors.FAIL, self.client.ballcoords.__getitem__(0), bcolors.ENDC)
                 self.update_ball_signal.emit(self.client.ballcoords.__getitem__(0),
                                              self.client.ballcoords.__getitem__(1))
+                if(self.client.ballcoords.__getitem__(0) == 625 and self.client.ballcoords.__getitem__(1) == 375):
+                    if self.pongWindow.scoreLeft.text() == '0':
+                        self.pongWindow.scoreLeft.setText('1')
+                    elif self.pongWindow.scoreLeft.text() == '1':
+                        self.pongWindow.scoreLeft.setText('2')
+                    elif self.pongWindow.scoreLeft.text() == '2':
+                        self.pongWindow.scoreLeft.setText('3')
+
                 # self.update_ball_signal.emit(500, 500)
 
                 # To Do send to server:
@@ -212,6 +221,9 @@ class StartWindow(QMainWindow):
         self.thread.start()
         # Chat
         self.globalChat = []
+
+        self.isPause = False
+        self.pauseThread = PauseThread()
 
         # self.pixmap_item = QPixmap()
 
@@ -360,6 +372,9 @@ class StartWindow(QMainWindow):
         self.pongWindow.torRight.setVisible(True)
         self.pongWindow.torLeft.setGeometry(0, 0, 80, 80)
         self.pongWindow.torRight.setGeometry(1248, 0, 80, 80)
+
+        self.pongWindow.scoreLeft.setGeometry(QRect(600, 50, 10, 50))
+        self.pongWindow.scoreRight.setGeometry(QRect(700, 50, 10, 50))
 
         print('Die positive Variable: ', self.positive)
 
@@ -640,6 +655,15 @@ class BackgroundFeed(QThread):
                 #img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, body_image_black)
                 self.change_pixmap_signal.emit(body_image_black)
 
+
+
+class PauseThread(QThread):
+    def __init__(self):
+        super().__init__()
+
+    def run(self):
+        time.sleep(0.1)
+        return False
 
 if __name__ == '__main__':
     app = QApplication([])
