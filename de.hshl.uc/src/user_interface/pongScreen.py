@@ -38,21 +38,23 @@ class pongScreen(QWidget):
         self.imageLabel1 = QLabel()
         self.imageLabel1.setMinimumSize(10, 200)
         self.imageLabel1.setMaximumSize(10, 200)
+        self.imageLabel1.setStyleSheet("background-color: #00b000;")
         #self.imageLabel1.setGeometry(QRect(10, 200, 10, 400))
         self.imageLabel1.setAutoFillBackground(True)
         # Player 2 - Imagelabel 2 = paddle2
         self.imageLabel2 = QLabel()
         self.imageLabel2.setMinimumSize(10, 200)
         self.imageLabel2.setMaximumSize(10, 200)
+        self.imageLabel2.setStyleSheet("background-color: red;")
         #self.imageLabel2.setGeometry(QRect(1270, 200, 10, 400))
         self.imageLabel2.setAutoFillBackground(True)
         # Ball - Imagelabel 3 = Ball
-        self.imageLabel3 = QLabel('round label')
+        self.imageLabel3 = QLabel('')
         self.imageLabel3.move(100, 100)
-        self.imageLabel3.resize(80, 80)
-        self.imageLabel3.setMaximumSize(80, 80)
+        self.imageLabel3.resize(30, 30)
+        self.imageLabel3.setMaximumSize(30, 30)
         self.imageLabel3.setAutoFillBackground(True)
-        self.imageLabel3.setStyleSheet("border: 3px solid blue; border-radius: 40px;")
+        self.imageLabel3.setStyleSheet("border: 3px solid #4447e3; border-radius: 15px; background-color: #3032b3;")
 
         #Bande oben
         self.bandeOben = QLabel()
