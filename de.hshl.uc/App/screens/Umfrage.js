@@ -16,8 +16,8 @@ export default function Umfrage() {
     container: {
       flex: 1,
       backgroundColor: '#EBEFF0',
-      paddingBottom: 40,
-      paddingTop: 60,
+      paddingBottom: 30,
+      paddingTop: 30,
       paddingLeft: 20,
       paddingRight: 20,
     },
