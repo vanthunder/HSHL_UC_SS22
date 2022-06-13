@@ -4,6 +4,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { globalStyles } from '../styles/gobal';
 
 export default function Home( { navigation }) {
+  const pressUmfrage = () => {
+    navigation.navigate('Umfrage')
+  }
+  const pressSpiele = () => {
+    navigation.navigate('Spiele')
+  }
   const pressChat = () => {
     navigation.navigate('Chat')
   }
@@ -12,7 +18,7 @@ export default function Home( { navigation }) {
   
     <TouchableOpacity
      style={globalStyles.boxOne}
-     onPress={(pressChat)}>
+     onPress={(pressUmfrage)}>
      <Text  style={globalStyles.Titel}>Umfrage</Text>
      </TouchableOpacity>
   
@@ -20,7 +26,7 @@ export default function Home( { navigation }) {
    
      <TouchableOpacity
      style={globalStyles.boxTwo}
-     onPress={(pressChat)}>
+     onPress={(pressSpiele)}>
      <Text style={globalStyles.Titel}>Spiele</Text>
      </TouchableOpacity>
      

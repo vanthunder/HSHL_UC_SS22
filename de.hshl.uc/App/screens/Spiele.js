@@ -1,54 +1,42 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { globalStyles } from "../styles/gobal";
 
-
-export default function Spiele() {
+export default function Spiele(navigation) {
+  const pressUmfrage = () => {
+    navigation.navigate('Umfrage')
+  }
+  const pressSpiele = () => {
+    navigation.navigate('Spiele')
+  }
+  const pressChat = () => {
+    navigation.navigate('Chat')
+  }
   return (
-    <View style={styles.container}>
-      <Text style={styles.boxOne}>Umfrage</Text>
-      <Text style={styles.boxTwo}>unknown</Text>
-      <Text style={styles.boxThree}>unknown</Text>
-    </View>
+ <View style={globalStyles.container}>
+   
+  
+  <TouchableOpacity
+   style={globalStyles.boxOne}
+   onPress={(pressUmfrage)}>
+   <Text  style={globalStyles.Titel}>Phong</Text>
+   </TouchableOpacity>
+
+    
+ 
+   <TouchableOpacity
+   style={globalStyles.boxTwo}
+   onPress={(pressSpiele)}>
+   <Text style={globalStyles.Titel}>TickTackToe</Text>
+   </TouchableOpacity>
+   
+   <TouchableOpacity
+   style={globalStyles.boxThree}
+   onPress={(pressChat)}>
+   <Text style={globalStyles.Titel}>x</Text>
+   </TouchableOpacity>
+  
+  </View>
   );
 
-}const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#EBEFF0',
-      paddingBottom: 40,
-      paddingTop: 60,
-      paddingLeft: 20,
-      paddingRight: 20,
-    },
-    boxOne: {
-      flex: 1,
-      backgroundColor: '#8BC1E9',
-      margin: 30,
-      textAlign: 'center',
-      textAlignVertical: 'center',
-      borderRadius: 25,
-      fontFamily: "PermanentMarker_400Regular",
-      fontSize: 50,
-    },
-    boxTwo: {
-      flex: 1,
-      backgroundColor: '#B28BBC',
-      margin: 30,
-      textAlign: 'center',
-      textAlignVertical: 'center',
-      borderRadius: 25,
-      fontFamily: "PermanentMarker_400Regular",
-      fontSize: 50,
-    },
-    boxThree: {
-      flex: 1,
-      backgroundColor: '#4B6E74',
-      margin: 30,
-      textAlign: 'center',
-      textAlignVertical: 'center',
-      borderRadius: 25,
-      fontFamily: "PermanentMarker_400Regular",
-      fontSize: 50,
-    }
-  });
-  
+}

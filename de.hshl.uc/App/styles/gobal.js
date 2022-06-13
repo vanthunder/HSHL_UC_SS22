@@ -5,7 +5,7 @@ export const globalStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFFFFF',
         paddingBottom: 30,
-        paddingTop: 30,
+        paddingTop: 20,
         paddingLeft: 20,
         paddingRight: 20,
       },
