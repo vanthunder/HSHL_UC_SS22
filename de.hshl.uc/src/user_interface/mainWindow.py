@@ -48,6 +48,7 @@ class VideoThread(QThread):
     update_ball_signal = pyqtSignal(int, int)
     update_player_2 = pyqtSignal(int)
     starte_receive_loop = pyqtSignal(local_client)
+    update_tor = pyqtSignal()
     counter = int(1)
     client = local_client()
 
@@ -125,12 +126,7 @@ class VideoThread(QThread):
                 self.update_ball_signal.emit(self.client.ballcoords.__getitem__(0),
                                              self.client.ballcoords.__getitem__(1))
                 if(self.client.ballcoords.__getitem__(0) == 625 and self.client.ballcoords.__getitem__(1) == 375):
-                    if self.pongWindow.scoreLeft.text() == '0':
-                        self.pongWindow.scoreLeft.setText('1')
-                    elif self.pongWindow.scoreLeft.text() == '1':
-                        self.pongWindow.scoreLeft.setText('2')
-                    elif self.pongWindow.scoreLeft.text() == '2':
-                        self.pongWindow.scoreLeft.setText('3')
+                    self.update_tor.emit()
 
                 # self.update_ball_signal.emit(500, 500)
 
@@ -166,13 +162,13 @@ class VideoThread(QThread):
 
     # Camera Loop
     def run(self):
-        Player = 'Right'  # input('Player: ')
+        Player = 'Left'  # input('Player: ')
 
         self.client.player = Player
         rThread = threading.Thread(target=self.start_receive, args=())
         #rThread.start()
         #self.client.receive()
-        self.client.sendReady('Right')
+        self.client.sendReady('Left')
         while True:
             if self.client.canStart == True:
                 print(bcolors.WARNING, "Starte VideoLoop", bcolors.ENDC)
@@ -432,6 +428,7 @@ class StartWindow(QMainWindow):
                 # Collision Bande Oben
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torLeft.geometry()):
                 print("INTERSECTION!")
+                #self.String("torL")
                 self.local_cL.sendCollision("torL")
                 return True
             # Collision Bande Unten
@@ -490,6 +487,15 @@ class StartWindow(QMainWindow):
         print(bcolors.BOLD,"TEST111111111111111111111111!",bcolors.ENDC)
 
     # Only for debug!
+
+
+    def updateTor(self):
+        if self.pongWindow.scoreLeft.text() == '0':
+            self.pongWindow.scoreLeft.setText('1')
+        elif self.pongWindow.scoreLeft.text() == '1':
+            self.pongWindow.scoreLeft.setText('2')
+        elif self.pongWindow.scoreLeft.text() == '2':
+            self.pongWindow.scoreLeft.setText('3')
 
     def update_chat_debug(self, ab):
         # uses dict
@@ -566,6 +572,7 @@ class StartWindow(QMainWindow):
         self.thread.update_label_signal.connect(self.updatePosition)
         self.thread.update_ball_signal.connect(self.updateBall)
         #self.thread.update_chat_signal.connect(self.upchatlabel)
+        self.thread.update_tor.connect(self.updateTor)
         self.thread.update_player_2.connect(self.updatePositionPlayer2)
 
         #self.update_chat_debug()
