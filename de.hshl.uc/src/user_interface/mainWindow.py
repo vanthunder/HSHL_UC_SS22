@@ -333,15 +333,15 @@ class StartWindow(QMainWindow):
         #self.startWindow.button_Play.move(x, y)
         if self.startWindow.cursor.geometry().intersected(self.startWindow.button_Play.geometry()):
             self.counter += 1
-            self.startWindow.cursor.setText(str(self.startWindow.cursor.geometry().getCoords()))
-            self.startWindow.button_Play.setText(str(self.startWindow.button_Play.geometry().getCoords()))
+            #self.startWindow.cursor.setText(str(self.startWindow.cursor.geometry().getCoords()))
+            #self.startWindow.button_Play.setText(str(self.startWindow.button_Play.geometry().getCoords()))
             print("counter:", self.counter)
-            self.startWindow.cursor.load(self.counter)
-            if self.counter > 100:
+            self.startWindow.load(self.counter)
+            if self.counter > 60:
                 self.start_Game()
                 self.counter = 0
         else:
-            self.startWindow.cursor.reset_load()
+            self.startWindow.reset_load()
             self.counter = 0;
             #self.start_Game()
             print()

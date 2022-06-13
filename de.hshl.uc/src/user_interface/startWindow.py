@@ -2,7 +2,7 @@ import requests
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QPalette
-from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QSizePolicy
+from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QSizePolicy, QStackedLayout
 from pyqtgraph.Qt import QtGui
 from datetime import datetime
 import pytz
@@ -15,6 +15,8 @@ from user_interface import global_specs
 
 
 class startWindow(QWidget):
+    DEFAULT_WIDTH = 150
+    DEFAULT_HEIGTH = 250
     def __init__(self):
         super().__init__()
         # Change the desired Resolution!
@@ -146,6 +148,14 @@ class startWindow(QWidget):
         self.button_Play.setMinimumSize(250, 150)
         self.button_Play.setMaximumSize(250, 150)
         self.button_Play.setFont(self.fontA)
+        self.button_Play.setText("Start Pong Game")
+        self.button_Play.layout = QStackedLayout()
+        self.loading_label = QLabel()
+        #self.loading_label.width = 150
+        #self.loading_label.height = 250
+        self.loading_label.setStyleSheet('background: Yellow')
+        self.button_Play.layout.addWidget(self.loading_label)
+        self.loading_label.setMaximumSize(100, 20)
         # Add the two "buttons"
         self.inner_vbox_label_container.layout.addWidget(self.button_Opinion)
         self.inner_vbox_label_container.setStyleSheet('background-color: blue')
@@ -187,3 +197,9 @@ class startWindow(QWidget):
         self.outer_chat_v_label.layout.addWidget(self.scrollArea)
         # Adds the chat to the midd label container
         self.mid_label_container.layout.addWidget(self.outer_chat_v_label)
+
+    def load(self, i):
+        self.loading_label.setMaximumSize(int(self.DEFAULT_WIDTH / 100 * i), self.DEFAULT_HEIGTH)
+
+    def reset_load(self):
+        self.loading_label.setMaximumSize(0, 0)
