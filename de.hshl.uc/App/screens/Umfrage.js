@@ -5,10 +5,10 @@ import { StyleSheet, View, Text } from 'react-native';
 export default function Umfrage() {
   return (
     <View style={styles.container}>
-      <Text style={styles.boxOne}>A</Text>
-      <Text style={styles.boxTwo}>B</Text>
-      <Text style={styles.boxThree}>C</Text>
-      <Text style={styles.boxThree}>D</Text>
+      <Text style={styles.boxOne}>Was ist deine Meingung?</Text>
+      <Text style={styles.boxTwo}>A</Text>
+      <Text style={styles.boxThree}>B</Text>
+      <Text style={styles.boxFour}>C</Text>
     </View>
   );
 
@@ -24,32 +24,42 @@ export default function Umfrage() {
     boxOne: {
       flex: 1,
       backgroundColor: '#8BC1E9',
-      margin: 30,
+      justifyContent: 'space-between',
       textAlign: 'center',
       textAlignVertical: 'center',
       borderRadius: 25,
-      fontFamily: "PermanentMarker_400Regular",
+      fontFamily: "JosefineSansMedium",
       fontSize: 50,
+      marginBottom: 30,
     },
     boxTwo: {
       flex: 1,
       backgroundColor: '#B28BBC',
-      margin: 30,
       textAlign: 'center',
       textAlignVertical: 'center',
-      borderRadius: 25,
-      fontFamily: "PermanentMarker_400Regular",
+      borderTopLeftRadius: 25,
+      borderTopRightRadius: 25,
+      fontFamily: "JosefineSansMedium",
       fontSize: 50,
     },
     boxThree: {
       flex: 1,
       backgroundColor: '#4B6E74',
-      margin: 30,
       textAlign: 'center',
       textAlignVertical: 'center',
-      borderRadius: 25,
-      fontFamily: "PermanentMarker_400Regular",
+      fontFamily: "JosefineSansMedium",
+      fontSize: 50,
+    },
+    boxFour: {
+      flex: 1,
+      backgroundColor: '#F7AF9D',
+      borderBottomLeftRadius: 25,
+      borderBottomRightRadius: 25,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      fontFamily: "JosefineSansMedium",
       fontSize: 50,
     }
+    
   });
   

@@ -5,7 +5,7 @@ export const globalStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFFFFF',
         paddingBottom: 30,
-        paddingTop: 20,
+        paddingTop: 50,
         paddingLeft: 20,
         paddingRight: 20,
       },
@@ -62,6 +62,16 @@ export const globalStyles = StyleSheet.create({
         fontSize: 50,
         margin: 20,
       },
+      boxFive: {
+        height: 175,
+        backgroundColor: '#F7AF9D',
+        margin: 30,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 25,
+        fontFamily: "PermanentMarker",
+        fontSize: 50,
+      },
 
       Chat :{
         height: 400,
@@ -79,6 +89,13 @@ export const globalStyles = StyleSheet.create({
        justifyContent: 'space-between',
        paddingTop: 320,
       },
+
+      Spieleauswahl :{
+        flex:6,
+        paddingTop: 20,
+        
+       },
+ 
 
   
       ButtonStyle :{

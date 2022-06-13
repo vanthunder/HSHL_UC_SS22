@@ -13,11 +13,11 @@ export default function Spiele(navigation) {
     navigation.navigate('Chat')
   }
   return (
- <View style={globalStyles.container}>
-   
-  
+<View style={globalStyles.containerTwo}>
+       <Text style={globalStyles.boxFour}>Chat</Text>
+       <View style={globalStyles.Spieleauswahl}>
   <TouchableOpacity
-   style={globalStyles.boxOne}
+   style={globalStyles.boxTwo}
    onPress={(pressUmfrage)}>
    <Text  style={globalStyles.Titel}>Phong</Text>
    </TouchableOpacity>
@@ -25,17 +25,17 @@ export default function Spiele(navigation) {
     
  
    <TouchableOpacity
-   style={globalStyles.boxTwo}
+   style={globalStyles.boxThree}
    onPress={(pressSpiele)}>
    <Text style={globalStyles.Titel}>TickTackToe</Text>
    </TouchableOpacity>
    
    <TouchableOpacity
-   style={globalStyles.boxThree}
+   style={globalStyles.boxFive}
    onPress={(pressChat)}>
    <Text style={globalStyles.Titel}>x</Text>
    </TouchableOpacity>
-  
+   </View>
   </View>
   );
 
