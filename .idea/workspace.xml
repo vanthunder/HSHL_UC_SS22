@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e02fe796-3b59-42ea-a5eb-771cd7f82d7e" name="Changes" comment="autoscroll down working">
-      <change beforePath="$PROJECT_DIR$/.idea/HSHL_UC_SS22.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/HSHL_UC_SS22.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/Socket/online/Chat/Chat_Client_V01.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/Socket/online/Chat/Chat_Client_V01.py" afterDir="false" />
+    <list default="true" id="e02fe796-3b59-42ea-a5eb-771cd7f82d7e" name="Changes" comment="funfacts 2">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/Tools/FunFacts.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/Tools/FunFacts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/pongScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/pongScreen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/startWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/startWindow.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +115,28 @@
       <option name="project" value="LOCAL" />
       <updated>1654179781487</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="funfacts 1">
+      <created>1655669701779</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1655669701779</updated>
+    </task>
+    <task id="LOCAL-00007" summary="funfacts 1">
+      <created>1655669723506</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1655669723506</updated>
+    </task>
+    <task id="LOCAL-00008" summary="funfacts 2">
+      <created>1655669862219</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1655669862219</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -140,6 +156,8 @@
     <MESSAGE value="cursor counter" />
     <MESSAGE value="removed scroll bars" />
     <MESSAGE value="autoscroll down working" />
-    <option name="LAST_COMMIT_MESSAGE" value="autoscroll down working" />
+    <MESSAGE value="funfacts 1" />
+    <MESSAGE value="funfacts 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="funfacts 2" />
   </component>
 </project>

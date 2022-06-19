@@ -41,4 +41,33 @@ class Cursor():
                    "Centralia weltweite Bekanntheit. Denn ein unheimlicher Kohlebrand unter der Erde verwandelte die \n" \
                    "Stadt in eine Geisterstadt. Aber Centralia ist nicht das einzige Gebiet auf der Welt, wo es einen \n" \
                    "solchen Kohlebrand gibt. Auch in Deutschland gibt es so etwas: der Brennende Berg im Saarland."
+        self.s11 = "Der Nevado Ojos del Salado ist nicht nur der höchste aktive Vulkan der Welt, sondern auch der \n" \
+                   "höchste Berg in Chile. Er ist 6.893 Meter hoch. Sein letzter Ausbruch ist schon ein paar \n" \
+                   "Jahrhunderte her. Fun Fact am Rande: Der Nevado Ojos del Salado ist recht einfach zu besteigen. \n" \
+                   "Man kann sogar mit dem Auto auf den Gipfel fahren."
+        self.s12 = "Der längste Straßentunnel der Welt ist der Lærdalstunnel. Er liegt in der norwegischen Region \n" \
+                   "Sogn och Fjordane und ist 24,51 Kilometer lang. \n" \
+                   "Der längste Eisenbahntunnel der Welt liegt übrigens in der Schweiz. Es ist der \n" \
+                   "57 Kilometer lange Gotthard-Basistunnel."
+        self.s13 = "Die höchste Brücke der Welt ist seit 2016 und mit einer Höhe von 565 Metern die \n" \
+                   "Beipanjiang-Brücke in China. Die höchste Brücke von Europa ist das 270 Meter hohe Viaduc de Millau \n" \
+                   "in Frankreich."
+        self.s14 = "Der Musikantenknochen ist kein Knochen, sondern ein Nerv mit der Bezeichnung Nervus ulnaris."
+        self.s15 = "Hausstaub besteht meist bis zu 80% aus abgestorbenen Hautzellen. Der Körper verliert am Tag bis \n" \
+                   "zu 14 Gramm abgestorbene Hautzellen. Das können dann im Jahr etwa 3-5 Kilogramm sein. "
+        self.s16 = "Bis zum Jahre 1937 hatten Haiti und Liechtenstein die selbe Flagge. Und das ist niemandem \n" \
+                   "aufgefallen bis zu den olympischen Spielen 1936. Daraufhin wurde der Flagge Liechtensteins \n" \
+                   "eine Krone hinzugefügt."
+        self.s17 = "Im Jahre 1859 gab es ein extrem seltenes Ereignis. Wegen starker Sonnenstürme konnten Nordlichter \n" \
+                   "über Rom bewundert werden."
+        self.s18 = "Im Jahre 1961 bestellte der US-Präsident Kennedy noch schnell 1.000 kubanische Zigarren, \n" \
+                   "bevor er das Embargo gegen das bewundernswerte kleine Land unterzeichnete."
+        self.s19 = "Da die Mammuts erst etwa 2.000 vor Christus endgültig ausgestorben sind, überschneidet sich ihre \n" \
+                   "Lebenszeit noch mit dem Bau der ersten ägyptischen Pyramiden."
+        self.s20 = "Es gibt nach derzeitigem Stand 39 Menschen, die alle 14 Berge der Erde, die über 8.000 Meter \n" \
+                   "hoch sind, bestiegen haben. Der erste davon war Reinhold Messner."
+        self.s21 = "Die USA haben bis heute 11 Atombomben verloren. Ihr Aufenthaltsort ist nicht bekannt. \n" \
+                   "Insgesamt gingen weltweit bisher etwa 50 Atombomben verloren."
+        self.s22 = "Auf der Venus dauert ein Tag länger als ein Jahr. Ein Venus-Tag entspricht nämlich \n" \
+                   "ungefähr 243 Tagen auf der Erde und ein Venus-Jahr nur etwa 225 Tagen auf der Erde."
         self.funFacts = [self.s1, self.s2, self.s3, self.s4, self.s5, self.s6, self.s7, self.s8, self.s9, self.s10]
