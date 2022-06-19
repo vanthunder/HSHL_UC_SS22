@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e02fe796-3b59-42ea-a5eb-771cd7f82d7e" name="Changes" comment="autoscroll down working">
+      <change beforePath="$PROJECT_DIR$/.idea/HSHL_UC_SS22.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/HSHL_UC_SS22.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/Socket/online/Chat/Chat_Client_V01.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/Socket/online/Chat/Chat_Client_V01.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/Tools/FunFacts.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/Tools/FunFacts.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/pongScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/pongScreen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/startWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/startWindow.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="29qOighypyRB26nRvluXv9Vr1jJ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Studium\SS 2022\Ubliquitus Computing\HSHL_UC_SS22\de.hshl.uc\src\user_interface" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="start" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="HSHL_UC_SS22" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/de.hshl.uc/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/de.hshl.uc/src/start.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.start" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e02fe796-3b59-42ea-a5eb-771cd7f82d7e" name="Changes" comment="" />
+      <created>1653837278035</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1653837278035</updated>
+    </task>
+    <task id="LOCAL-00001" summary="activate button with cam">
+      <created>1654112819352</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1654112819352</updated>
+    </task>
+    <task id="LOCAL-00002" summary="cursor turns orange when intersecting">
+      <created>1654115848354</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1654115848354</updated>
+    </task>
+    <task id="LOCAL-00003" summary="cursor counter">
+      <created>1654120300911</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1654120300911</updated>
+    </task>
+    <task id="LOCAL-00004" summary="removed scroll bars">
+      <created>1654179228289</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1654179228289</updated>
+    </task>
+    <task id="LOCAL-00005" summary="autoscroll down working">
+      <created>1654179781487</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1654179781487</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="activate button with cam" />
+    <MESSAGE value="cursor turns orange when intersecting" />
+    <MESSAGE value="cursor counter" />
+    <MESSAGE value="removed scroll bars" />
+    <MESSAGE value="autoscroll down working" />
+    <option name="LAST_COMMIT_MESSAGE" value="autoscroll down working" />
+  </component>
+</project>
