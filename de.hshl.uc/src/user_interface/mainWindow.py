@@ -439,6 +439,7 @@ class StartWindow(QMainWindow):
                 self.local_cL.sendCollision("torL")
                 self.scoreRightCounter += 1
                 self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
+                time.sleep(0.5)
                 return True
             # Collision Bande Unten
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torRight.geometry()):
@@ -446,6 +447,7 @@ class StartWindow(QMainWindow):
                 self.local_cL.sendCollision("torR")
                 self.scoreLeftCounter += 1
                 self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
+                time.sleep(0.5)
                 return True
             else:
                 return False
