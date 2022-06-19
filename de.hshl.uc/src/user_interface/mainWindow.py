@@ -98,7 +98,10 @@ class VideoThread(QThread):
             print(self.client.canStart, '2222222222222')
 
             #if self.client.canStart == True:
-
+            if not self.client.ballcoords.__getitem__(0) == 1011100 and not self.client.ballcoords.__getitem__(
+                    0) == 1011101:
+                self.update_ball_signal.emit(self.client.ballcoords.__getitem__(0),
+                                             self.client.ballcoords.__getitem__(1))
             if success:
 
                 # self.client.canStart = False
@@ -124,8 +127,7 @@ class VideoThread(QThread):
                 print(bcolors.OKBLUE, self.client.test, " TorLinks", bcolors.ENDC)
                 # Bewege ball
                 print(bcolors.FAIL, self.client.ballcoords.__getitem__(0), bcolors.ENDC)
-                if not self.client.ballcoords.__getitem__(0) == 1011100 and not self.client.ballcoords.__getitem__(0) == 1011101:
-                    self.update_ball_signal.emit(self.client.ballcoords.__getitem__(0),self.client.ballcoords.__getitem__(1))
+
                 # Tor L
 
 
