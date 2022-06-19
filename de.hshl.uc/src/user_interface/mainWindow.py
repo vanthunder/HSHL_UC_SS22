@@ -225,6 +225,7 @@ class StartWindow(QMainWindow):
         self.thread.start()
         # Chat
         self.globalChat = []
+        self.stopwatch = Stopwatch(2)
 
         self.isPause = False
         self.pauseThread = PauseThread()
@@ -468,10 +469,10 @@ class StartWindow(QMainWindow):
             self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
             print('Tor')
             self.goalSetBool == False
-            stopwatch = Stopwatch(2)
-        if stopwatch >= 4.00:
+            self.stopwatch.restart()
+        if self.stopwatch >= 5.00:
             self.goalSetBool == True
-            stopwatch.reset()
+
 
 
 
