@@ -264,6 +264,7 @@ class StartWindow(QMainWindow):
         grid_layout.addWidget(self.startWindow.button_Play, 1, 0, -1, 1)
         grid_layout.addWidget(self.startWindow.outer_chat_v_label, 1, 2, -1, 1)
         grid_layout.addWidget(self.startWindow.cursor, 1, 0)
+        self.startWindow.loading_label.setVisible(False)
 
         #self.startWindow.imageLabel.layout.addWidget(self.startWindow.cursor)
 
@@ -298,6 +299,8 @@ class StartWindow(QMainWindow):
             self.window_title = 'game'
             self.startWindow.hide()
             self.pongWindow.show()
+            #ToDo: Implement direct play start!
+            self.pongWindow.button_movie.click()
 
 
     def closeEvent(self, event):
@@ -332,12 +335,14 @@ class StartWindow(QMainWindow):
         self.startWindow.cursor.move(x, y)
         #self.startWindow.button_Play.move(x, y)
         if self.startWindow.cursor.geometry().intersected(self.startWindow.button_Play.geometry()):
-            self.counter += 1
+            self.counter += 5
             #self.startWindow.cursor.setText(str(self.startWindow.cursor.geometry().getCoords()))
             #self.startWindow.button_Play.setText(str(self.startWindow.button_Play.geometry().getCoords()))
             print("counter:", self.counter)
             self.startWindow.load(self.counter)
-            if self.counter > 60:
+            #self.startWindow.loading_label.setGeometry(QRect(100, 250, 250, 150))
+            if self.counter > 100:
+                #If Counter hits 60 -> the view switches to the game (Pong screen)
                 self.start_Game()
                 self.counter = 0
         else:

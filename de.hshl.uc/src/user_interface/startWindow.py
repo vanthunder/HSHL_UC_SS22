@@ -15,8 +15,8 @@ from user_interface import global_specs
 
 
 class startWindow(QWidget):
-    DEFAULT_WIDTH = 150
-    DEFAULT_HEIGTH = 250
+    DEFAULT_WIDTH = 250
+    DEFAULT_HEIGTH = 150
     def __init__(self):
         super().__init__()
         # Change the desired Resolution!
@@ -141,25 +141,45 @@ class startWindow(QWidget):
         self.button_Opinion.setMaximumSize(200, 200)
         self.button_Opinion.setFont(self.fontA)
         #self.button_Play = QPushButton('Spielesammlung', self.inner_vbox_label_container)
+        self.buttonWidgetContainer = QLabel()
+        self.buttonWidgetContainer.layout = QStackedLayout(self.buttonWidgetContainer)
+        self.buttonWidgetContainer.setMinimumSize(250,150)
+        self.buttonWidgetContainer.setMinimumSize(250,150)
+        #self.buttonWidgetContainer.setStyleSheet( "margin-left: 20px -40px; background: #4B6E74; border: 1px solid black; border-radius: 24px;")
         self.button_Play = QLabel()
-        self.button_Play.layout = QHBoxLayout(self.button_Play)
+        self.button_Play.layout = QStackedLayout(self.button_Play)
         self.button_Play.setStyleSheet(
             "margin-left: 20px -40px; background: #4B6E74; border: 1px solid black; border-radius: 24px;")
+        #self.button_Play.setStyleSheet(
+        #    "margin-left: 20px -40px; background: #4B6E74;")
+        #self.button_Play.setStyleSheet(
+        #    "background: #4B6E74")
         self.button_Play.setMinimumSize(250, 150)
         self.button_Play.setMaximumSize(250, 150)
+        self.DEFAULT_WIDTH = self.button_Play.width()
+        self.DEFAULT_HEIGTH = self.button_Play.height()
         self.button_Play.setFont(self.fontA)
         self.button_Play.setText("Start Pong Game")
-        self.button_Play.layout = QStackedLayout()
+        #self.button_Play.layout = QVBoxLayout()
+
         self.loading_label = QLabel()
         #self.loading_label.width = 150
         #self.loading_label.height = 250
-        self.loading_label.setStyleSheet('background: Yellow')
+        self.loading_label.setVisible(False)
+        self.loading_label.setMaximumSize(50, 150)
+        self.loading_label.setMinimumSize(50, 150)
+
+        self.loading_label.setStyleSheet(
+            "margin-left: -2px; background: Yellow; border: 1px solid black; border-radius: 24px;")
+        #self.buttonWidgetContainer.layout.addWidget(self.loading_label)
+        #self.buttonWidgetContainer.layout.addWidget(self.button_Play)
         self.button_Play.layout.addWidget(self.loading_label)
-        self.loading_label.setMaximumSize(100, 20)
         # Add the two "buttons"
         self.inner_vbox_label_container.layout.addWidget(self.button_Opinion)
         self.inner_vbox_label_container.setStyleSheet('background-color: blue')
-        self.inner_vbox_label_container.layout.addWidget(self.button_Play)
+
+        #self.inner_vbox_label_container.layout.addWidget(self.buttonWidgetContainer)
+
         # Adds the inner box to the outer box
         self.mid_label_container.layout.addWidget(self.inner_vbox_label_container)
         # Chat Container
@@ -200,6 +220,8 @@ class startWindow(QWidget):
 
     def load(self, i):
         self.loading_label.setMaximumSize(int(self.DEFAULT_WIDTH / 100 * i), self.DEFAULT_HEIGTH)
+        self.loading_label.setVisible(True)
 
     def reset_load(self):
         self.loading_label.setMaximumSize(0, 0)
+        self.loading_label.setVisible(False)
