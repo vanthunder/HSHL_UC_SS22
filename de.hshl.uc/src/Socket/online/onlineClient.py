@@ -29,7 +29,8 @@ class local_client:
     # client = "Client"
     nickname = 'Client'
     pkg = []
-    ballcoords = ("ball",111,111)
+    ballcoords = (111,111)
+    test = ""
 
     def __init__(self):
         # Choosing Nickname
@@ -92,6 +93,8 @@ class local_client:
                 elif type(message.__getitem__(0)) is not str:
                     print(bcolors.OKGREEN,message, 'Ball wird mit dieser Variable überschrieben!',bcolors.ENDC)
                     self.ballcoords = message
+                    self.test = message
+
             #TODO: Programm breaks after start!
             if type(message) == bool:
                 print('QAQAQAQAQAQAQAQAQAQAQAQAQAQAQA')
@@ -110,6 +113,7 @@ class local_client:
             # self.y = message
             # self.tempTupel = message
             # message = self.client.recv(1024).decode('ascii')
+            print(bcolors.FAIL, self.test, ' BallCoords', bcolors.ENDC)
             print('Server: ', message)
 
             # Close Connection When Error

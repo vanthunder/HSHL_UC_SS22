@@ -121,17 +121,13 @@ class VideoThread(QThread):
                 # Game Loop
                 bX += 1 + speedX
                 bY += 1 + speedY
+                print(bcolors.OKBLUE, self.client.test, " TorLinks", bcolors.ENDC)
                 # Bewege ball
                 print(bcolors.FAIL, self.client.ballcoords.__getitem__(0), bcolors.ENDC)
                 if not self.client.ballcoords.__getitem__(0) == 1011100 and not self.client.ballcoords.__getitem__(0) == 1011101:
-                    self.update_ball_signal.emit(self.client.ballcoords.__getitem__(0),
-                                                        self.client.ballcoords.__getitem__(1))
+                    self.update_ball_signal.emit(self.client.ballcoords.__getitem__(0),self.client.ballcoords.__getitem__(1))
                 # Tor L
-                if(self.client.ballcoords.__getitem__(0) == 1011100 and self.client.ballcoords.__getitem__(1) == 0):
-                    self.update_tor.emit()
-                # Tor R
-                if (self.client.ballcoords.__getitem__(0) == 1011101 and self.client.ballcoords.__getitem__(1) == 0):
-                    self.update_tor.emit()
+
 
                 # self.update_ball_signal.emit(500, 500)
 
@@ -403,6 +399,10 @@ class StartWindow(QMainWindow):
 
         self.pongWindow.imageLabel3.setGeometry(x, y, 80, 80)
         self.detect_collision()
+        print(bcolors.FAIL,self.pongWindow.imageLabel3.geometry().x(), " X Coord", bcolors.ENDC)
+        if self.pongWindow.imageLabel3.geometry().x() >= 850 and self.pongWindow.imageLabel3.geometry().x() <= 853:
+            self.updateTor()
+
 
     def ballMovementpositive(self):
         self.bX += 10
@@ -440,7 +440,7 @@ class StartWindow(QMainWindow):
                 # Collision Bande Oben
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torLeft.geometry()):
                 print("INTERSECTION!")
-                self.String("torL")
+                #self.String("torL")
                 self.local_cL.sendCollision("torL")
                 #self.scoreRightCounter += 1
                 #self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
