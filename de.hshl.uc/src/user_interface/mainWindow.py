@@ -123,9 +123,14 @@ class VideoThread(QThread):
                 bY += 1 + speedY
                 # Bewege ball
                 print(bcolors.FAIL, self.client.ballcoords.__getitem__(0), bcolors.ENDC)
-                self.update_ball_signal.emit(self.client.ballcoords.__getitem__(0),
-                                             self.client.ballcoords.__getitem__(1))
-                if(self.client.ballcoords.__getitem__(0) == 625 and self.client.ballcoords.__getitem__(1) == 375):
+                if not (self.client.ballcoords.__getitem__(0) == 1011100 and not self.client.ballcoords.__getitem__(0) == 1011101):
+                    self.update_ball_signal.emit(self.client.ballcoords.__getitem__(0),
+                                                        self.client.ballcoords.__getitem__(1))
+                # Tor L
+                if(self.client.ballcoords.__getitem__(0) == 1011100 and self.client.ballcoords.__getitem__(1) == 0):
+                    self.update_tor.emit()
+                # Tor R
+                if (self.client.ballcoords.__getitem__(0) == 1011101 and self.client.ballcoords.__getitem__(1) == 0):
                     self.update_tor.emit()
 
                 # self.update_ball_signal.emit(500, 500)
@@ -435,19 +440,19 @@ class StartWindow(QMainWindow):
                 # Collision Bande Oben
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torLeft.geometry()):
                 print("INTERSECTION!")
-                #self.String("torL")
+                self.String("torL")
                 self.local_cL.sendCollision("torL")
-                self.scoreRightCounter += 1
-                self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
-                time.sleep(0.5)
+                #self.scoreRightCounter += 1
+                #self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
+                #time.sleep(0.5)
                 return True
             # Collision Bande Unten
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torRight.geometry()):
                 print("INTERSECTION!")
                 self.local_cL.sendCollision("torR")
-                self.scoreLeftCounter += 1
-                self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
-                time.sleep(0.5)
+                #self.scoreLeftCounter += 1
+                #self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
+                #time.sleep(0.5)
                 return True
             else:
                 return False
@@ -503,7 +508,8 @@ class StartWindow(QMainWindow):
 
 
     def updateTor(self):
-
+        self.scoreRightCounter += 1
+        self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
         print('Tor')
 
 
