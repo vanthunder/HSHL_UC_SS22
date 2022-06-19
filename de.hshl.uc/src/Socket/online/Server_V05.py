@@ -210,7 +210,18 @@ class Server:
                 if self.canStart == True:
                     print('Can Start', self.xC, self.yC, message.__getitem__(1))
                     self.updateBall(message.__getitem__(1))
-                    # self.ballMovementpositive()
+                    if message.__getitem__(1) == 'torL':
+                        # msg 1011101 for torL
+                        # msg 1011100 for torR
+                        msgT = (1011101, 0)
+                        msgT = pickle.dumps(msgT)
+                        self.broadcast(msgT)
+                    elif message.__getitem__(1) == 'torR':
+                        msgT = (1011100, 0)
+                        msgT = pickle.dumps(msgT)
+                        self.broadcast(msgT)
+
+                        # self.ballMovementpositive()
                     # self.x += 10
                     msg = (self.xC, self.yC)
                     msg = pickle.dumps(msg)
