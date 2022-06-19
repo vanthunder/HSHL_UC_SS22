@@ -162,13 +162,13 @@ class VideoThread(QThread):
 
     # Camera Loop
     def run(self):
-        Player = 'Left'  # input('Player: ')
+        Player = 'Right'  # input('Player: ')
 
         self.client.player = Player
         rThread = threading.Thread(target=self.start_receive, args=())
         #rThread.start()
         #self.client.receive()
-        self.client.sendReady('Left')
+        self.client.sendReady('Right')
         while True:
             if self.client.canStart == True:
                 print(bcolors.WARNING, "Starte VideoLoop", bcolors.ENDC)
@@ -182,6 +182,8 @@ class StartWindow(QMainWindow):
 
     def __init__(self, camera=None, hand_detector=None, local_cL=None):
         super().__init__()
+        self.scoreLeftCounter = 0
+        self.scoreRightCounter = 0
         self.width = 1280
         self.height = 750
         self.window_title = 'start'
@@ -495,12 +497,11 @@ class StartWindow(QMainWindow):
 
 
     def updateTor(self):
-        if self.pongWindow.scoreLeft.text() == '0':
-            self.pongWindow.scoreLeft.setText('1')
-        elif self.pongWindow.scoreLeft.text() == '1':
-            self.pongWindow.scoreLeft.setText('2')
-        elif self.pongWindow.scoreLeft.text() == '2':
-            self.pongWindow.scoreLeft.setText('3')
+        self.scoreLeftCounter += 1
+        self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
+
+
+
 
     def update_chat_debug(self, ab):
         # uses dict
