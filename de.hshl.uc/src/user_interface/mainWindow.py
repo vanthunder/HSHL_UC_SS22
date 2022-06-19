@@ -167,13 +167,13 @@ class VideoThread(QThread):
 
     # Camera Loop
     def run(self):
-        Player = 'Right'  # input('Player: ')
+        Player = 'Left'  # input('Player: ')
 
         self.client.player = Player
         rThread = threading.Thread(target=self.start_receive, args=())
         #rThread.start()
         #self.client.receive()
-        self.client.sendReady('Right')
+        self.client.sendReady('Left')
         while True:
             if self.client.canStart == True:
                 print(bcolors.WARNING, "Starte VideoLoop", bcolors.ENDC)
@@ -381,7 +381,7 @@ class StartWindow(QMainWindow):
         self.pongWindow.torLeft.setVisible(True)
         self.pongWindow.torRight.setVisible(True)
         self.pongWindow.torLeft.setGeometry(0, 0, 80, 80)
-        self.pongWindow.torRight.setGeometry(1248, 0, 80, 80)
+        self.pongWindow.torRight.setGeometry(1250, 0, 80, 80)
 
         self.pongWindow.scoreLeft.setGeometry(QRect(600, 50, 10, 50))
         self.pongWindow.scoreRight.setGeometry(QRect(700, 50, 10, 50))
