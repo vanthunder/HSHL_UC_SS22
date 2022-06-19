@@ -135,30 +135,29 @@ class VideoThread(QThread):
 
                 # To Do send to server:
 
-                #if not lmList:
-                #    print()
-                #else:
-                print(bcolors.FAIL, self.client.TempChatList,
-                      "EMITYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
-                      bcolors.ENDC)
-                # self.update_chat.emit()
-                if not self.client.TempChatList:
-                    print(bcolors.FAIL,
+                if not lmList:
+                    print()
+                else:
+                    print(bcolors.FAIL, self.client.TempChatList,
                           "EMITYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
                           bcolors.ENDC)
+                    # self.update_chat.emit()
+                    if not self.client.TempChatList:
+                        print(bcolors.FAIL,
+                              "EMITYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+                              bcolors.ENDC)
 
-                # Send Tupel
-                print('Send Coordinates form Main Window')
-                if len(lmList):
+                    # Send Tupel
+                    print('Send Coordinates form Main Window')
                     self.client.sendcoordinate(Player, lmList[0].__getitem__(2))
-                print('Send Coordinates form Main Window 2')
-                # print("Player:  ", self.client.TempTupel.__getitem__(0))
+                    print('Send Coordinates form Main Window 2')
+                    # print("Player:  ", self.client.TempTupel.__getitem__(0))
 
-                if self.client.TempTupel.__getitem__(0) == 'Left':
-                    self.update_label_signal.emit(self.client.TempTupel.__getitem__(1))
-                else:
-                    self.update_player_2.emit(self.client.TempTupel.__getitem__(1))
-                print()
+                    if self.client.TempTupel.__getitem__(0) == 'Left':
+                        self.update_label_signal.emit(self.client.TempTupel.__getitem__(1))
+                    else:
+                        self.update_player_2.emit(self.client.TempTupel.__getitem__(1))
+                    print()
                 # print(client.y)
                 # To Do receive Coordinate
 
