@@ -1,7 +1,6 @@
 import React,{useState} from "react";
-import { View, StyleSheet, TextInput, Button, Text, FlatList, TouchableOpacity} from "react-native";
+import { View, TextInput, Button, Text, FlatList, TouchableOpacity, KeyboardAvoidingView, ScrollView} from "react-native";
 import { globalStyles } from "../styles/gobal";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Ionicons } from '@expo/vector-icons'; 
 
 
@@ -30,7 +29,9 @@ const Chat = () => {
     })
 
     .then(response => response.json())
-    .then(data => console.log(data));
+    .then(data =>{
+      console.log(data)
+    });
 }
 
 
@@ -40,8 +41,9 @@ const Chat = () => {
   
 
   return (
-    <KeyboardAwareScrollView>
-    <View style={globalStyles.containerTwo}>
+    <KeyboardAvoidingView>
+    <ScrollView>
+ 
        <Text style={globalStyles.boxFour}>Chat</Text>
        <View style={globalStyles.Chat}>
       
@@ -66,8 +68,9 @@ const Chat = () => {
        </View>
       
       </View>
-    </View>
-    </KeyboardAwareScrollView>
+    
+    </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
