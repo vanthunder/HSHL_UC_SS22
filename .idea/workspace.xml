@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0249d737-1b62-40ab-b2d4-51d9f088bc89" name="Changes" comment="Updates Goal Counter!" />
-    <list id="cf1cc60c-cbd6-4cbf-82b8-5e64fd9c236c" name="Changes by Jan-Gustav" comment="Changes by Jan-Gustav" />
+    <list default="true" id="e02fe796-3b59-42ea-a5eb-771cd7f82d7e" name="Changes" comment="funfacts 2">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/Tools/FunFacts.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/Tools/FunFacts.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,200 +22,28 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="ROOT_SYNC" value="DONT_SYNC" />
-  </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$USER_HOME$/.virtualenvs/HSHL_UC_SS22/Lib/site-packages/pandas/io/html.py" root0="SKIP_INSPECTION" />
-    <setting file="file://$USER_HOME$/.virtualenvs/HSHL_UC_SS22/Lib/site-packages/pymongo/common.py" root0="SKIP_INSPECTION" />
-    <setting file="file://$USER_HOME$/Downloads/Server_V02 (1).py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Games/Pong/paddle.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/Client.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/New_Client.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/New_Server_AB06.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/local/localClient.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/local/localServer.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/online/Chat/Chat_Client_V01.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/online/Chat/Chat_Server_V01.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/online/New_Server_AB_CV_20_no_Pkgs.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/online/Server_V01.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/online/Server_V02.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/online/Server_V04.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/online/onlineClient.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/recognition/gesture_detector.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/recognition/hand_detector.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/start.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/start.spec" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/ui.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/Tools/Cursor.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/global_specs.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/pongScreen.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/startWindow.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
-  <component name="ProjectId" id="27iYUeFgft0e8FaQZrVpqdiOUIF" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="29qOighypyRB26nRvluXv9Vr1jJ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "full.screen.before.presentation.mode": "true",
-    "last_opened_file_path": "C:/Users/Marvin/PycharmProjects/HSHL_UC_SS22/de.hshl.uc/src/user_interface/Tools",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
-  }
-}]]></component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Marvin\PycharmProjects\HSHL_UC_SS22\de.hshl.uc\src\user_interface\Tools" />
-      <recent name="C:\Users\Marvin\PycharmProjects\HSHL_UC_SS22\de.hshl.uc\src\Socket\online" />
-      <recent name="C:\Users\Marvin\PycharmProjects\HSHL_UC_SS22\de.hshl.uc\src\Socket" />
-      <recent name="C:\Users\Marvin\PycharmProjects\HSHL_UC_SS22\de.hshl.uc\testPackage" />
-      <recent name="C:\Users\Marvin\PycharmProjects\HSHL_UC_SS22\de.hshl.uc\src" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Marvin\PycharmProjects\HSHL_UC_SS22\de.hshl.uc\src\user_interface\Tools" />
-      <recent name="C:\Users\Marvin\PycharmProjects\HSHL_UC_SS22\de.hshl.uc" />
-      <recent name="C:\Users\Marvin\PycharmProjects\HSHL_UC_SS22\de.hshl.uc\src\Socket\local" />
-      <recent name="C:\Users\Marvin\PycharmProjects\HSHL_UC_SS22\de.hshl.uc\src" />
-      <recent name="C:\Users\Marvin\PycharmProjects\HSHL_UC_SS22\de.hshl.uc\testPackage" />
+      <recent name="D:\Studium\SS 2022\Ubliquitus Computing\HSHL_UC_SS22\de.hshl.uc\src\user_interface" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.start">
-    <configuration name="New_Server_AB_CV_20_no_Pkgs" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="HSHL_UC_SS22" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/de.hshl.uc/src/Socket/online" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/de.hshl.uc/src/Socket/online/New_Server_AB_CV_20_no_Pkgs.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Server_V03" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="HSHL_UC_SS22" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/de.hshl.uc/src/Socket/online" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/de.hshl.uc/src/Socket/online/Server_V03.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="hand_detector (1)" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
-      <module name="HSHL_UC_SS22" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/de.hshl.uc/src/recognition" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/de.hshl.uc/src/recognition/hand_detector.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="localClient" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="HSHL_UC_SS22" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/de.hshl.uc/src/Socket/local" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/de.hshl.uc/src/Socket/local/localClient.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="localServer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="HSHL_UC_SS22" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/de.hshl.uc/src/Socket/local" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/de.hshl.uc/src/Socket/local/localServer.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager">
     <configuration name="start" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="HSHL_UC_SS22" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -226,7 +56,6 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/de.hshl.uc/src/start.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -239,423 +68,76 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.start" />
-        <item itemvalue="Python.Server_V03" />
-        <item itemvalue="Python.New_Server_AB_CV_20_no_Pkgs" />
-        <item itemvalue="Python.localClient" />
-        <item itemvalue="Python.localServer" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="0249d737-1b62-40ab-b2d4-51d9f088bc89" name="Changes" comment="" />
-      <created>1649804390773</created>
+      <changelist id="e02fe796-3b59-42ea-a5eb-771cd7f82d7e" name="Changes" comment="" />
+      <created>1653837278035</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1649804390773</updated>
-      <workItem from="1649804392119" duration="5284000" />
-      <workItem from="1649847375534" duration="25271000" />
-      <workItem from="1649968653809" duration="1340000" />
-      <workItem from="1650377539336" duration="10758000" />
-      <workItem from="1650388403870" duration="18423000" />
-      <workItem from="1650450894423" duration="2010000" />
-      <workItem from="1650480166522" duration="839000" />
-      <workItem from="1650481029716" duration="13713000" />
-      <workItem from="1650495229748" duration="3973000" />
-      <workItem from="1650499253680" duration="791000" />
-      <workItem from="1650561081133" duration="4052000" />
-      <workItem from="1650565182343" duration="21895000" />
-      <workItem from="1650589176376" duration="3515000" />
-      <workItem from="1650625188111" duration="7405000" />
-      <workItem from="1650807432953" duration="6104000" />
-      <workItem from="1650900209329" duration="24382000" />
-      <workItem from="1650968391431" duration="14741000" />
-      <workItem from="1650994563086" duration="1583000" />
-      <workItem from="1651005220550" duration="7677000" />
-      <workItem from="1651056308530" duration="613000" />
-      <workItem from="1651104963229" duration="342000" />
-      <workItem from="1651323092453" duration="1229000" />
-      <workItem from="1651697973724" duration="1139000" />
-      <workItem from="1652270477927" duration="18381000" />
-      <workItem from="1652374750204" duration="992000" />
-      <workItem from="1652882501079" duration="2974000" />
-      <workItem from="1652885535150" duration="3030000" />
-      <workItem from="1653138596606" duration="19620000" />
-      <workItem from="1653252429244" duration="1637000" />
-      <workItem from="1653323194757" duration="2274000" />
-      <workItem from="1653476588770" duration="23000" />
-      <workItem from="1653476620946" duration="10178000" />
-      <workItem from="1653520766029" duration="3525000" />
-      <workItem from="1653589260401" duration="7005000" />
-      <workItem from="1653668480033" duration="11123000" />
-      <workItem from="1653687733102" duration="11239000" />
-      <workItem from="1653768734868" duration="1636000" />
-      <workItem from="1653834509800" duration="8138000" />
-      <workItem from="1653921194358" duration="7009000" />
-      <workItem from="1654108695284" duration="13468000" />
-      <workItem from="1654173413648" duration="13673000" />
-      <workItem from="1654201106889" duration="10213000" />
-      <workItem from="1654264524838" duration="134000" />
-      <workItem from="1654264669352" duration="6081000" />
-      <workItem from="1654281397836" duration="9807000" />
-      <workItem from="1654301088630" duration="651000" />
-      <workItem from="1654350765833" duration="26988000" />
-      <workItem from="1654394920690" duration="3671000" />
-      <workItem from="1654464147987" duration="2195000" />
-      <workItem from="1654720954543" duration="2464000" />
-      <workItem from="1655127051389" duration="2822000" />
-      <workItem from="1655131853635" duration="2662000" />
-      <workItem from="1655639534866" duration="19132000" />
+      <updated>1653837278035</updated>
     </task>
-    <task id="LOCAL-00083" summary="Ball Server Sync!">
-      <created>1654297216007</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
+    <task id="LOCAL-00001" summary="activate button with cam">
+      <created>1654112819352</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1654297216007</updated>
+      <updated>1654112819352</updated>
     </task>
-    <task id="LOCAL-00084" summary="Ball Server Sync!">
-      <created>1654299392638</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
+    <task id="LOCAL-00002" summary="cursor turns orange when intersecting">
+      <created>1654115848354</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1654299392638</updated>
+      <updated>1654115848354</updated>
     </task>
-    <task id="LOCAL-00085" summary="Ball Server Sync!">
-      <created>1654350808575</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
+    <task id="LOCAL-00003" summary="cursor counter">
+      <created>1654120300911</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1654350808575</updated>
+      <updated>1654120300911</updated>
     </task>
-    <task id="LOCAL-00086" summary="Ball Server Sync!">
-      <created>1654351519874</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
+    <task id="LOCAL-00004" summary="removed scroll bars">
+      <created>1654179228289</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1654351519874</updated>
+      <updated>1654179228289</updated>
     </task>
-    <task id="LOCAL-00087" summary="Ball Server Sync!">
-      <created>1654352658793</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
+    <task id="LOCAL-00005" summary="autoscroll down working">
+      <created>1654179781487</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1654352658793</updated>
+      <updated>1654179781487</updated>
     </task>
-    <task id="LOCAL-00088" summary="Ball Server Sync!">
-      <created>1654352807660</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
+    <task id="LOCAL-00006" summary="funfacts 1">
+      <created>1655669701779</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1654352807660</updated>
+      <updated>1655669701779</updated>
     </task>
-    <task id="LOCAL-00089" summary="Ball Server Sync!">
-      <created>1654353374836</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
+    <task id="LOCAL-00007" summary="funfacts 1">
+      <created>1655669723506</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1654353374836</updated>
+      <updated>1655669723506</updated>
     </task>
-    <task id="LOCAL-00090" summary="Ball Server Sync!">
-      <created>1654353683711</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
+    <task id="LOCAL-00008" summary="funfacts 2">
+      <created>1655669862219</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1654353683711</updated>
+      <updated>1655669862219</updated>
     </task>
-    <task id="LOCAL-00091" summary="Ball Server Sync!">
-      <created>1654353978723</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1654353978723</updated>
-    </task>
-    <task id="LOCAL-00092" summary="Ball Server Sync!">
-      <created>1654355417563</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1654355417563</updated>
-    </task>
-    <task id="LOCAL-00093" summary="Ball Server Sync!">
-      <created>1654355984860</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1654355984860</updated>
-    </task>
-    <task id="LOCAL-00094" summary="Ball Server Sync!">
-      <created>1654357398800</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1654357398800</updated>
-    </task>
-    <task id="LOCAL-00095" summary="Ball Server Sync!">
-      <created>1654357942929</created>
-      <option name="number" value="00095" />
-      <option name="presentableId" value="LOCAL-00095" />
-      <option name="project" value="LOCAL" />
-      <updated>1654357942929</updated>
-    </task>
-    <task id="LOCAL-00096" summary="Ball Server Sync!">
-      <created>1654358811553</created>
-      <option name="number" value="00096" />
-      <option name="presentableId" value="LOCAL-00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1654358811553</updated>
-    </task>
-    <task id="LOCAL-00097" summary="Ball Server Sync!">
-      <created>1654372979854</created>
-      <option name="number" value="00097" />
-      <option name="presentableId" value="LOCAL-00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1654372979854</updated>
-    </task>
-    <task id="LOCAL-00098" summary="Ball Server Sync!">
-      <created>1654378386844</created>
-      <option name="number" value="00098" />
-      <option name="presentableId" value="LOCAL-00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1654378386844</updated>
-    </task>
-    <task id="LOCAL-00099" summary="Ball Server Sync!">
-      <created>1654379887331</created>
-      <option name="number" value="00099" />
-      <option name="presentableId" value="LOCAL-00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1654379887331</updated>
-    </task>
-    <task id="LOCAL-00100" summary="Implements Bande and collision detection!">
-      <created>1654380419907</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1654380419907</updated>
-    </task>
-    <task id="LOCAL-00101" summary="Implements Goal!">
-      <created>1654384753803</created>
-      <option name="number" value="00101" />
-      <option name="presentableId" value="LOCAL-00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1654384753803</updated>
-    </task>
-    <task id="LOCAL-00102" summary="Implements Goal!">
-      <created>1654385581739</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1654385581739</updated>
-    </task>
-    <task id="LOCAL-00103" summary="Implements Goal!">
-      <created>1654386785441</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1654386785441</updated>
-    </task>
-    <task id="LOCAL-00104" summary="Implements Goal!">
-      <created>1654387233190</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1654387233190</updated>
-    </task>
-    <task id="LOCAL-00105" summary="Implements Goal!">
-      <created>1654387444752</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1654387444752</updated>
-    </task>
-    <task id="LOCAL-00106" summary="Implements Goal!">
-      <created>1654387557325</created>
-      <option name="number" value="00106" />
-      <option name="presentableId" value="LOCAL-00106" />
-      <option name="project" value="LOCAL" />
-      <updated>1654387557325</updated>
-    </task>
-    <task id="LOCAL-00107" summary="Implements Goal!">
-      <created>1654387720189</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1654387720189</updated>
-    </task>
-    <task id="LOCAL-00108" summary="Implements Goal!">
-      <created>1654387821004</created>
-      <option name="number" value="00108" />
-      <option name="presentableId" value="LOCAL-00108" />
-      <option name="project" value="LOCAL" />
-      <updated>1654387821004</updated>
-    </task>
-    <task id="LOCAL-00109" summary="Implements Goal!">
-      <created>1654387990768</created>
-      <option name="number" value="00109" />
-      <option name="presentableId" value="LOCAL-00109" />
-      <option name="project" value="LOCAL" />
-      <updated>1654387990768</updated>
-    </task>
-    <task id="LOCAL-00110" summary="Implements Goal!">
-      <created>1654388564509</created>
-      <option name="number" value="00110" />
-      <option name="presentableId" value="LOCAL-00110" />
-      <option name="project" value="LOCAL" />
-      <updated>1654388564509</updated>
-    </task>
-    <task id="LOCAL-00111" summary="Implements Goal!">
-      <created>1654390217255</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1654390217255</updated>
-    </task>
-    <task id="LOCAL-00112" summary="Implements Goal!">
-      <created>1654392719957</created>
-      <option name="number" value="00112" />
-      <option name="presentableId" value="LOCAL-00112" />
-      <option name="project" value="LOCAL" />
-      <updated>1654392719957</updated>
-    </task>
-    <task id="LOCAL-00113" summary="Implements Goal!">
-      <created>1654394460815</created>
-      <option name="number" value="00113" />
-      <option name="presentableId" value="LOCAL-00113" />
-      <option name="project" value="LOCAL" />
-      <updated>1654394460815</updated>
-    </task>
-    <task id="LOCAL-00114" summary="Implements Goal!">
-      <created>1654464207120</created>
-      <option name="number" value="00114" />
-      <option name="presentableId" value="LOCAL-00114" />
-      <option name="project" value="LOCAL" />
-      <updated>1654464207120</updated>
-    </task>
-    <task id="LOCAL-00115" summary="Implements Goal!">
-      <created>1654721788821</created>
-      <option name="number" value="00115" />
-      <option name="presentableId" value="LOCAL-00115" />
-      <option name="project" value="LOCAL" />
-      <updated>1654721788821</updated>
-    </task>
-    <task id="LOCAL-00116" summary="Implements Goal!">
-      <created>1654721836619</created>
-      <option name="number" value="00116" />
-      <option name="presentableId" value="LOCAL-00116" />
-      <option name="project" value="LOCAL" />
-      <updated>1654721836619</updated>
-    </task>
-    <task id="LOCAL-00117" summary="Implements Goal!">
-      <created>1655129874095</created>
-      <option name="number" value="00117" />
-      <option name="presentableId" value="LOCAL-00117" />
-      <option name="project" value="LOCAL" />
-      <updated>1655129874096</updated>
-    </task>
-    <task id="LOCAL-00118" summary="Implements Goal!">
-      <created>1655137971270</created>
-      <option name="number" value="00118" />
-      <option name="presentableId" value="LOCAL-00118" />
-      <option name="project" value="LOCAL" />
-      <updated>1655137971271</updated>
-    </task>
-    <task id="LOCAL-00119" summary="Implements direct start from the main menu!&#10;&#10;Updates the button animation!">
-      <created>1655643919704</created>
-      <option name="number" value="00119" />
-      <option name="presentableId" value="LOCAL-00119" />
-      <option name="project" value="LOCAL" />
-      <updated>1655643919704</updated>
-    </task>
-    <task id="LOCAL-00120" summary="Updates Goal Counter!">
-      <created>1655646883419</created>
-      <option name="number" value="00120" />
-      <option name="presentableId" value="LOCAL-00120" />
-      <option name="project" value="LOCAL" />
-      <updated>1655646883419</updated>
-    </task>
-    <task id="LOCAL-00121" summary="Updates Goal Counter!">
-      <created>1655647234076</created>
-      <option name="number" value="00121" />
-      <option name="presentableId" value="LOCAL-00121" />
-      <option name="project" value="LOCAL" />
-      <updated>1655647234076</updated>
-    </task>
-    <task id="LOCAL-00122" summary="Updates Goal Counter!">
-      <created>1655647656734</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1655647656734</updated>
-    </task>
-    <task id="LOCAL-00123" summary="Updates Goal Counter!">
-      <created>1655649844490</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1655649844490</updated>
-    </task>
-    <task id="LOCAL-00124" summary="Updates Goal Counter!">
-      <created>1655650068853</created>
-      <option name="number" value="00124" />
-      <option name="presentableId" value="LOCAL-00124" />
-      <option name="project" value="LOCAL" />
-      <updated>1655650068853</updated>
-    </task>
-    <task id="LOCAL-00125" summary="Updates Goal Counter!">
-      <created>1655666163580</created>
-      <option name="number" value="00125" />
-      <option name="presentableId" value="LOCAL-00125" />
-      <option name="project" value="LOCAL" />
-      <updated>1655666163580</updated>
-    </task>
-    <task id="LOCAL-00126" summary="Updates Goal Counter!">
-      <created>1655666464673</created>
-      <option name="number" value="00126" />
-      <option name="presentableId" value="LOCAL-00126" />
-      <option name="project" value="LOCAL" />
-      <updated>1655666464673</updated>
-    </task>
-    <task id="LOCAL-00127" summary="Updates Goal Counter!">
-      <created>1655666830755</created>
-      <option name="number" value="00127" />
-      <option name="presentableId" value="LOCAL-00127" />
-      <option name="project" value="LOCAL" />
-      <updated>1655666830755</updated>
-    </task>
-    <task id="LOCAL-00128" summary="Updates Goal Counter!">
-      <created>1655666977423</created>
-      <option name="number" value="00128" />
-      <option name="presentableId" value="LOCAL-00128" />
-      <option name="project" value="LOCAL" />
-      <updated>1655666977423</updated>
-    </task>
-    <task id="LOCAL-00129" summary="Updates Goal Counter!">
-      <created>1655667717290</created>
-      <option name="number" value="00129" />
-      <option name="presentableId" value="LOCAL-00129" />
-      <option name="project" value="LOCAL" />
-      <updated>1655667717290</updated>
-    </task>
-    <task id="LOCAL-00130" summary="Updates Goal Counter!">
-      <created>1655668410483</created>
-      <option name="number" value="00130" />
-      <option name="presentableId" value="LOCAL-00130" />
-      <option name="project" value="LOCAL" />
-      <updated>1655668410483</updated>
-    </task>
-    <task id="LOCAL-00131" summary="Updates Goal Counter!">
-      <created>1655668948883</created>
-      <option name="number" value="00131" />
-      <option name="presentableId" value="LOCAL-00131" />
-      <option name="project" value="LOCAL" />
-      <updated>1655668948883</updated>
-    </task>
-    <option name="localTasksCounter" value="132" />
+    <option name="localTasksCounter" value="9" />
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -669,80 +151,13 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Update Dependencies!" />
-    <MESSAGE value="Implements a new UI System!&#10;&#10;+ Start Window!&#10;+ Switch Windows!" />
-    <MESSAGE value="Updates the UI!" />
-    <MESSAGE value="Implements new Code structure!&#10;&#10;All windows a stored in separate classes!&#10;&#10;Massive Code cleanup!&#10;&#10;More improvements!" />
-    <MESSAGE value="Adds a backgound camera feed to the main window!&#10;&#10;Fixes a bug!" />
-    <MESSAGE value="Camera Screen Fix!" />
-    <MESSAGE value="Adds a movable cursor on the main screen!" />
-    <MESSAGE value="Fixes the resolution tracking bug!&#10;&#10;Smoother tracking!" />
-    <MESSAGE value="Updates Resolution to fit uni project!" />
-    <MESSAGE value="First App Commit!" />
-    <MESSAGE value="Marvelous Update!&#10;&#10;+ Server!&#10;+ Node.js connection!&#10;+ Chat!&#10;+ Manny Bugfixes!" />
-    <MESSAGE value="Implements standalone Chat Server!" />
-    <MESSAGE value="Chat Fix!" />
-    <MESSAGE value="Fix Button Detection!" />
-    <MESSAGE value="Fix Button Detection and Screen Size!" />
-    <MESSAGE value="Fix Button Detection and Screen Size!&#10;&#10;+ New Layout System!" />
-    <MESSAGE value="Update Pong Game!" />
-    <MESSAGE value="Update Hand Screen!" />
-    <MESSAGE value="Implements Waiting System for Player!" />
-    <MESSAGE value="Server Client Fix!" />
-    <MESSAGE value="Ball Server Sync!" />
-    <MESSAGE value="Implements Bande and collision detection!" />
-    <MESSAGE value="Implements Goal!" />
-    <MESSAGE value="Implements direct start from the main menu!&#10;&#10;Updates the button animation!" />
-    <MESSAGE value="Updates Goal Counter!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updates Goal Counter!" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/de.hshl.uc/testPackage/views.py</url>
-          <line>39</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py</url>
-          <line>184</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-      </breakpoints>
-      <default-breakpoints>
-        <breakpoint type="python-exception">
-          <properties notifyOnTerminate="true" exception="BaseException">
-            <option name="notifyOnTerminate" value="true" />
-          </properties>
-        </breakpoint>
-      </default-breakpoints>
-    </breakpoint-manager>
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$New_Client.coverage" NAME="New_Client Coverage Results" MODIFIED="1650569255236" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$hand_detector__1_.coverage" NAME="hand_detector (1) Coverage Results" MODIFIED="1650584371704" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/recognition" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$localClient.coverage" NAME="localClient Coverage Results" MODIFIED="1653670808939" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/local" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$gesture_detector.coverage" NAME="gesture_detector Coverage Results" MODIFIED="1650497314918" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/recognition" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$__init____1_.coverage" NAME="__init__ (1) Coverage Results" MODIFIED="1650381139575" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/testPackage" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$Server_V01.coverage" NAME="Server_V01 Coverage Results" MODIFIED="1653670381604" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/online" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$New_Server_AB_CV_20_no_Pkgs.coverage" NAME="New_Server_AB_CV_20_no_Pkgs Coverage Results" MODIFIED="1653671426718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/online" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$start__1_.coverage" NAME="start (1) Coverage Results" MODIFIED="1650481422632" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$localClient__1_.coverage" NAME="localClient (1) Coverage Results" MODIFIED="1650586688418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/local" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$Server_V03.coverage" NAME="Server_V03 Coverage Results" MODIFIED="1654268465350" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/online" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$localServer.coverage" NAME="localServer Coverage Results" MODIFIED="1653670805720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/local" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$mainWindow.coverage" NAME="mainWindow Coverage Results" MODIFIED="1650586747810" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/user_interface" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$start.coverage" NAME="start Coverage Results" MODIFIED="1655669704887" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1650586779647" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/testPackage" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$local_old_Server.coverage" NAME="local_old_Server Coverage Results" MODIFIED="1650571005227" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/test" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$paddle.coverage" NAME="paddle Coverage Results" MODIFIED="1650577394549" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Games/Pong" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$hand_detector.coverage" NAME="hand_detector Coverage Results" MODIFIED="1649808099671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/recognition/ressource" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$localServer__1_.coverage" NAME="localServer (1) Coverage Results" MODIFIED="1650585519871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/local" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$local_Old_Client.coverage" NAME="local_Old_Client Coverage Results" MODIFIED="1650569495841" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/test" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$ui.coverage" NAME="ui Coverage Results" MODIFIED="1650929504486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$Test.coverage" NAME="Test Coverage Results" MODIFIED="1650498377112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/testPackage" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$New_Server_AB_CV_04.coverage" NAME="New_Server_AB_CV_04 Coverage Results" MODIFIED="1650936355430" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/online" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$onlineClient.coverage" NAME="onlineClient Coverage Results" MODIFIED="1653621422685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/online" />
+    <MESSAGE value="activate button with cam" />
+    <MESSAGE value="cursor turns orange when intersecting" />
+    <MESSAGE value="cursor counter" />
+    <MESSAGE value="removed scroll bars" />
+    <MESSAGE value="autoscroll down working" />
+    <MESSAGE value="funfacts 1" />
+    <MESSAGE value="funfacts 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="funfacts 2" />
   </component>
 </project>

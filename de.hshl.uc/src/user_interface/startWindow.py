@@ -46,19 +46,17 @@ class startWindow(QWidget):
         # Info Label
         self.info_Label_Container = QLabel()
         self.info_Label_Container.setStyleSheet(
-            "margin: 20px 40px; border-radius: 25px; background: #8BC1E9; color: black;")
+            "border-radius: 25px; background: #8BC1E9; color: black;")
         # self.info_Label_Container.setMaximumHeight(400)
         self.info_Label_Container.setFont(self.fontA)
         # self.info_Label_Container.setMaximumSize(100, 400)
         self.info_Label_Container.setAutoFillBackground(True)
         # self.info_Label_Container.setStyleSheet("""background: #ebef00;""")
-        # date and temp vBox
+        # date and temperature vBox
         self.clock_temp_vbox = QLabel()
         self.clock_temp_vbox.layout = QVBoxLayout(self.clock_temp_vbox)
 
-
-
-        # Get Date and Time
+        # get Date and Time
         timezone = pytz.timezone('Europe/Berlin')
         now = datetime.now(timezone)
         now.astimezone()
@@ -89,7 +87,7 @@ class startWindow(QWidget):
         self.clock_label = QLabel()
         self.clock_label.setText(str(time))
         self.clock_label.setAlignment(QtCore.Qt.AlignCenter)
-        # self.clock_label.setMinimumWidth(400)
+        #self.clock_label.setMinimumWidth(400)
         self.clock_label.setFont(self.fontB)
         self.clock_label.setStyleSheet("margin-bottom: 0px; color: white")
 
@@ -104,9 +102,7 @@ class startWindow(QWidget):
         # -273.15 weil Kelvin zu Celsius
         print("hier muss es hin: " + str(int(data["main"]["temp"] - (273.15))))
 
-
-
-        # Temp
+        # temperature
         self.temp_label = QLabel()
         self.temp_label.setText(str(int(data["main"]["temp"] - (273.15))) + "°C")
         self.temp_label.setAlignment(QtCore.Qt.AlignCenter)
@@ -124,7 +120,7 @@ class startWindow(QWidget):
         self.clock_temp_vbox.setMinimumWidth(800)
         # self.clock_temp_vbox.setStyleSheet("overflow: hidden;border-radius: 25px; background: #F7AF9D; color: black;")
 
-        # Hbox
+        # HBox
         self.mid_label_container = QLabel()
         self.mid_label_container.layout = QHBoxLayout(self.mid_label_container)
         self.mid_label_container.setMaximumHeight(100)
@@ -133,13 +129,14 @@ class startWindow(QWidget):
         self.inner_vbox_label_container.setMaximumSize(200, 200)
         self.inner_vbox_label_container.layout = QVBoxLayout(self.inner_vbox_label_container)
         self.inner_vbox_label_container.setAlignment(QtCore.Qt.AlignCenter)
-        # Adds Buttons to the inner box
+        # Add Buttons to the inner box
         self.button_Opinion = QPushButton('Meinungsumfrage', self.inner_vbox_label_container)
         self.button_Opinion.setStyleSheet(
             "margin-left: 20px 40px; background-color: #B28BBC; border-style: thin; border-color: black; border-width: 5px; border-radius: 24px;")
         self.button_Opinion.setMinimumSize(200, 200)
         self.button_Opinion.setMaximumSize(200, 200)
         self.button_Opinion.setFont(self.fontA)
+        # turned QPushButton button_Play to a QLabel
         #self.button_Play = QPushButton('Spielesammlung', self.inner_vbox_label_container)
         self.buttonWidgetContainer = QLabel()
         self.buttonWidgetContainer.layout = QStackedLayout(self.buttonWidgetContainer)
@@ -149,7 +146,7 @@ class startWindow(QWidget):
         self.button_Play = QLabel()
         self.button_Play.layout = QStackedLayout(self.button_Play)
         self.button_Play.setStyleSheet(
-            "margin-left: 20px -40px; background: #4B6E74; border: 1px solid black; border-radius: 24px;")
+            "background: #4B6E74; border: 1px solid black; border-radius: 24px;")
         #self.button_Play.setStyleSheet(
         #    "margin-left: 20px -40px; background: #4B6E74;")
         #self.button_Play.setStyleSheet(
@@ -191,12 +188,13 @@ class startWindow(QWidget):
         # inner box
         self.inner_chat_label = QLabel()
         self.inner_chat_label.setText(
-            "Lorem ipsum dolor sit amet, \nconsetetur sadipscing elitr, \nsed diam nonumy eirmod tempor invidunt \nut labore et dolore magna aliquyam \nerat, sed diam voluptua.")
+            "Lorem ipsum dolor sit amet, \nconsetetur sadipscing elitr, \nsed diam nonumy eirmod tempor invidunt \nut "
+            "labore et dolore magna aliquyam \nerat, sed diam voluptua.")
         self.inner_chat_label.setStyleSheet(
-            "float: left; left: 20px; padding-right: opx; border-radius: 25px; background: #EBEFF0; color: black;")
+            "background: #EBEFF0;")
         self.inner_chat_label.setMinimumWidth(800)
 
-        # set the QScrollArea
+        # setup the QScrollArea
         self.scrollArea = QtGui.QScrollArea()
         self.scrollArea.setGeometry(QtCore.QRect(10, 10, 100, 100))
         self.scrollArea.setWidgetResizable(True)

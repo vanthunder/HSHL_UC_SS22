@@ -68,7 +68,7 @@ class pongScreen(QWidget):
         self.scoreRight.setStyleSheet("background-color: white; color: black; font-size: 30px; padding: 1px;")
 
 
-        #Bande oben
+        # Bande oben
         self.bandeOben = QLabel()
         self.bandeOben.setMinimumSize(width, 10)
         self.bandeOben.setMaximumSize(width, 10)
@@ -85,16 +85,16 @@ class pongScreen(QWidget):
         self.torLeft.setMinimumSize(10, height)
         self.torLeft.setMaximumSize(10, height)
         self.torLeft.setAutoFillBackground(True)
-        #self.torleft.setVisible(False)
+        # self.torleft.setVisible(False)
         # Tor rechts
         self.torRight = QLabel()
         self.torRight.setMinimumSize(10, height)
         self.torRight.setMaximumSize(10, height)
         self.torRight.setAutoFillBackground(True)
-        #self.torRight.setVisible(False)
+        # self.torRight.setVisible(False)
 
 
-        self.imageLabelRect = QtCore.QRectF(100, 100, 20, 20)
+        self.imageLabelRect = QtCore.QRectF(100, 100, 20, 20) #ball
         # self.paint = QPainter(self.imageLabelRect)
         # ball
         self.pixmap = QPixmap(100, 100)
@@ -116,9 +116,10 @@ class pongScreen(QWidget):
         self.imageLabel.layout().addWidget(self.torRight)
         self.imageLabel.layout().addWidget(self.scoreLeft)
         self.imageLabel.layout().addWidget(self.scoreRight)
-        #self.bandeUnten.geometry().setX(0)
-       # self.bandeUnten.setGeometry(QtCore.QRect(0, 0, 0, 0))
-        #self.imageLabel.layout().addWidget(self.button_movie)
+
+        # self.bandeUnten.geometry().setX(0)
+        # self.bandeUnten.setGeometry(QtCore.QRect(0, 0, 0, 0))
+        # self.imageLabel.layout().addWidget(self.button_movie)
         # self.imageLabel.layout().addWidget(self.imageLabelRect)
         # self.imageLabel.setParent(self.pad)
 

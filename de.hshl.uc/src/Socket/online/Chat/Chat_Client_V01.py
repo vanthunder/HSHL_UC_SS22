@@ -118,6 +118,7 @@ class chat_client:
         playerCoordinates = (Player, yCoordiante)
         serialPC = pickle.dumps(playerCoordinates)
         #serialY = pickle.dumps(yCoordiante)
+
         self.client.send(serialPC)
         # Starting Threads For Listening And Writing
 
