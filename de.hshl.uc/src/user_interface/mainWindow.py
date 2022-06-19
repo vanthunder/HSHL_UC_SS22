@@ -19,12 +19,14 @@ from Socket.online.Chat.Chat_Client_V01 import chat_client
 from model.camera import Camera
 from recognition.gesture_detector import gesture_detector
 from recognition.hand_detector import hand_detector
+from user_interface.Tools import FunFacts
 from user_interface.pongScreen import pongScreen
 from user_interface.startWindow import startWindow
 
 from recognition.body_detector import body_detector
 from datetime import datetime
 import time
+
 import requests
 
 
@@ -187,9 +189,15 @@ class StartWindow(QMainWindow):
 
     def __init__(self, camera=None, hand_detector=None, local_cL=None):
         super().__init__()
+        self.threadOpen = False
         self.scoreLeftCounter = 0
         self.scoreRightCounter = 0
         self.goalSetBool = True
+        self.funFactsClass = FunFacts
+        self.funFacts = self.funFactsClass.FunFacts.funFacts
+        self.sizeOfAr = len(self.funFactsClass.FunFacts.funFacts)
+        self.arCounter = 0
+        self.arGlobalCounter = 0
         self.width = 1280
         self.height = 750
         self.window_title = 'start'
@@ -481,7 +489,7 @@ class StartWindow(QMainWindow):
         timezone = pytz.timezone('Europe/Berlin')
         now = datetime.now(timezone)
         now.astimezone()
-        time = now.strftime("%H:%M")
+        timea = now.strftime("%H:%M")
         get_date = now.date().strftime("%A")
 
         match str(get_date):
@@ -500,8 +508,52 @@ class StartWindow(QMainWindow):
             case "Sunday":
                 get_date = "Sonntag"
 
-        self.startWindow.clock_label.setText(str(time))
+        #if not self.threadOpen:
+        #    self.arCounter = 0
+        #    thread = threading.Thread(target=self.updateCounter)
+        #    thread.start()
+        #    self.threadOpen = True
+        # run the thread
+
+        # wait for the thread to finish
+        print('Waiting for the thread...')
+
+        self.startWindow.clock_label.setText(str(timea))
         self.startWindow.date_label.setText(str(get_date))
+
+        if self.arGlobalCounter <= 50:
+            self.arGlobalCounter += 1
+        if self.arGlobalCounter == 50:
+            self.arCounter += 1
+            self.arGlobalCounter = 0
+
+        self.startWindow.fact_label.setText(self.funFacts.__getitem__(self.arCounter))
+        #self.updateCounter()
+        #if self.arCounter < self.sizeOfAr - 1:
+        #    self.arCounter += 1
+        #    time.sleep(4)
+        if self.arCounter == self.sizeOfAr - 1:
+            self.arCounter = 0
+        print(self.funFacts)
+        #thread.join()
+
+        #ToDo: Implements Wait
+        #if self.goalSetBool == True:
+
+        #    self.goalSetBool == False
+        #    #self.stopwatch.restart()
+        #if str(self.stopwatch) >= str(1000.00):
+        #    self.stopwatch.reset()
+        #    self.stopwatch.start()
+        #    self.goalSetBool == True
+
+
+
+
+    def updateCounter(self):
+        self.arCounter += 1
+        print(self.arCounter)
+        time.sleep(2)
 
     def convert_cv_qt(self, cv_img):
         cv_img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
