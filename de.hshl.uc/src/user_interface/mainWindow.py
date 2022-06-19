@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import QMessageBox, QStackedLayout, \
 
 # from Socket.local.localClient import local_client
 from pyqtgraph import Qt
+from stopwatch import Stopwatch
 
 from Socket.online.onlineClient import local_client
 from Socket.online.Chat.Chat_Client_V01 import chat_client
@@ -188,6 +189,7 @@ class StartWindow(QMainWindow):
         super().__init__()
         self.scoreLeftCounter = 0
         self.scoreRightCounter = 0
+        self.goalSetBool = True
         self.width = 1280
         self.height = 750
         self.window_title = 'start'
@@ -445,20 +447,33 @@ class StartWindow(QMainWindow):
                 print("INTERSECTION!")
                 #self.String("torL")
                 self.local_cL.sendCollision("torL")
-                #self.scoreRightCounter += 1
-                #self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
-                #time.sleep(0.5)
+                self.scoreRightCounter += 1
+                self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
+                time.sleep(0.5)
                 return True
             # Collision Bande Unten
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torRight.geometry()):
                 print("INTERSECTION!")
                 self.local_cL.sendCollision("torR")
-                #self.scoreLeftCounter += 1
-                #self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
-                #time.sleep(0.5)
+                self.scoreLeftCounter += 1
+                self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
+                time.sleep(0.5)
                 return True
             else:
                 return False
+
+    def updateTor(self):
+        if self.goalSetBool == True:
+            self.scoreRightCounter += 1
+            self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
+            print('Tor')
+            self.goalSetBool == False
+            stopwatch = Stopwatch(2)
+        if stopwatch >= 4.00:
+            self.goalSetBool == True
+            stopwatch.reset()
+
+
 
     def update_infolabel(self):
         # Get Date and Time
@@ -510,10 +525,7 @@ class StartWindow(QMainWindow):
     # Only for debug!
 
 
-    def updateTor(self):
-        self.scoreRightCounter += 1
-        self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
-        print('Tor')
+
 
 
 
