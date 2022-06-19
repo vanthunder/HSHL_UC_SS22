@@ -437,11 +437,15 @@ class StartWindow(QMainWindow):
                 print("INTERSECTION!")
                 #self.String("torL")
                 self.local_cL.sendCollision("torL")
+                self.scoreRightCounter += 1
+                self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
                 return True
             # Collision Bande Unten
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torRight.geometry()):
                 print("INTERSECTION!")
                 self.local_cL.sendCollision("torR")
+                self.scoreLeftCounter += 1
+                self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
                 return True
             else:
                 return False
@@ -497,8 +501,8 @@ class StartWindow(QMainWindow):
 
 
     def updateTor(self):
-        self.scoreLeftCounter += 1
-        self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
+
+        print('Tor')
 
 
 
