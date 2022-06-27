@@ -169,13 +169,13 @@ class VideoThread(QThread):
 
     # Camera Loop
     def run(self):
-        Player = 'Left'  # input('Player: ')
+        Player = 'Right'  # input('Player: ')
 
         self.client.player = Player
         rThread = threading.Thread(target=self.start_receive, args=())
         #rThread.start()
         #self.client.receive()
-        self.client.sendReady('Left')
+        self.client.sendReady('Right')
         while True:
             if self.client.canStart == True:
                 print(bcolors.WARNING, "Starte VideoLoop", bcolors.ENDC)
@@ -463,7 +463,7 @@ class StartWindow(QMainWindow):
                 #self.scoreRightCounter += 1
                 #self.pongWindow.scoreRight.setText(str(20))
                 self.scoreRight = True
-                self.updateTor
+                self.updateTor()
                 #time.sleep(0.5)
                 return True
             # Collision Bande Unten
@@ -473,7 +473,7 @@ class StartWindow(QMainWindow):
                 #self.scoreLeftCounter += 1
                 #self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
                 self.scoreLeft = True
-                self.updateTor
+                self.updateTor()
                 #time.sleep(0.5)
                 return True
             else:
@@ -482,33 +482,21 @@ class StartWindow(QMainWindow):
 
     def updateTor(self):
         print("DIE METHODE WIRD AUSGEFÜHRT#####################################################1111####1##")
-        if self.scoreLeft == True:
-            self.scoreLeft = False
-            self.scoreRight = False
-            self.scoreLeftCounter += 1
-            self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
-            self.goalGlobalCounter = 0
-        if self.scoreRight == True:
-            self.scoreLeft = False
-            self.scoreRight = False
-            self.scoreRightCounter += 1
-            self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
-            self.goalGlobalCounter = 0
         if self.goalGlobalCounter <= 20:
             self.goalGlobalCounter += 1
         if self.goalGlobalCounter == 20:
             #TODO: Put Goal Code Here:
             if self.scoreLeft:
-                #self.scoreLeft = False
-                #self.scoreRight = False
-                #self.scoreLeftCounter +=1
-                #self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
+                self.scoreLeft = False
+                self.scoreRight = False
+                self.scoreLeftCounter +=1
+                self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
                 self.goalGlobalCounter = 0
             if self.scoreRight:
-                #self.scoreLeft = False
-                #self.scoreRight = False
-                #self.scoreRightCounter += 1
-                #self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
+                self.scoreLeft = False
+                self.scoreRight = False
+                self.scoreRightCounter += 1
+                self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
                 self.goalGlobalCounter = 0
             #self.scoreLeft = False
             #self.scoreRight = False
