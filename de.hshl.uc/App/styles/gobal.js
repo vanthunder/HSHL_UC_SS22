@@ -52,7 +52,7 @@ export const globalStyles = StyleSheet.create({
         fontSize: 50,
       },
       boxFour: {
-      flex: 1,
+    
         backgroundColor: '#8BC1E9',
         height: 175,
         textAlign: 'center',
@@ -74,7 +74,7 @@ export const globalStyles = StyleSheet.create({
       },
 
       Chat :{
-        height: 450,
+        marginTop:10,
         margin: 20,
         borderWidth: 5,
         borderLeftWidth: 2,
