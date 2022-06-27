@@ -5,7 +5,6 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const Server = require("socket.io")
 const socketio = require('socketio')
-require('./User')
 require('./Chat')
 
 app.use(bodyParser.json())
@@ -29,21 +28,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/jokes/random', (req, res) => {
-    request(
-        {url: 'https://joke-api-strict-cors.appspot.com/jokes/random'},
-        (error, response, body) => {
-            if (error || response.statusCode !== 200) {
-                return res.status(500).json({type: 'error', message: err.message});
-            }
-
-            res.json(JSON.parse(body));
-        }
-    )
-});
-
-
-//const User = mongoose.model('user')
 const Chat = mongoose.model('Chatmessages')
 
 
@@ -63,51 +47,6 @@ mongoose.connection.on("error", (err) => {
     console.log("error", err)
 })
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
-
-app.get('/', function (req, res, next) {
-
-    app.post('/send-data', (req, res) => {
-        const chat = new Chat({
-            user: req.body.name,
-            message: req.body.password
-        })
-        chat.save()
-            .then(data => {
-                console.log(data)
-                res.send(data)
-            }).catch(err => {
-            console.log(err)
-        })
-
-    })
-    // Handle the get for this route
-});
-
-app.post('/', function (req, res, next) {
-    // Handle the post for this route
-
-    app.post('/send-data', (req, res) => {
-        const chat = new Chat({
-            user: req.body.name,
-            message: req.body.password
-        })
-        chat.save()
-            .then(data => {
-                console.log(data)
-                res.send(data)
-            }).catch(err => {
-            console.log(err)
-        })
-
-    })
-});
-
-
 app.get('/', (req, res) => {
     User.find({}).then(data => {
         res.send(data)
@@ -119,8 +58,7 @@ app.get('/', (req, res) => {
 
 app.post('/send-data', (req, res) => {
     const chat = new Chat({
-        user: req.body.name,
-        message: req.body.password
+        message: req.body.message
     })
     chat.save()
         .then(data => {

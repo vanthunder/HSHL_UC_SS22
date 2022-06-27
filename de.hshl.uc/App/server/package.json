@@ -2,6 +2,9 @@
   "proxy": "34.159.99.140:1666",
   "dependencies": {
     "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "install": "^0.13.0",
+    "mongoose": "^6.4.1",
     "socket.io": "^4.5.1",
     "socketio": "^1.0.0"
   }
