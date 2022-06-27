@@ -190,6 +190,8 @@ class StartWindow(QMainWindow):
     def __init__(self, camera=None, hand_detector=None, local_cL=None):
         super().__init__()
         self.threadOpen = False
+        self.scoreLeft = False
+        self.scoreRight = False
         self.scoreLeftCounter = 0
         self.scoreRightCounter = 0
         self.goalSetBool = True
@@ -198,6 +200,8 @@ class StartWindow(QMainWindow):
         self.sizeOfAr = len(self.funFactsClass.FunFacts.funFacts)
         self.arCounter = 0
         self.arGlobalCounter = 0
+        self.goalCounter = 0
+        self.goalGlobalCounter = 0
         self.width = 1280
         self.height = 750
         self.window_title = 'start'
@@ -456,30 +460,58 @@ class StartWindow(QMainWindow):
                 print("INTERSECTION!")
                 #self.String("torL")
                 self.local_cL.sendCollision("torL")
-                self.scoreRightCounter += 1
-                self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
-                time.sleep(0.5)
+                #self.scoreRightCounter += 1
+                #self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
+                self.scoreRight = True
+                #time.sleep(0.5)
                 return True
             # Collision Bande Unten
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torRight.geometry()):
                 print("INTERSECTION!")
                 self.local_cL.sendCollision("torR")
-                self.scoreLeftCounter += 1
-                self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
-                time.sleep(0.5)
+                #self.scoreLeftCounter += 1
+                #self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
+                self.ScoreLeft = True
+                #time.sleep(0.5)
                 return True
             else:
                 return False
 
     def updateTor(self):
-        if self.goalSetBool == True:
-            self.scoreRightCounter += 1
-            self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
-            print('Tor')
-            self.goalSetBool == False
-            self.stopwatch.restart()
-        if self.stopwatch >= 5.00:
-            self.goalSetBool == True
+        if self.goalGlobalCounter <= 50:
+            self.goalGlobalCounter += 1
+        if self.goalGlobalCounter == 50:
+            #TODO: Put Goal Code Here:
+            if self.scoreLeft:
+                self.scoreLeft = False
+                self.scoreRight = False
+                self.scoreLeftCounter +=1
+                self.pongWindow.scoreLeft.setText(str(self.scoreRightCounter))
+                self.goalGlobalCounter = 0
+            if self.scoreRight:
+                self.scoreLeft = False
+                self.scoreRight = False
+                self.scoreRightCounter += 1
+                self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
+                self.goalGlobalCounter = 0
+            self.scoreLeft = False
+            self.scoreRight = False
+
+        #self.startWindow.fact_label.setText(self.funFacts.__getitem__(self.arCounter))
+
+        if self.goalCounter == self.sizeOfAr - 1:
+            self.goalCounter = 0
+
+
+
+        #if self.goalSetBool == True:
+        #    self.scoreRightCounter += 1
+        #    self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
+        #    print('Tor')
+        #    self.goalSetBool == False
+        #    self.stopwatch.restart()
+        #if self.stopwatch >= 5.00:
+        #    self.goalSetBool == True
 
 
 
@@ -534,7 +566,7 @@ class StartWindow(QMainWindow):
         #    time.sleep(4)
         if self.arCounter == self.sizeOfAr - 1:
             self.arCounter = 0
-        print(self.funFacts)
+        #print(self.funFacts)
         #thread.join()
 
         #ToDo: Implements Wait
