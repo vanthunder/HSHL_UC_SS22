@@ -482,21 +482,34 @@ class StartWindow(QMainWindow):
 
     def updateTor(self):
         print("DIE METHODE WIRD AUSGEFÜHRT#####################################################1111####1##")
+        if self.scoreLeft:
+            self.scoreLeft = False
+            self.scoreRight = False
+            self.scoreLeftCounter += 1
+            self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
+            self.goalGlobalCounter = 0
+        if self.scoreRight:
+            self.scoreLeft = False
+            self.scoreRight = False
+            self.scoreRightCounter += 1
+            self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
+            self.goalGlobalCounter = 0
+
         if self.goalGlobalCounter <= 20:
             self.goalGlobalCounter += 1
         if self.goalGlobalCounter == 20:
             #TODO: Put Goal Code Here:
             if self.scoreLeft:
-                self.scoreLeft = False
-                self.scoreRight = False
-                self.scoreLeftCounter +=1
-                self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
+                #self.scoreLeft = False
+                #self.scoreRight = False
+                #self.scoreLeftCounter +=1
+                #self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
                 self.goalGlobalCounter = 0
             if self.scoreRight:
-                self.scoreLeft = False
-                self.scoreRight = False
-                self.scoreRightCounter += 1
-                self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
+                #self.scoreLeft = False
+                #self.scoreRight = False
+                #self.scoreRightCounter += 1
+                #self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
                 self.goalGlobalCounter = 0
             #self.scoreLeft = False
             #self.scoreRight = False
