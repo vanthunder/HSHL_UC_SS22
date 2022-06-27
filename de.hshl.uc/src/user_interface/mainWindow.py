@@ -471,11 +471,12 @@ class StartWindow(QMainWindow):
                 self.local_cL.sendCollision("torR")
                 #self.scoreLeftCounter += 1
                 #self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
-                self.ScoreLeft = True
+                self.scoreLeft = True
                 #time.sleep(0.5)
                 return True
             else:
                 return False
+        self.updateTor
 
     def updateTor(self):
         if self.goalGlobalCounter <= 50:
@@ -486,7 +487,7 @@ class StartWindow(QMainWindow):
                 self.scoreLeft = False
                 self.scoreRight = False
                 self.scoreLeftCounter +=1
-                self.pongWindow.scoreLeft.setText(str(self.scoreRightCounter))
+                self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
                 self.goalGlobalCounter = 0
             if self.scoreRight:
                 self.scoreLeft = False
