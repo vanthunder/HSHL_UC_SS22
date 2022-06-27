@@ -481,13 +481,14 @@ class StartWindow(QMainWindow):
 
 
     def updateTor(self):
-        if self.scoreLeft:
+        print("DIE METHODE WIRD AUSGEFÜHRT#####################################################1111####1##")
+        if self.scoreLeft == True:
             self.scoreLeft = False
             self.scoreRight = False
             self.scoreLeftCounter += 1
             self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
             self.goalGlobalCounter = 0
-        if self.scoreRight:
+        if self.scoreRight == True:
             self.scoreLeft = False
             self.scoreRight = False
             self.scoreRightCounter += 1
