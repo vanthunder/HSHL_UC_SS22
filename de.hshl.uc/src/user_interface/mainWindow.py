@@ -487,13 +487,11 @@ class StartWindow(QMainWindow):
             self.scoreRight = False
             self.scoreLeftCounter += 1
             self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
-            self.goalGlobalCounter = 0
-        if self.scoreRight:
+        elif self.scoreRight:
             self.scoreLeft = False
             self.scoreRight = False
             self.scoreRightCounter += 1
             self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
-            self.goalGlobalCounter = 0
 
         if self.goalGlobalCounter <= 20:
             self.goalGlobalCounter += 1
