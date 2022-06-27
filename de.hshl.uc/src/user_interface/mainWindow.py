@@ -418,8 +418,8 @@ class StartWindow(QMainWindow):
         self.pongWindow.imageLabel3.setGeometry(x, y, 80, 80)
         self.detect_collision()
         print(bcolors.FAIL,self.pongWindow.imageLabel3.geometry().x(), " X Coord", bcolors.ENDC)
-        if self.pongWindow.imageLabel3.geometry().x() >= 850 and self.pongWindow.imageLabel3.geometry().x() <= 853:
-            self.updateTor()
+        #if self.pongWindow.imageLabel3.geometry().x() >= 850 and self.pongWindow.imageLabel3.geometry().x() <= 853:
+        #    self.updateTor()
 
 
     def ballMovementpositive(self):
@@ -479,9 +479,9 @@ class StartWindow(QMainWindow):
         self.updateTor
 
     def updateTor(self):
-        if self.goalGlobalCounter <= 50:
+        if self.goalGlobalCounter <= 20:
             self.goalGlobalCounter += 1
-        if self.goalGlobalCounter == 50:
+        if self.goalGlobalCounter == 20:
             #TODO: Put Goal Code Here:
             if self.scoreLeft:
                 self.scoreLeft = False
@@ -495,13 +495,13 @@ class StartWindow(QMainWindow):
                 self.scoreRightCounter += 1
                 self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
                 self.goalGlobalCounter = 0
-            self.scoreLeft = False
-            self.scoreRight = False
+            #self.scoreLeft = False
+            #self.scoreRight = False
 
         #self.startWindow.fact_label.setText(self.funFacts.__getitem__(self.arCounter))
 
-        if self.goalCounter == self.sizeOfAr - 1:
-            self.goalCounter = 0
+        #if self.goalCounter == self.sizeOfAr - 1:
+        #    self.goalCounter = 0
 
 
 
