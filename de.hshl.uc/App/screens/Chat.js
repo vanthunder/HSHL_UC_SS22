@@ -6,18 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 
 const Chat = () => {
  
-  const [name, setName] = useState()
-  const [data,setData] =useState([])
-  const [loading,setLoading]= useState(true)
-
-  useEffect(()=>{
-    fetch("http://34.159.99.140:1666/")
-    .then(res=>res.json())
-    .then(results=>{
-      setData(results)
-      setLoading(false)
-    })
-  },[]);
+  const [message, setMessage] = useState()
+ 
 
   const DATA = [
     {
@@ -45,7 +35,7 @@ const Chat = () => {
   );
 
   const submitData = ()=>{
-    fetch("http://34.159.99.140:1666/send-data",{
+    fetch("http://34.159.165.27:1666/send-data",{
         method:"post",
         headers:{
           'Content-Type': 'application/json',
@@ -53,7 +43,7 @@ const Chat = () => {
         },
 
         body:JSON.stringify({
-           name,
+           message,
           
         })
     })
@@ -86,8 +76,8 @@ const Chat = () => {
         <View style={globalStyles.Chatinput}>
          <TextInput
           style={{fontFamily: 'JosefineSansMedium'}}
-          value={name}
-          onChangeText={text => setName(text)}
+          value={message}
+          onChangeText={text => setMessage(text)}
           placeholder="Ihre Nachricht"
          />
   
