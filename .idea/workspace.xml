@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0249d737-1b62-40ab-b2d4-51d9f088bc89" name="Changes" comment="Implements new goal method!">
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" afterDir="false" />
-    </list>
+    <list default="true" id="0249d737-1b62-40ab-b2d4-51d9f088bc89" name="Changes" comment="Implements new goal method!" />
     <list id="cf1cc60c-cbd6-4cbf-82b8-5e64fd9c236c" name="Changes by Jan-Gustav" comment="Changes by Jan-Gustav" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +113,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1653837278035</updated>
-      <workItem from="1656349707648" duration="3330000" />
+      <workItem from="1656349707648" duration="3632000" />
     </task>
     <task id="LOCAL-00001" summary="activate button with cam">
       <created>1654112819352</created>
@@ -194,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656353961148</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Implements new goal method!">
+      <created>1656354258182</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1656354258182</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

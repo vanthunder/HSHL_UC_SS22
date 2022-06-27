@@ -461,8 +461,9 @@ class StartWindow(QMainWindow):
                 #self.String("torL")
                 self.local_cL.sendCollision("torL")
                 #self.scoreRightCounter += 1
-                #self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
+                self.pongWindow.scoreRight.setText(str(20))
                 self.scoreRight = True
+                self.updateTor
                 #time.sleep(0.5)
                 return True
             # Collision Bande Unten
@@ -472,11 +473,12 @@ class StartWindow(QMainWindow):
                 #self.scoreLeftCounter += 1
                 #self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
                 self.scoreLeft = True
+                self.updateTor
                 #time.sleep(0.5)
                 return True
             else:
                 return False
-        self.updateTor
+
 
     def updateTor(self):
         if self.goalGlobalCounter <= 20:
