@@ -3,8 +3,6 @@ const app = express()
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const cors = require('cors')
-const Server = require("socket.io")
-const socketio = require('socketio')
 require('./Chat')
 
 app.use(bodyParser.json())
@@ -96,9 +94,7 @@ app.post('/update', (req, res) => {
 app.use(express.json())
 app.use('/api/user', Chat)
 app.use(cors(corsOptions));
-//const io = socketio(Server).sockets;
 const port = process.env.PORT || 1666;
-//console.log(io.handshake.host);
 app.listen(port, () => {
     console.log('server running')
 })

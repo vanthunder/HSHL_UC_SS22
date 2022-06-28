@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import { View, TextInput, Button, Text, FlatList, TouchableOpacity, KeyboardAvoidingView, ScrollView} from "react-native";
+import { View, TextInput, Button, Text, FlatList, TouchableOpacity, KeyboardAvoidingView, ActivityIndicator} from "react-native";
 import { globalStyles } from "../styles/gobal";
 import { Ionicons } from '@expo/vector-icons'; 
 
@@ -7,22 +7,23 @@ import { Ionicons } from '@expo/vector-icons';
 const Chat = () => {
  
   const [message, setMessage] = useState()
+  const [DATA,setDATA] = useState([])
+  const [loading,setLoading]= useState(true)
  
+  const fetchData = ()=>{
+    fetch("http://34.159.99.140:1666/get-data")
+    .then(res=>res.json())
+    .then(results=>{
 
-  const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      name: 'First Item',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      name: 'Second Item',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      name: 'Third Item',
-    },
-  ];
+        setDATA(results)
+        setLoading(false)
+
+    })
+ };
+
+ useEffect(()=>{
+  fetchData()
+},[])
   
   const Item = ({ name }) => (
     <View>
@@ -35,7 +36,7 @@ const Chat = () => {
   );
 
   const submitData = ()=>{
-    fetch("http://34.159.165.27:1666/send-data",{
+    fetch("http://34.159.99.140:1666/send-data",{
         method:"post",
         headers:{
           'Content-Type': 'application/json',
@@ -65,12 +66,17 @@ const Chat = () => {
  
        <Text style={globalStyles.boxFour}>Chat</Text>
        <View style={globalStyles.Chat}>
-      
-       <FlatList
+      {
+        loading? 
+      <ActivityIndicator size="small" color="#0000ff" />
+      :
+      <FlatList
         data={DATA}
         renderItem={renderItem}
         keyExtractor={item => item._id}
         />
+      }
+      
        
      
         <View style={globalStyles.Chatinput}>
@@ -88,8 +94,7 @@ const Chat = () => {
          </TouchableOpacity>
        </View>
       
-      </View>
-    
+       </View>
     </KeyboardAvoidingView>
   );
 };
