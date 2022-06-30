@@ -74,8 +74,9 @@ export const globalStyles = StyleSheet.create({
       },
 
       Chat :{
-        marginTop:10,
-        margin: 20,
+      
+        marginLeft: 20,
+        marginRight: 20,
         borderWidth: 5,
         borderLeftWidth: 2,
         borderRightWidth: 2,
@@ -87,7 +88,7 @@ export const globalStyles = StyleSheet.create({
      Chatinput :{
        flexDirection: "row",
        justifyContent: 'space-between',
-       paddingTop: 360,
+       paddingTop: 340,
       },
 
       Spieleauswahl :{

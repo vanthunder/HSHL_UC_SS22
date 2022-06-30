@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import { View, TextInput, Button, Text, FlatList, TouchableOpacity, KeyboardAvoidingView, ActivityIndicator} from "react-native";
+import { View, TextInput, Button, Text, FlatList, TouchableOpacity, KeyboardAvoidingView, ActivityIndicator, ScrollView} from "react-native";
 import { globalStyles } from "../styles/gobal";
 import { Ionicons } from '@expo/vector-icons'; 
 
@@ -25,14 +25,14 @@ const Chat = () => {
   fetchData()
 },[])
   
-  const Item = ({ name }) => (
+  const Item = ({ message }) => (
     <View>
-      <Text>{name}</Text>
+      <Text>{message}</Text>
     </View>
   );
 
   const renderItem = ({ item }) => (
-    <Item name={item.name} />
+    <Item name={item.message} />
   );
 
   const submitData = ()=>{
@@ -63,7 +63,8 @@ const Chat = () => {
 
   return (
     <KeyboardAvoidingView>
- 
+    <ScrollView>
+
        <Text style={globalStyles.boxFour}>Chat</Text>
        <View style={globalStyles.Chat}>
       {
@@ -95,6 +96,7 @@ const Chat = () => {
        </View>
       
        </View>
+       </ScrollView>
     </KeyboardAvoidingView>
   );
 };
