@@ -1,9 +1,6 @@
-import numpy as np
 import cv2
 import mediapipe as mp
-import time
-import keyboard
-from matplotlib import pyplot as plt
+import numpy as np
 
 
 class hand_detector:
@@ -92,73 +89,8 @@ class hand_detector:
 
     def getLmlist(self):
         return self.lmList
-    def hand_detector_run(detector, img):
-        hdt = hand_detector()
-        pTime = 0
-        cTime = 0
-        x = 300
-        y = 200
-        color = (255, 0, 0)
-        thickness = 2
-        first_time = True
-        t1 = 0
-        t2 = 0
-        dt = 0
-        seconds_until_click = 2
-        counter = 0
-        startPoint = (1000, 100)
-        endPoint = (1400, 300)
-        # TO-DO: detector Klasse übergeben!
-        # CV2 Operation ausführen
-        img = detector.findHands(hdt, img)
 
-        img = cv2.rectangle(img, startPoint, endPoint, color, thickness)
-
-        # TO-DO Loading animation Circle
-        lmlist = detector.findPosition(hdt, img)
-        # Setze Globale Liste!
-        handlist = lmlist
-        hand_detector.handlist = lmlist
-        if len(lmlist) != 0:
-            center = (int(lmlist[0].__getitem__(1)), int(lmlist[0].__getitem__(2)))
-            img = cv2.circle(img, center, 20, (255, 255, 0), 2)
-            # TO-DO: Implement Timer
-            if detector.intersection(hdt, lmlist, x, y, startPoint, endPoint) == True:
-                counter += 1
-                color = (255, 255, 40)
-
-                t1 = time.time()
-
-                if dt >= seconds_until_click:
-                    color = (0, 0, 255)
-                    cv2.circle(img, (400, 400), 30, (0, 0, 0), cv2.FILLED)
-                    # send a message
-
-                if first_time:
-                    first_time = False
-                else:
-                    dt += t1 - t2
-
-                t2 = t1
-            else:
-                first_time = True
-                dt = 0
-                color = (255, 0, 0)
-                counter = 0
-                t1 = 0
-                t2 = 0
-                dt = 0
-                first_time = True
-
-        cTime = time.time()
-        fps = 1 / (cTime - pTime)
-        pTime = cTime
-        print('FPS: ',fps)
-
-
-        return img
     def find_hands_on_image(self, img):
-        # TO -DO Intersection außerhalb der While Methode
         x = 300
         y = 200
         color = (255, 0, 0)
@@ -176,10 +108,11 @@ class hand_detector:
 
         return img
 
+
 def main(self):
     print("TRUE INI!!!!!!")
     detector = hand_detector()
 
 
 if __name__ == "__main__":
-   main()
+    main()

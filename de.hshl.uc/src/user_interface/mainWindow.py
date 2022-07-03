@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import QMessageBox, QStackedLayout, \
 # from Socket.local.localClient import local_client
 from stopwatch import Stopwatch
 
-from Socket.online.PongServer.onlineClient import local_client
+from Socket.online.PongServer.Online_Client import local_client
 from Socket.online.ChatServer.Online_Chat_Client_V01 import chat_client
 #from Socket.local.ChatServer.Local_Chat_Client_V01 import chat_client
 from model.camera import Camera

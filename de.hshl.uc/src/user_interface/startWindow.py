@@ -1,17 +1,20 @@
+from datetime import datetime
+
+import pytz
 import requests
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QPalette
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QSizePolicy, QStackedLayout
 from pyqtgraph.Qt import QtGui
-from datetime import datetime
-import pytz
 
 from user_interface.Tools.Cursor import Cursor
+
 
 class startWindow(QWidget):
     DEFAULT_WIDTH = 250
     DEFAULT_HEIGTH = 150
+
     def __init__(self):
         super().__init__()
         # Variablen initialisierung für Fenstergröße
@@ -75,7 +78,7 @@ class startWindow(QWidget):
         self.clock_label = QLabel()
         self.clock_label.setText(str(time))
         self.clock_label.setAlignment(QtCore.Qt.AlignCenter)
-        #self.clock_label.setMinimumWidth(400)
+        # self.clock_label.setMinimumWidth(400)
         self.clock_label.setFont(self.fontB)
         self.clock_label.setStyleSheet("margin-bottom: 0px; color: white")
 
@@ -128,8 +131,8 @@ class startWindow(QWidget):
         self.button_Opinion.setFont(self.fontA)
         self.buttonWidgetContainer = QLabel()
         self.buttonWidgetContainer.layout = QStackedLayout(self.buttonWidgetContainer)
-        self.buttonWidgetContainer.setMinimumSize(250,150)
-        self.buttonWidgetContainer.setMinimumSize(250,150)
+        self.buttonWidgetContainer.setMinimumSize(250, 150)
+        self.buttonWidgetContainer.setMinimumSize(250, 150)
 
         # Play Button erstellen
         self.button_Play = QLabel()
@@ -181,8 +184,8 @@ class startWindow(QWidget):
         self.scrollArea.setWidget(self.inner_chat_label)
 
         # add the chat and the scroll area
-        self.outer_chat_v_label.setMaximumSize(300,400)
-        self.inner_vbox_label_container.setMaximumSize(300,600)
+        self.outer_chat_v_label.setMaximumSize(300, 400)
+        self.inner_vbox_label_container.setMaximumSize(300, 600)
         self.mid_label_container.setMaximumHeight(400)
 
         self.inner_chat_label.setFont(self.fontA)
