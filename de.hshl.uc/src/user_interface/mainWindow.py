@@ -15,6 +15,7 @@ from stopwatch import Stopwatch
 
 from Socket.online.PongServer.onlineClient import local_client
 from Socket.online.ChatServer.Online_Chat_Client_V01 import chat_client
+#from Socket.local.ChatServer.Local_Chat_Client_V01 import chat_client
 from model.camera import Camera
 from recognition.hand_detector import hand_detector
 from user_interface.Tools import FunFacts
@@ -60,7 +61,6 @@ class VideoThread(QThread):
         self.camera = camera
         self.hand_detector = hand_detector
         hd = self.hand_detector
-        gd = gesture_detector()
 
     def start_receive(self):
         self.client.receive()
@@ -72,7 +72,6 @@ class VideoThread(QThread):
         speedX = 10
         speedY = 0
         hd = hand_detector()
-        gd = gesture_detector()
         lmList = []
         self.hand_detector.handlist = lmList
         video = 'hands.mp4'
@@ -115,7 +114,6 @@ class VideoThread(QThread):
                 # fps = self.camera.cap.get(cv2.CAP_PROP_FPS)
                 # cv2.putText(img_proc, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
                 # print(lmList)
-                gd.writeLmList(lmList)
                 # gd.print()
                 # cv2.imshow('Test', img)
                 self.change_pixmap_signal.emit(img_proc)
@@ -123,7 +121,7 @@ class VideoThread(QThread):
                 # Game Loop
                 bX += 1 + speedX
                 bY += 1 + speedY
-                print(bcolors.OKBLUE, self.client.test, " TorLinks", bcolors.ENDC)
+                #print(bcolors.OKBLUE, self.client.test, " TorLinks", bcolors.ENDC)
                 # Bewege ball
                 print(bcolors.FAIL, self.client.ballcoords.__getitem__(0), bcolors.ENDC)
 
@@ -137,14 +135,7 @@ class VideoThread(QThread):
                 if not lmList:
                     print()
                 else:
-                    print(bcolors.FAIL, self.client.TempChatList,
-                          "EMITYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
-                          bcolors.ENDC)
-                    # self.update_chat.emit()
-                    if not self.client.TempChatList:
-                        print(bcolors.FAIL,
-                              "EMITYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
-                              bcolors.ENDC)
+
 
                     # Send Tupel
                     print('Send Coordinates form Main Window')
@@ -756,13 +747,13 @@ class BackgroundFeed(QThread):
         bodyDetector = body_detector()
 
         self.client.player = Player
-        self.client.sendcoordinate(Player, 100)
+        self.client.startClientThread() #Client Thread for receiving messages from the Chat Server
         rThread = threading.Thread(target=self.start_receive, args=())
 
 
         while True:
 
-            self.client.sendcoordinate(Player, 100)
+            #self.client.sendcoordinate(Player, 100)
             success, img = self.camera.cap.read()
             # img.flags.writeable = False
             if success:
