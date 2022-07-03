@@ -6,14 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0249d737-1b62-40ab-b2d4-51d9f088bc89" name="Changes" comment="Removed Unused Code!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/Socket/online/PongServer/OnlineServer_V05.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/Socket/online/PongServer/Online_Server_V05.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/Socket/online/PongServer/onlineClient.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/Socket/online/PongServer/Online_Client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/recognition/hand_detector.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/recognition/hand_detector.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/start.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/start.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/Tools/Cursor.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/Tools/Cursor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/Tools/FunFacts.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/Tools/FunFacts.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/startWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/startWindow.py" afterDir="false" />
     </list>
     <list id="cf1cc60c-cbd6-4cbf-82b8-5e64fd9c236c" name="Changes by Jan-Gustav" comment="Changes by Jan-Gustav" />
     <option name="SHOW_DIALOG" value="false" />
@@ -277,7 +270,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656887857204</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Removed Unused Code!">
+      <created>1656889856148</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1656889856148</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -308,17 +308,6 @@
     <MESSAGE value="Removed Unused Code!" />
     <option name="LAST_COMMIT_MESSAGE" value="Removed Unused Code!" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py</url>
-          <line>520</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/HSHL_UC_SS22$New_Client.coverage" NAME="New_Client Coverage Results" MODIFIED="1650569255236" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket" />
     <SUITE FILE_PATH="coverage/HSHL_UC_SS22$localClient.coverage" NAME="localClient Coverage Results" MODIFIED="1653670808939" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/local" />
@@ -327,7 +316,7 @@
     <SUITE FILE_PATH="coverage/HSHL_UC_SS22$start__1_.coverage" NAME="start (1) Coverage Results" MODIFIED="1650481422632" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src" />
     <SUITE FILE_PATH="coverage/HSHL_UC_SS22$localClient__1_.coverage" NAME="localClient (1) Coverage Results" MODIFIED="1650586688418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/local" />
     <SUITE FILE_PATH="coverage/HSHL_UC_SS22$Server_V03.coverage" NAME="Server_V03 Coverage Results" MODIFIED="1654268465350" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/online" />
-    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$start.coverage" NAME="start Coverage Results" MODIFIED="1656887820394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src" />
+    <SUITE FILE_PATH="coverage/HSHL_UC_SS22$start.coverage" NAME="start Coverage Results" MODIFIED="1656892558740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src" />
     <SUITE FILE_PATH="coverage/HSHL_UC_SS22$hand_detector.coverage" NAME="hand_detector Coverage Results" MODIFIED="1649808099671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/recognition/ressource" />
     <SUITE FILE_PATH="coverage/HSHL_UC_SS22$localServer__1_.coverage" NAME="localServer (1) Coverage Results" MODIFIED="1650585519871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/local" />
     <SUITE FILE_PATH="coverage/HSHL_UC_SS22$local_Old_Client.coverage" NAME="local_Old_Client Coverage Results" MODIFIED="1650569495841" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/de.hshl.uc/src/Socket/test" />
