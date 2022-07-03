@@ -1,9 +1,3 @@
-import time
-
-import cv2
-import numpy as np
-import mediapipe as mp
-
 from recognition.hand_detector import hand_detector
 
 

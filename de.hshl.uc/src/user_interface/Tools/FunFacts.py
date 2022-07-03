@@ -1,9 +1,3 @@
-from PyQt5.QtGui import QMovie
-from PyQt5.QtWidgets import QLabel, QVBoxLayout, QStackedLayout
-from PyQt5.QtWidgets import QLabel, QVBoxLayout
-from PyQt5 import QtCore, QtGui, QtWidgets
-
-
 class FunFacts:
     s1 = "Das größte Gebiet, das zu keinem Staat der Erde gehört,\n" \
               "ist das Marie-Byrd-Land mit einer Fläche von etwa 1,6 Millionen Quadratkilometern.\n" \

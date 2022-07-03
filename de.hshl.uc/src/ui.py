@@ -11,8 +11,6 @@ class ui():
         hdt = hand_detector()
         hdt.hand_detector.main()
 
-
-
         window = QWidget()
         window.setWindowTitle('PyQt5 APP')
         window.setGeometry(100, 100, 280, 80)

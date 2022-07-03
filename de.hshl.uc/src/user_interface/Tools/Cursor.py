@@ -1,10 +1,10 @@
 from PyQt5.QtGui import QMovie
-from PyQt5.QtWidgets import QLabel, QVBoxLayout, QStackedLayout
-from PyQt5.QtWidgets import QLabel, QVBoxLayout
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QStackedLayout
+from PyQt5.QtWidgets import QLabel
 
 
 class Cursor(QLabel):
+    # Variable für die Größe des Cursors initialisieren
     DEFAULT_WIDTH = 40
     DEFAULT_HEIGTH = 40
     def __init__(self):
@@ -19,27 +19,24 @@ class Cursor(QLabel):
         self.loading_label.height = 40
         self.loading_label.setStyleSheet('background: orange')
 
-        # make
         self.layout = QStackedLayout(self)
 
         self.layout.addWidget(self.loading_label)
         self.loading_label.setMaximumSize(0, 0)
 
 
-
-
     def setPosition(self, x, y):
+        # Position des Cursors setzen/Updaten
         self.setGeometry(self.width, self.height, x, y)
 
     def start_giph(self):
         self.movie = QMovie("loading-circle.gif")
-        #self.setMovie(self.movie)
-        #self.movie.start()
-
 
 
     def load(self, i):
+        # Laden des Spiel starten Buttons
         self.loading_label.setMaximumSize(int(self.DEFAULT_WIDTH/100 * i), self.DEFAULT_HEIGTH)
 
     def reset_load(self):
+        # Spiel starten Button zurücksetzen
         self.loading_label.setMaximumSize(0, 0)
