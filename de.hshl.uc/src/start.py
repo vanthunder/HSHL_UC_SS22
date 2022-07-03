@@ -4,7 +4,7 @@ from model.camera import Camera
 from recognition.hand_detector import hand_detector
 from user_interface.mainWindow import StartWindow
 
-# Setup the camera
+# Set up the camera
 video = 'hands.mp4'
 handDetector = hand_detector()
 camera = Camera(0)
