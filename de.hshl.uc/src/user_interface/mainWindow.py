@@ -11,13 +11,11 @@ from PyQt5.QtWidgets import QMessageBox, QStackedLayout, \
     QHBoxLayout
 
 # from Socket.local.localClient import local_client
-from pyqtgraph import Qt
 from stopwatch import Stopwatch
 
-from Socket.online.onlineClient import local_client
-from Socket.online.Chat.Chat_Client_V01 import chat_client
+from Socket.online.PongServer.onlineClient import local_client
+from Socket.online.ChatServer.Online_Chat_Client_V01 import chat_client
 from model.camera import Camera
-from recognition.gesture_detector import gesture_detector
 from recognition.hand_detector import hand_detector
 from user_interface.Tools import FunFacts
 from user_interface.pongScreen import pongScreen
@@ -26,8 +24,6 @@ from user_interface.startWindow import startWindow
 from recognition.body_detector import body_detector
 from datetime import datetime
 import time
-
-import requests
 
 
 class bcolors:
@@ -169,13 +165,13 @@ class VideoThread(QThread):
 
     # Camera Loop
     def run(self):
-        Player = 'Right'  # input('Player: ')
+        Player = 'Left'  # input('Player: ')
 
         self.client.player = Player
         rThread = threading.Thread(target=self.start_receive, args=())
         #rThread.start()
         #self.client.receive()
-        self.client.sendReady('Right')
+        self.client.sendReady('Left')
         while True:
             if self.client.canStart == True:
                 print(bcolors.WARNING, "Starte VideoLoop", bcolors.ENDC)
@@ -235,7 +231,7 @@ class StartWindow(QMainWindow):
         # Start Thread
         self.thread.update_infolabel.connect(self.update_infolabel)
         self.thread.start()
-        # Chat
+        # ChatServer
         self.globalChat = []
         self.stopwatch = Stopwatch(2)
 
@@ -478,6 +474,7 @@ class StartWindow(QMainWindow):
                 return True
             else:
                 return False
+
 
 
     def updateTor(self):
@@ -746,13 +743,11 @@ class BackgroundFeed(QThread):
         self.camera = camera
         self.hand_detector = hand_detector
         hd = self.hand_detector
-        gd = gesture_detector()
 
     # Camera Loop
     def run(self):
         print("Video Started")
         hd = hand_detector()
-        gd = gesture_detector()
         lmList = []
         # rThread.start()
         # self.starte_receive_loop.emit(self.client)
@@ -780,7 +775,6 @@ class BackgroundFeed(QThread):
                 img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
                 lmList = self.hand_detector.handlist
                 # print(lmList)
-                gd.writeLmList(lmList)
                 if len(lmList) !=0:
                     x = int(lmList[0].__getitem__(1))
                     y = int(lmList[0].__getitem__(2))

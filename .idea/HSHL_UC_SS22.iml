@@ -6,7 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/venv_new" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.10 (de.hshl.uc)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.10 (HSHL_UC_SS22)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">
@@ -19,6 +19,7 @@
         <option value="$MODULE_DIR$/de.hshl.uc/src/recognition" />
         <option value="$MODULE_DIR$/de.hshl.uc/src/model" />
         <option value="$MODULE_DIR$/de.hshl.uc/src/user_interface" />
+        <option value="$MODULE_DIR$/de.hshl.uc/src/Socket" />
       </list>
     </option>
   </component>

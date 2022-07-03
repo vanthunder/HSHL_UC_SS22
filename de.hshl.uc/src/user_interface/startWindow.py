@@ -157,7 +157,7 @@ class startWindow(QWidget):
 
         # Adds the inner box to the outer box
         self.mid_label_container.layout.addWidget(self.inner_vbox_label_container)
-        # Chat Container
+        # ChatServer Container
         # outer box
         self.outer_chat_v_label = QLabel()
         self.outer_chat_v_label.layout = QVBoxLayout(self.outer_chat_v_label)

@@ -1,4 +1,4 @@
-from recognition import hand_detector, gesture_detector
+from recognition import hand_detector
 
 
 # class __init__():
