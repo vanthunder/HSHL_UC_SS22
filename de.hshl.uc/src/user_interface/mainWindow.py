@@ -11,19 +11,17 @@ from PyQt5.QtGui import QPixmap, QFont, QMovie
 from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QApplication, QLabel, QGridLayout
 from PyQt5.QtWidgets import QMessageBox, QStackedLayout, \
     QHBoxLayout
-# from Socket.local.localClient import local_client
 from stopwatch import Stopwatch
 
 from Socket.online.ChatServer.Online_Chat_Client_V01 import chat_client
 from Socket.online.PongServer.Online_Client import local_client
-# from Socket.local.ChatServer.Local_Chat_Client_V01 import chat_client
 from model.camera import Camera
 from recognition.body_detector import body_detector
 from user_interface.Tools import FunFacts
 from user_interface.pongScreen import pongScreen
 from user_interface.startWindow import startWindow
 
-
+# This class purpose is to color the print statements (it is ment for debugging)
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -168,7 +166,7 @@ class StartWindow(QMainWindow):
 
         # Debug
 
-        # Adds the eleemnets to the main viewport
+        # Adds the elements to the main viewport
         grid_layout = QGridLayout()
         self.mid_label = QLabel()
         self.mid_label.setText("TRUE")
