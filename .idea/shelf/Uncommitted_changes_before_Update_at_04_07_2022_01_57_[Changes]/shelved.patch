@@ -1,0 +1,787 @@
+Index: de.hshl.uc/src/user_interface/mainWindow.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import threading\r\n\r\nimport cv2\r\nimport numpy as np\r\nimport pytz\r\nimport qimage2ndarray as qimage2ndarray\r\nfrom PyQt5.QtCore import QThread, pyqtSignal, pyqtSlot, QRect, QMutex\r\nfrom PyQt5.QtGui import QPixmap, QFont, QMovie\r\nfrom PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QApplication, QLabel, QGridLayout\r\nfrom PyQt5.QtWidgets import QMessageBox, QStackedLayout, \\\r\n    QHBoxLayout\r\n\r\n# from Socket.local.localClient import local_client\r\nfrom stopwatch import Stopwatch\r\n\r\nfrom Socket.online.PongServer.Online_Client import local_client\r\nfrom Socket.online.ChatServer.Online_Chat_Client_V01 import chat_client\r\n#from Socket.local.ChatServer.Local_Chat_Client_V01 import chat_client\r\nfrom model.camera import Camera\r\nfrom recognition.hand_detector import hand_detector\r\nfrom user_interface.Tools import FunFacts\r\nfrom user_interface.pongScreen import pongScreen\r\nfrom user_interface.startWindow import startWindow\r\n\r\nfrom recognition.body_detector import body_detector\r\nfrom datetime import datetime\r\nimport time\r\n\r\n\r\nclass bcolors:\r\n    HEADER = '\\033[95m'\r\n    OKBLUE = '\\033[94m'\r\n    OKCYAN = '\\033[96m'\r\n    OKGREEN = '\\033[92m'\r\n    WARNING = '\\033[93m'\r\n    FAIL = '\\033[91m'\r\n    ENDC = '\\033[0m'\r\n    BOLD = '\\033[1m'\r\n    UNDERLINE = '\\033[4m'\r\n\r\n\r\n\r\nclass VideoThread(QThread):\r\n    ar = []\r\n    change_ab_signal = pyqtSignal(int)\r\n    change_pixmap_signal = pyqtSignal(np.ndarray)\r\n    update_label_signal = pyqtSignal(int)\r\n    update_ball_signal = pyqtSignal(int, int)\r\n    update_player_2 = pyqtSignal(int)\r\n    starte_receive_loop = pyqtSignal(local_client)\r\n    update_tor = pyqtSignal()\r\n    counter = int(1)\r\n    client = local_client()\r\n\r\n    def __init__(self, camera, hand_detector):\r\n        super(VideoThread, self).__init__()\r\n        self.ser = False\r\n        self.state = 0\r\n        self._mutex = QMutex()\r\n        self.serialEnabled = True\r\n        self.camera = camera\r\n        self.hand_detector = hand_detector\r\n        hd = self.hand_detector\r\n\r\n    def start_receive(self):\r\n        self.client.receive()\r\n        print(\"THEADING!!!!!\")\r\n\r\n    def videoLoop(self, Player):\r\n        bX = 0\r\n        bY = 0\r\n        speedX = 10\r\n        speedY = 0\r\n        hd = hand_detector()\r\n        lmList = []\r\n        self.hand_detector.handlist = lmList\r\n        video = 'hands.mp4'\r\n        self.camera = Camera(0)\r\n        self.camera.initialize()\r\n        # Left or Right\r\n        #Player = 'Left'  # input('Player: ')\r\n\r\n        #self.client.player = Player\r\n\r\n        # rThread.start()\r\n        # self.starte_receive_loop.emit(self.client)\r\n        # capture from web cam\r\n        # self.update_chat_signal.emit()\r\n        #self.client.sendReady('Left')\r\n        # self.client.sendcoordinate('Left', 111)\r\n\r\n        print(\"SRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\")\r\n        while True:\r\n            success, img = self.camera.cap.read()\r\n            # img.flags.writeable = False\r\n            print(self.client.canStart, '2222222222222')\r\n\r\n            #if self.client.canStart == True:\r\n            if not self.client.ballcoords.__getitem__(0) == 1011100 and not self.client.ballcoords.__getitem__(\r\n                    0) == 1011101:\r\n                self.update_ball_signal.emit(self.client.ballcoords.__getitem__(0),\r\n                                             self.client.ballcoords.__getitem__(1))\r\n            if success:\r\n\r\n                # self.client.canStart = False\r\n                self.change_ab_signal.emit(1)\r\n\r\n                # init Hand detector\r\n                # hd.findHands(img)\r\n                img = cv2.resize(img, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)\r\n                img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)\r\n                lmList = self.hand_detector.handlist\r\n\r\n                # fps = self.camera.cap.get(cv2.CAP_PROP_FPS)\r\n                # cv2.putText(img_proc, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)\r\n                # print(lmList)\r\n                # gd.print()\r\n                # cv2.imshow('Test', img)\r\n                self.change_pixmap_signal.emit(img_proc)\r\n\r\n                # Game Loop\r\n                bX += 1 + speedX\r\n                bY += 1 + speedY\r\n                #print(bcolors.OKBLUE, self.client.test, \" TorLinks\", bcolors.ENDC)\r\n                # Bewege ball\r\n                print(bcolors.FAIL, self.client.ballcoords.__getitem__(0), bcolors.ENDC)\r\n\r\n                # Tor L\r\n\r\n\r\n                # self.update_ball_signal.emit(500, 500)\r\n\r\n                # To Do send to server:\r\n\r\n                if not lmList:\r\n                    print()\r\n                else:\r\n\r\n\r\n                    # Send Tupel\r\n                    print('Send Coordinates form Main Window')\r\n                    self.client.sendcoordinate(Player, lmList[0].__getitem__(2))\r\n                    print('Send Coordinates form Main Window 2')\r\n                    # print(\"Player:  \", self.client.TempTupel.__getitem__(0))\r\n\r\n                    if self.client.TempTupel.__getitem__(0) == 'Left':\r\n                        self.update_label_signal.emit(self.client.TempTupel.__getitem__(1))\r\n                    else:\r\n                        self.update_player_2.emit(self.client.TempTupel.__getitem__(1))\r\n                    print()\r\n                # print(client.y)\r\n                # To Do receive Coordinate\r\n\r\n                # Updates the label\r\n\r\n\r\n    # Camera Loop\r\n    def run(self):\r\n        Player = 'Left'  # input('Player: ')\r\n\r\n        self.client.player = Player\r\n        rThread = threading.Thread(target=self.start_receive, args=())\r\n        #rThread.start()\r\n        #self.client.receive()\r\n        self.client.sendReady('Left')\r\n        while True:\r\n            if self.client.canStart == True:\r\n                print(bcolors.WARNING, \"Starte VideoLoop\", bcolors.ENDC)\r\n                self.videoLoop(Player)\r\n\r\n\r\n\r\n\r\nclass StartWindow(QMainWindow):\r\n    window_title = \"\"\r\n\r\n    def __init__(self, camera=None, hand_detector=None, local_cL=None):\r\n        super().__init__()\r\n        self.threadOpen = False\r\n        self.scoreLeft = False\r\n        self.scoreRight = False\r\n        self.scoreLeftCounter = 0\r\n        self.scoreRightCounter = 0\r\n        self.goalSetBool = True\r\n        self.funFactsClass = FunFacts\r\n        self.funFacts = self.funFactsClass.FunFacts.funFacts\r\n        self.sizeOfAr = len(self.funFactsClass.FunFacts.funFacts)\r\n        self.arCounter = 0\r\n        self.arGlobalCounter = 0\r\n        self.goalCounter = 0\r\n        self.goalGlobalCounter = 0\r\n        self.width = 1280\r\n        self.height = 750\r\n        self.window_title = 'start'\r\n        self.fontA = QFont(\"Josefin Sans Medium\", 24)\r\n        self.fontB = QFont(\"Josefin Sans Medium\", 100)\r\n        self.fontC = QFont(\"Josefin Sans Medium\", 40)\r\n        self.bX = 0\r\n        self.bY = 0\r\n        self.positive = True\r\n        self.counter = 0\r\n        self.camera = camera\r\n        self.hand_detector = hand_detector\r\n        self.local_cL = local_cL\r\n        self.display_width = self.width\r\n        self.display_height = self.height\r\n        self.setWindowTitle('Projekt: Ubi')\r\n        self.setMinimumSize(self.width, self.height)\r\n        self.setMaximumSize(self.width, self.height)\r\n        self.loading = QMovie('Tools/loading-circle.gif')\r\n        # Create Video Thread\r\n        self.thread = BackgroundFeed(self.camera, self.hand_detector)\r\n        # Update Label\r\n        self.thread.change_pixmap_signal.connect(self.update_image)\r\n        # Updates the Cursor\r\n        self.thread.change_cursor_position.connect(self.update_cursor)\r\n        # Debug\r\n        self.thread.change_ab_signal.connect(self.update_chat_debug)\r\n        self.chat_client = self.thread.client\r\n        print(self.chat_client)\r\n        self.thread.change_lc.connect(self.start_thread_receive)\r\n        # Start Thread\r\n        self.thread.update_infolabel.connect(self.update_infolabel)\r\n        self.thread.start()\r\n        # ChatServer\r\n        self.globalChat = []\r\n        self.stopwatch = Stopwatch(2)\r\n\r\n        self.isPause = False\r\n        self.pauseThread = PauseThread()\r\n\r\n        # self.pixmap_item = QPixmap()\r\n\r\n        # Central Widget\r\n        self.central_widget = QWidget()\r\n        self.layout_for_wids = QStackedLayout()\r\n\r\n        self.startWindow = startWindow()\r\n        self.pongWindow = pongScreen()\r\n\r\n        # Widgets\r\n\r\n        # self.wid_start.setStyleSheet(\"\"\"background: blue;\"\"\")\r\n\r\n        # Layout Container for Widgets and Buttons\r\n        self.layout_for_wids.addWidget(self.startWindow)\r\n        self.layout_for_wids.addWidget(self.pongWindow)\r\n\r\n        # Debug\r\n\r\n        # Adds the eleemnets to the main viewport\r\n        grid_layout = QGridLayout()\r\n        self.mid_label = QLabel()\r\n        self.mid_label.setText(\"TRUE\")\r\n        self.startWindow.layout = QVBoxLayout(self.startWindow)\r\n        self.startWindow.layout.addWidget(self.startWindow.imageLabel)\r\n\r\n        self.startWindow.imageLabel.setLayout(grid_layout)\r\n\r\n\r\n        #self.startWindow.imageLabel.layout.addWidget(self.startWindow.info_Label_Container)\r\n\r\n        self.startWindow.info_Label_Container.layout = QHBoxLayout(self.startWindow.info_Label_Container)\r\n        self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.date_label)\r\n        self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.clock_temp_vbox)\r\n        self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.fact_label)\r\n        grid_layout.addWidget(self.startWindow.info_Label_Container, 0, 0, 1, 3)\r\n\r\n        #self.startWindow.imageLabel.layout.addWidget(self.startWindow.mid_label_container)\r\n        #self.startWindow.imageLabel.layout.addWidget(self.startWindow.button_Play)\r\n\r\n        grid_layout.addWidget(self.startWindow.button_Play, 1, 0, -1, 1)\r\n        grid_layout.addWidget(self.startWindow.outer_chat_v_label, 1, 2, -1, 1)\r\n        grid_layout.addWidget(self.startWindow.cursor, 1, 0)\r\n        self.startWindow.loading_label.setVisible(False)\r\n\r\n        #self.startWindow.imageLabel.layout.addWidget(self.startWindow.cursor)\r\n\r\n        #self.startWindow.imageLabel.layout.addWidget(self.mid_label)\r\n\r\n        self.pongWindow.layout = QVBoxLayout(self.pongWindow)\r\n        self.pongWindow.layout.addWidget(self.pongWindow.imageLabel)\r\n        self.pongWindow.layout.addWidget(self.pongWindow.button_movie)\r\n        #self.pongWindow.setMinimumSize(1920, 1080)\r\n        self.central_widget.setLayout(self.layout_for_wids)\r\n\r\n\r\n        # self.layout = QVBoxLayout(self.central_widget)\r\n        # self.layout.addWidget(self.imageLabel)\r\n        self.setCentralWidget(self.central_widget)\r\n        # Connects the button actions\r\n        self.pongWindow.button_movie.clicked.connect(self.start_movie)\r\n        # self.startWindow.button_Play.clicked.connect(self.start_Game)\r\n        #self.pongWindow.imageLabel1.setGeometry(QRect(10, 200, 10, 400))\r\n        #self.pongWindow.imageLabel2.setFixedWidth(10)\r\n        #self.pongWindow.imageLabel2.move(400, 222)\r\n        #self.pongWindow.imageLabel2.setAlignment(Qt.AlignCenter)\r\n        #self.start_Game()\r\n\r\n\r\n\r\n    def start_Game(self):\r\n        print(\"Test\")\r\n        self.camera.close_camera()\r\n        if self.window_title == 'start':\r\n            print(\"True\")\r\n            self.window_title = 'game'\r\n            self.startWindow.hide()\r\n            self.pongWindow.show()\r\n            #ToDo: Implement direct play start!\r\n            self.pongWindow.button_movie.click()\r\n\r\n\r\n    def closeEvent(self, event):\r\n        reply = QMessageBox.question(self, 'Window Close', 'Are you sure you want to close the window?',\r\n                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)\r\n\r\n        if reply == QMessageBox.Yes:\r\n            self.local_cL.close_client()\r\n            event.accept()\r\n\r\n            print('Window closed')\r\n        else:\r\n            event.ignore()\r\n\r\n    # self.update_timer = QTimer()\r\n    # self.update_timer.timeout.connect(self.update_movie)\r\n\r\n    @pyqtSlot(np.ndarray)\r\n\r\n\r\n    def update_image(self, cv_img):\r\n        \"\"\"Updates the image_label with a new opencv image\"\"\"\r\n        # self.pixmap_item.fromImage(self.convert_cv_qt(cv_img))\r\n        qt_img = self.convert_cv_qt(cv_img)\r\n        self.pongWindow.imageLabel.setPixmap(QPixmap.fromImage(qt_img))\r\n        self.startWindow.imageLabel.setPixmap(QPixmap.fromImage(qt_img))\r\n        #self.startWindow.imageLabel.pixmap().scaled(1920, 1080)\r\n\r\n    def update_cursor(self, x, y):\r\n        print(x, y)\r\n\r\n        self.startWindow.cursor.move(x, y)\r\n        #self.startWindow.button_Play.move(x, y)\r\n        if self.startWindow.cursor.geometry().intersected(self.startWindow.button_Play.geometry()):\r\n            self.counter += 5\r\n            #self.startWindow.cursor.setText(str(self.startWindow.cursor.geometry().getCoords()))\r\n            #self.startWindow.button_Play.setText(str(self.startWindow.button_Play.geometry().getCoords()))\r\n            print(\"counter:\", self.counter)\r\n            self.startWindow.load(self.counter)\r\n            #self.startWindow.loading_label.setGeometry(QRect(100, 250, 250, 150))\r\n            if self.counter > 100:\r\n                #If Counter hits 60 -> the view switches to the game (Pong screen)\r\n                self.start_Game()\r\n                self.counter = 0\r\n        else:\r\n            self.startWindow.reset_load()\r\n            self.counter = 0;\r\n            #self.start_Game()\r\n            print()\r\n\r\n        #else:\r\n        #    self.startWindow.cursor.setStyleSheet('background-color: yellow')\r\n\r\n    def updatePosition(self, c):\r\n        self.pongWindow.imageLabel1.setGeometry(QRect(100, c - 100, 10, 200))\r\n        #self.pongWindow.imageLabel2.setGeometry(QRect(1240, 200, 10, 200))\r\n        # self.imageLabel2.setGeometry(QRect(1400,c-200,10,400))\r\n        print(\"Klick\")\r\n\r\n    def updatePositionPlayer2(self, y):\r\n        print(y, \" TEST\")\r\n        self.pongWindow.imageLabel2.setGeometry(QRect(1140, y - 100, 10, 200))\r\n\r\n    def updateBall(self, x, y):\r\n        self.pongWindow.bandeOben.setVisible(True)\r\n        self.pongWindow.bandeUnten.setVisible(True)\r\n        self.pongWindow.bandeOben.setGeometry(0, 0, 80, 80)\r\n        self.pongWindow.bandeUnten.setGeometry(0, 720, 80, 80)\r\n        self.pongWindow.torLeft.setVisible(True)\r\n        self.pongWindow.torRight.setVisible(True)\r\n        self.pongWindow.torLeft.setGeometry(0, 0, 80, 80)\r\n        self.pongWindow.torRight.setGeometry(1250, 0, 80, 80)\r\n\r\n        self.pongWindow.scoreLeft.setGeometry(QRect(600, 50, 10, 50))\r\n        self.pongWindow.scoreRight.setGeometry(QRect(700, 50, 10, 50))\r\n\r\n        print('Die positive Variable: ', self.positive)\r\n\r\n        # elif self.detect_collision()==False and not self.positive:\r\n        #    self.positive = True\r\n        #if self.detect_collision():\r\n        #    if self.positive:\r\n        #        self.positive = False\r\n\r\n        #    elif self.positive == False:\r\n        #        self.positive = True\r\n\r\n        #if self.positive == True:\r\n        #    self.ballMovementpositive()\r\n        #elif self.positive == False:\r\n        #    self.ballMovementnegative()\r\n\r\n\r\n        self.pongWindow.imageLabel3.setGeometry(x, y, 80, 80)\r\n        self.detect_collision()\r\n        print(bcolors.FAIL,self.pongWindow.imageLabel3.geometry().x(), \" X Coord\", bcolors.ENDC)\r\n        #if self.pongWindow.imageLabel3.geometry().x() >= 850 and self.pongWindow.imageLabel3.geometry().x() <= 853:\r\n        #    self.updateTor()\r\n\r\n\r\n    def ballMovementpositive(self):\r\n        self.bX += 10\r\n        self.bY += 1\r\n        self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)\r\n\r\n    def ballMovementnegative(self):\r\n        self.bX -= 10\r\n        # self.bY -= 1\r\n        self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)\r\n\r\n    def detect_collision(self):\r\n        # if self.imageLabel3.geometry().center()+80 == self.imageLabel2.geometry().intersects()\r\n        if self.positive:\r\n            # Collision Paddle Right!\r\n            if self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.imageLabel2.geometry()):\r\n                print(\"INTERSECTION!\")\r\n                self.local_cL.sendCollision(\"paddleR\")\r\n                return True\r\n            # Collision Paddle Left\r\n            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.imageLabel1.geometry()):\r\n                print(\"INTERSECTION!\")\r\n                self.local_cL.sendCollision(\"paddleL\")\r\n                return True\r\n            # Collision Bande Oben\r\n            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeOben.geometry()):\r\n                print(\"INTERSECTION!\")\r\n                self.local_cL.sendCollision(\"bandeO\")\r\n                return True\r\n            # Collision Bande Unten\r\n            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeUnten.geometry()):\r\n                print(\"INTERSECTION!\")\r\n                self.local_cL.sendCollision(\"bandeU\")\r\n                return True\r\n                # Collision Bande Oben\r\n            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torLeft.geometry()):\r\n                print(\"INTERSECTION!\")\r\n                #self.String(\"torL\")\r\n                self.local_cL.sendCollision(\"torL\")\r\n                #self.scoreRightCounter += 1\r\n                #self.pongWindow.scoreRight.setText(str(20))\r\n                self.scoreRight = True\r\n                self.updateTor()\r\n                #time.sleep(0.5)\r\n                return True\r\n            # Collision Bande Unten\r\n            elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torRight.geometry()):\r\n                print(\"INTERSECTION!\")\r\n                self.local_cL.sendCollision(\"torR\")\r\n                #self.scoreLeftCounter += 1\r\n                #self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))\r\n                self.scoreLeft = True\r\n                self.updateTor()\r\n                #time.sleep(0.5)\r\n                return True\r\n            else:\r\n                return False\r\n\r\n\r\n\r\n    def updateTor(self):\r\n        print(\"DIE METHODE WIRD AUSGEFÜHRT#####################################################1111####1##\")\r\n        if self.scoreLeft:\r\n            self.scoreLeft = False\r\n            self.scoreRight = False\r\n            self.scoreLeftCounter += 1\r\n            self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))\r\n        elif self.scoreRight:\r\n            self.scoreLeft = False\r\n            self.scoreRight = False\r\n            self.scoreRightCounter += 1\r\n            self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))\r\n\r\n        if self.goalGlobalCounter <= 20:\r\n            self.goalGlobalCounter += 1\r\n        if self.goalGlobalCounter == 20:\r\n            #TODO: Put Goal Code Here:\r\n            if self.scoreLeft:\r\n                #self.scoreLeft = False\r\n                #self.scoreRight = False\r\n                #self.scoreLeftCounter +=1\r\n                #self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))\r\n                self.goalGlobalCounter = 0\r\n            if self.scoreRight:\r\n                #self.scoreLeft = False\r\n                #self.scoreRight = False\r\n                #self.scoreRightCounter += 1\r\n                #self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))\r\n                self.goalGlobalCounter = 0\r\n            #self.scoreLeft = False\r\n            #self.scoreRight = False\r\n\r\n        #self.startWindow.fact_label.setText(self.funFacts.__getitem__(self.arCounter))\r\n\r\n        #if self.goalCounter == self.sizeOfAr - 1:\r\n        #    self.goalCounter = 0\r\n\r\n\r\n\r\n        #if self.goalSetBool == True:\r\n        #    self.scoreRightCounter += 1\r\n        #    self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))\r\n        #    print('Tor')\r\n        #    self.goalSetBool == False\r\n        #    self.stopwatch.restart()\r\n        #if self.stopwatch >= 5.00:\r\n        #    self.goalSetBool == True\r\n\r\n\r\n\r\n\r\n    def update_infolabel(self):\r\n        # Get Date and Time\r\n        timezone = pytz.timezone('Europe/Berlin')\r\n        now = datetime.now(timezone)\r\n        now.astimezone()\r\n        timea = now.strftime(\"%H:%M\")\r\n        get_date = now.date().strftime(\"%A\")\r\n\r\n        match str(get_date):\r\n            case \"Monday\":\r\n                get_date = \"Montag\"\r\n            case \"Tuesday\":\r\n                get_date = \"Dienstag\"\r\n            case \"Wednesday\":\r\n                get_date = \"Mittwoch\"\r\n            case \"Thursday\":\r\n                get_date = \"Donnerstag\"\r\n            case \"Friday\":\r\n                get_date = \"Freitag\"\r\n            case \"Saturday\":\r\n                get_date = \"Samstag\"\r\n            case \"Sunday\":\r\n                get_date = \"Sonntag\"\r\n\r\n        #if not self.threadOpen:\r\n        #    self.arCounter = 0\r\n        #    thread = threading.Thread(target=self.updateCounter)\r\n        #    thread.start()\r\n        #    self.threadOpen = True\r\n        # run the thread\r\n\r\n        # wait for the thread to finish\r\n        print('Waiting for the thread...')\r\n\r\n        self.startWindow.clock_label.setText(str(timea))\r\n        self.startWindow.date_label.setText(str(get_date))\r\n\r\n        if self.arGlobalCounter <= 50:\r\n            self.arGlobalCounter += 1\r\n        if self.arGlobalCounter == 50:\r\n            self.arCounter += 1\r\n            self.arGlobalCounter = 0\r\n\r\n        self.startWindow.fact_label.setText(self.funFacts.__getitem__(self.arCounter))\r\n        #self.updateCounter()\r\n        #if self.arCounter < self.sizeOfAr - 1:\r\n        #    self.arCounter += 1\r\n        #    time.sleep(4)\r\n        if self.arCounter == self.sizeOfAr - 1:\r\n            self.arCounter = 0\r\n        #print(self.funFacts)\r\n        #thread.join()\r\n\r\n        #ToDo: Implements Wait\r\n        #if self.goalSetBool == True:\r\n\r\n        #    self.goalSetBool == False\r\n        #    #self.stopwatch.restart()\r\n        #if str(self.stopwatch) >= str(1000.00):\r\n        #    self.stopwatch.reset()\r\n        #    self.stopwatch.start()\r\n        #    self.goalSetBool == True\r\n\r\n\r\n\r\n\r\n    def updateCounter(self):\r\n        self.arCounter += 1\r\n        print(self.arCounter)\r\n        time.sleep(2)\r\n\r\n    def convert_cv_qt(self, cv_img):\r\n        cv_img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)\r\n        cv_img = qimage2ndarray.array2qimage(cv_img)\r\n        return cv_img\r\n\r\n    \"\"\"Convert from an opencv image to QPixmap\"\"\"\r\n\r\n    # rgb_image = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)\r\n    # h, w, ch = rgb_image.shape\r\n    # bytes_per_line = ch * w\r\n    # convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)\r\n    # p = convert_to_Qt_format.scaled(self.disply_width, self.display_height, Qt.KeepAspectRatio)\r\n    def start_thread_receive(self, local_cla):\r\n        self.local_cL = local_cla\r\n\r\n    def upchatlabel(self):\r\n        self.startWindow.inner_chat_label.move(400)\r\n        self.startWindow.inner_chat_label.setText(\"TEST111111111111111111111111!\")\r\n        print(bcolors.BOLD,\"TEST111111111111111111111111!\",bcolors.ENDC)\r\n\r\n    # Only for debug!\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n    def update_chat_debug(self, ab):\r\n        # uses dict\r\n        self.vbar = self.startWindow.scrollArea.verticalScrollBar()\r\n        self.vbar.setValue(self.vbar.maximum())\r\n        #Debug\r\n        atuple = ('Left', 0)\r\n        if ab[0] == atuple:\r\n            print('TRUE!!!!')\r\n            print(bcolors.HEADER, ab, bcolors.ENDC)\r\n\r\n\r\n        ac = []\r\n        ac = ab\r\n        #print(ac[1].__getitem__(0))\r\n\r\n\r\n        if not ab == tuple:\r\n            if not ab[0] == atuple:\r\n\r\n                abc = {'user': 'ab'}\r\n\r\n                dicta = {}\r\n                for x in range(len(list(ac))):\r\n\r\n\r\n                    dicta = list(ac)[x].__getitem__(0)\r\n\r\n                    user = list(iter(dicta))[1]\r\n\r\n                    chat = dicta.get(user)\r\n\r\n                    if not self.globalChat.__contains__(chat):\r\n                        self.globalChat.append(chat)\r\n\r\n                a = {}\r\n                a.values()\r\n\r\n                # print(ab.index())\r\n                ele = []\r\n                # for k, v in list(ac)[0].__getitem__(1).items():\r\n\r\n                # print(k, v)\r\n\r\n                # for x in ac:\r\n                #    ele.append(x[0])\r\n                # res_list = [x[0] for x in ac]\r\n                # x = list(ac)[0].__getitem__(1).count\r\n\r\n                print(bcolors.FAIL, self.globalChat, bcolors.ENDC)\r\n\r\n                # print(bcolors.FAIL, dicta.values(), bcolors.ENDC)\r\n                # print(bcolors.FAIL, ac[1], bcolors.ENDC)\r\n                self.startWindow.inner_chat_label.setText(str(self.globalChat))\r\n                self.startWindow.inner_chat_label.setText(str(\"\\n\".join(self.globalChat)))\r\n\r\n        #self.camera.close_camera()\r\n        #self.startWindow.inner_chat_label.setText(\"TEST!\")\r\n        #self.startWindow.show()\r\n        #self.pongWindow.hide()\r\n\r\n\r\n    def start_movie(self):\r\n        self.pongWindow.button_movie.setVisible(False)\r\n        #self.pongWindow.imageLabel2.setGeometry(QRect(1240, 100, 10, 200))\r\n        # create the video capture thread\r\n        self.thread = VideoThread(self.camera, self.hand_detector)\r\n        # self.thread.client.client.close()\r\n        self.local_cL = self.thread.client\r\n        print(self.local_cL)\r\n        #self.thread.starte_receive_loop.connect(self.start_thread_receive)\r\n        # connect its signal to the update_image slot\r\n        self.thread.change_pixmap_signal.connect(self.update_image)\r\n        self.thread.update_label_signal.connect(self.updatePosition)\r\n        self.thread.update_ball_signal.connect(self.updateBall)\r\n        #self.thread.update_chat_signal.connect(self.upchatlabel)\r\n        self.thread.update_tor.connect(self.updateTor)\r\n        self.thread.update_player_2.connect(self.updatePositionPlayer2)\r\n\r\n        #self.update_chat_debug()\r\n\r\n        # start the thread\r\n        self.thread.start()\r\n        # self.thread1.start()\r\n        # self.update_timer.start(30)\r\n\r\nclass msg(object):\r\n    def __init__(self, message):\r\n        self.message = message\r\n\r\n\r\n\r\n\r\nclass BackgroundFeed(QThread):\r\n    a = \"a\"\r\n    #change_ab_signal = pyqtSignal(str)\r\n    change_ab_signal = pyqtSignal(object)\r\n    change_pixmap_signal = pyqtSignal(np.ndarray)\r\n    change_cursor_position = pyqtSignal(int, int)\r\n    update_infolabel = pyqtSignal()\r\n    ## LC\r\n    change_lc = pyqtSignal(chat_client)\r\n    counter = int(1)\r\n\r\n    client = chat_client()\r\n\r\n\r\n\r\n    def start_receive(self):\r\n        self.client.receive()\r\n        print(\"THEADING!!!!!\")\r\n\r\n    def __init__(self, camera, hand_detector):\r\n        super().__init__()\r\n        self.camera = camera\r\n        self.hand_detector = hand_detector\r\n        hd = self.hand_detector\r\n\r\n    # Camera Loop\r\n    def run(self):\r\n        print(\"Video Started\")\r\n        hd = hand_detector()\r\n        lmList = []\r\n        # rThread.start()\r\n        # self.starte_receive_loop.emit(self.client)\r\n        # capture from web cam\r\n        Player = 'Left'  # input('Player: ')\r\n        bodyDetector = body_detector()\r\n\r\n        self.client.player = Player\r\n        self.client.startClientThread() #Client Thread for receiving messages from the Chat Server\r\n        rThread = threading.Thread(target=self.start_receive, args=())\r\n\r\n\r\n        while True:\r\n\r\n            #self.client.sendcoordinate(Player, 100)\r\n            success, img = self.camera.cap.read()\r\n            # img.flags.writeable = False\r\n            if success:\r\n                self.update_infolabel.emit()\r\n                print(bcolors.OKCYAN,'!!@@',self.client.TempChatList,bcolors.ENDC)\r\n                self.change_ab_signal.emit(self.client.TempChatList)\r\n                # init Hand detector\r\n                # hd.findHands(img)\r\n                img = cv2.resize(img, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)\r\n                img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)\r\n                lmList = self.hand_detector.handlist\r\n                # print(lmList)\r\n                if len(lmList) !=0:\r\n                    x = int(lmList[0].__getitem__(1))\r\n                    y = int(lmList[0].__getitem__(2))\r\n                    #print(x, \"_\", y)\r\n                    # Updates Cursor Coordinate from the lmList hands points\r\n                    # Tracks always the middle point\r\n                    self.change_cursor_position.emit(x, y)\r\n                # gd.print()\r\n                # cv2.imshow('Test', img)\r\n                body_image_black = bodyDetector.findPose(img_proc)\r\n                body_image_black = cv2.resize(body_image_black, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)\r\n                #img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, body_image_black)\r\n                self.change_pixmap_signal.emit(body_image_black)\r\n\r\n\r\n\r\nclass PauseThread(QThread):\r\n    def __init__(self):\r\n        super().__init__()\r\n\r\n    def run(self):\r\n        time.sleep(0.1)\r\n        return False\r\n\r\nif __name__ == '__main__':\r\n    app = QApplication([])\r\n    window = StartWindow()\r\n    window.setWindowTitle('Project: UBI')\r\n    window.setBaseSize(2400, 1444)\r\n    window.show()\r\n    app.exit(app.exec_())\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/de.hshl.uc/src/user_interface/mainWindow.py b/de.hshl.uc/src/user_interface/mainWindow.py
+--- a/de.hshl.uc/src/user_interface/mainWindow.py	(revision cff081f71f3246b82c32d0a21d37f10c31fd6370)
++++ b/de.hshl.uc/src/user_interface/mainWindow.py	(date 1656892670413)
+@@ -15,7 +15,7 @@
+ 
+ from Socket.online.PongServer.Online_Client import local_client
+ from Socket.online.ChatServer.Online_Chat_Client_V01 import chat_client
+-#from Socket.local.ChatServer.Local_Chat_Client_V01 import chat_client
++# from Socket.local.ChatServer.Local_Chat_Client_V01 import chat_client
+ from model.camera import Camera
+ from recognition.hand_detector import hand_detector
+ from user_interface.Tools import FunFacts
+@@ -39,7 +39,6 @@
+     UNDERLINE = '\033[4m'
+ 
+ 
+-
+ class VideoThread(QThread):
+     ar = []
+     change_ab_signal = pyqtSignal(int)
+@@ -64,7 +63,6 @@
+ 
+     def start_receive(self):
+         self.client.receive()
+-        print("THEADING!!!!!")
+ 
+     def videoLoop(self, Player):
+         bX = 0
+@@ -77,82 +75,39 @@
+         video = 'hands.mp4'
+         self.camera = Camera(0)
+         self.camera.initialize()
+-        # Left or Right
+-        #Player = 'Left'  # input('Player: ')
+-
+-        #self.client.player = Player
+-
+-        # rThread.start()
+-        # self.starte_receive_loop.emit(self.client)
+-        # capture from web cam
+-        # self.update_chat_signal.emit()
+-        #self.client.sendReady('Left')
+-        # self.client.sendcoordinate('Left', 111)
+-
+-        print("SRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR")
+         while True:
+             success, img = self.camera.cap.read()
+-            # img.flags.writeable = False
+-            print(self.client.canStart, '2222222222222')
+-
+-            #if self.client.canStart == True:
+             if not self.client.ballcoords.__getitem__(0) == 1011100 and not self.client.ballcoords.__getitem__(
+                     0) == 1011101:
+                 self.update_ball_signal.emit(self.client.ballcoords.__getitem__(0),
+                                              self.client.ballcoords.__getitem__(1))
+             if success:
+ 
+-                # self.client.canStart = False
+                 self.change_ab_signal.emit(1)
+ 
+-                # init Hand detector
+-                # hd.findHands(img)
+                 img = cv2.resize(img, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
+                 img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
+                 lmList = self.hand_detector.handlist
+ 
+-                # fps = self.camera.cap.get(cv2.CAP_PROP_FPS)
+-                # cv2.putText(img_proc, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
+-                # print(lmList)
+-                # gd.print()
+-                # cv2.imshow('Test', img)
+                 self.change_pixmap_signal.emit(img_proc)
+ 
+                 # Game Loop
+                 bX += 1 + speedX
+                 bY += 1 + speedY
+-                #print(bcolors.OKBLUE, self.client.test, " TorLinks", bcolors.ENDC)
+-                # Bewege ball
+-                print(bcolors.FAIL, self.client.ballcoords.__getitem__(0), bcolors.ENDC)
+ 
+                 # Tor L
+ 
+-
+                 # self.update_ball_signal.emit(500, 500)
+ 
+                 # To Do send to server:
+ 
+-                if not lmList:
+-                    print()
+-                else:
+-
+-
+-                    # Send Tupel
+-                    print('Send Coordinates form Main Window')
++                if lmList:
+                     self.client.sendcoordinate(Player, lmList[0].__getitem__(2))
+-                    print('Send Coordinates form Main Window 2')
+-                    # print("Player:  ", self.client.TempTupel.__getitem__(0))
+ 
+                     if self.client.TempTupel.__getitem__(0) == 'Left':
+                         self.update_label_signal.emit(self.client.TempTupel.__getitem__(1))
+                     else:
+                         self.update_player_2.emit(self.client.TempTupel.__getitem__(1))
+-                    print()
+-                # print(client.y)
+-                # To Do receive Coordinate
+-
+-                # Updates the label
+-
+ 
+     # Camera Loop
+     def run(self):
+@@ -160,17 +115,12 @@
+ 
+         self.client.player = Player
+         rThread = threading.Thread(target=self.start_receive, args=())
+-        #rThread.start()
+-        #self.client.receive()
+         self.client.sendReady('Left')
+         while True:
+             if self.client.canStart == True:
+-                print(bcolors.WARNING, "Starte VideoLoop", bcolors.ENDC)
+                 self.videoLoop(Player)
+ 
+ 
+-
+-
+ class StartWindow(QMainWindow):
+     window_title = ""
+ 
+@@ -217,7 +167,6 @@
+         # Debug
+         self.thread.change_ab_signal.connect(self.update_chat_debug)
+         self.chat_client = self.thread.client
+-        print(self.chat_client)
+         self.thread.change_lc.connect(self.start_thread_receive)
+         # Start Thread
+         self.thread.update_infolabel.connect(self.update_infolabel)
+@@ -229,8 +178,6 @@
+         self.isPause = False
+         self.pauseThread = PauseThread()
+ 
+-        # self.pixmap_item = QPixmap()
+-
+         # Central Widget
+         self.central_widget = QWidget()
+         self.layout_for_wids = QStackedLayout()
+@@ -240,8 +187,6 @@
+ 
+         # Widgets
+ 
+-        # self.wid_start.setStyleSheet("""background: blue;""")
+-
+         # Layout Container for Widgets and Buttons
+         self.layout_for_wids.addWidget(self.startWindow)
+         self.layout_for_wids.addWidget(self.pongWindow)
+@@ -257,60 +202,34 @@
+ 
+         self.startWindow.imageLabel.setLayout(grid_layout)
+ 
+-
+-        #self.startWindow.imageLabel.layout.addWidget(self.startWindow.info_Label_Container)
+-
+         self.startWindow.info_Label_Container.layout = QHBoxLayout(self.startWindow.info_Label_Container)
+         self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.date_label)
+         self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.clock_temp_vbox)
+         self.startWindow.info_Label_Container.layout.addWidget(self.startWindow.fact_label)
+         grid_layout.addWidget(self.startWindow.info_Label_Container, 0, 0, 1, 3)
+ 
+-        #self.startWindow.imageLabel.layout.addWidget(self.startWindow.mid_label_container)
+-        #self.startWindow.imageLabel.layout.addWidget(self.startWindow.button_Play)
+-
+         grid_layout.addWidget(self.startWindow.button_Play, 1, 0, -1, 1)
+         grid_layout.addWidget(self.startWindow.outer_chat_v_label, 1, 2, -1, 1)
+         grid_layout.addWidget(self.startWindow.cursor, 1, 0)
+         self.startWindow.loading_label.setVisible(False)
+ 
+-        #self.startWindow.imageLabel.layout.addWidget(self.startWindow.cursor)
+-
+-        #self.startWindow.imageLabel.layout.addWidget(self.mid_label)
+-
+         self.pongWindow.layout = QVBoxLayout(self.pongWindow)
+         self.pongWindow.layout.addWidget(self.pongWindow.imageLabel)
+         self.pongWindow.layout.addWidget(self.pongWindow.button_movie)
+-        #self.pongWindow.setMinimumSize(1920, 1080)
+         self.central_widget.setLayout(self.layout_for_wids)
+ 
+-
+-        # self.layout = QVBoxLayout(self.central_widget)
+-        # self.layout.addWidget(self.imageLabel)
+         self.setCentralWidget(self.central_widget)
+         # Connects the button actions
+         self.pongWindow.button_movie.clicked.connect(self.start_movie)
+-        # self.startWindow.button_Play.clicked.connect(self.start_Game)
+-        #self.pongWindow.imageLabel1.setGeometry(QRect(10, 200, 10, 400))
+-        #self.pongWindow.imageLabel2.setFixedWidth(10)
+-        #self.pongWindow.imageLabel2.move(400, 222)
+-        #self.pongWindow.imageLabel2.setAlignment(Qt.AlignCenter)
+-        #self.start_Game()
+-
+-
+ 
+     def start_Game(self):
+-        print("Test")
+         self.camera.close_camera()
+         if self.window_title == 'start':
+-            print("True")
+             self.window_title = 'game'
+             self.startWindow.hide()
+             self.pongWindow.show()
+-            #ToDo: Implement direct play start!
+             self.pongWindow.button_movie.click()
+ 
+-
+     def closeEvent(self, event):
+         reply = QMessageBox.question(self, 'Window Close', 'Are you sure you want to close the window?',
+                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+@@ -318,58 +237,34 @@
+         if reply == QMessageBox.Yes:
+             self.local_cL.close_client()
+             event.accept()
+-
+-            print('Window closed')
+         else:
+             event.ignore()
+ 
+-    # self.update_timer = QTimer()
+-    # self.update_timer.timeout.connect(self.update_movie)
+-
+     @pyqtSlot(np.ndarray)
+-
+-
+     def update_image(self, cv_img):
+         """Updates the image_label with a new opencv image"""
+-        # self.pixmap_item.fromImage(self.convert_cv_qt(cv_img))
+         qt_img = self.convert_cv_qt(cv_img)
+         self.pongWindow.imageLabel.setPixmap(QPixmap.fromImage(qt_img))
+         self.startWindow.imageLabel.setPixmap(QPixmap.fromImage(qt_img))
+-        #self.startWindow.imageLabel.pixmap().scaled(1920, 1080)
+ 
+     def update_cursor(self, x, y):
+-        print(x, y)
+ 
+         self.startWindow.cursor.move(x, y)
+-        #self.startWindow.button_Play.move(x, y)
+         if self.startWindow.cursor.geometry().intersected(self.startWindow.button_Play.geometry()):
+             self.counter += 5
+-            #self.startWindow.cursor.setText(str(self.startWindow.cursor.geometry().getCoords()))
+-            #self.startWindow.button_Play.setText(str(self.startWindow.button_Play.geometry().getCoords()))
+-            print("counter:", self.counter)
+             self.startWindow.load(self.counter)
+-            #self.startWindow.loading_label.setGeometry(QRect(100, 250, 250, 150))
+             if self.counter > 100:
+-                #If Counter hits 60 -> the view switches to the game (Pong screen)
++                # If Counter hits 60 -> the view switches to the game (Pong screen)
+                 self.start_Game()
+                 self.counter = 0
+         else:
+             self.startWindow.reset_load()
+-            self.counter = 0;
+-            #self.start_Game()
+-            print()
+-
+-        #else:
+-        #    self.startWindow.cursor.setStyleSheet('background-color: yellow')
++            self.counter = 0
+ 
+     def updatePosition(self, c):
+         self.pongWindow.imageLabel1.setGeometry(QRect(100, c - 100, 10, 200))
+-        #self.pongWindow.imageLabel2.setGeometry(QRect(1240, 200, 10, 200))
+-        # self.imageLabel2.setGeometry(QRect(1400,c-200,10,400))
+-        print("Klick")
+ 
+     def updatePositionPlayer2(self, y):
+-        print(y, " TEST")
+         self.pongWindow.imageLabel2.setGeometry(QRect(1140, y - 100, 10, 200))
+ 
+     def updateBall(self, x, y):
+@@ -385,29 +280,8 @@
+         self.pongWindow.scoreLeft.setGeometry(QRect(600, 50, 10, 50))
+         self.pongWindow.scoreRight.setGeometry(QRect(700, 50, 10, 50))
+ 
+-        print('Die positive Variable: ', self.positive)
+-
+-        # elif self.detect_collision()==False and not self.positive:
+-        #    self.positive = True
+-        #if self.detect_collision():
+-        #    if self.positive:
+-        #        self.positive = False
+-
+-        #    elif self.positive == False:
+-        #        self.positive = True
+-
+-        #if self.positive == True:
+-        #    self.ballMovementpositive()
+-        #elif self.positive == False:
+-        #    self.ballMovementnegative()
+-
+-
+         self.pongWindow.imageLabel3.setGeometry(x, y, 80, 80)
+         self.detect_collision()
+-        print(bcolors.FAIL,self.pongWindow.imageLabel3.geometry().x(), " X Coord", bcolors.ENDC)
+-        #if self.pongWindow.imageLabel3.geometry().x() >= 850 and self.pongWindow.imageLabel3.geometry().x() <= 853:
+-        #    self.updateTor()
+-
+ 
+     def ballMovementpositive(self):
+         self.bX += 10
+@@ -416,60 +290,42 @@
+ 
+     def ballMovementnegative(self):
+         self.bX -= 10
+-        # self.bY -= 1
+         self.pongWindow.imageLabel3.setGeometry(self.bX, self.bY, 80, 80)
+ 
+     def detect_collision(self):
+-        # if self.imageLabel3.geometry().center()+80 == self.imageLabel2.geometry().intersects()
+         if self.positive:
+             # Collision Paddle Right!
+             if self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.imageLabel2.geometry()):
+-                print("INTERSECTION!")
+                 self.local_cL.sendCollision("paddleR")
+                 return True
+             # Collision Paddle Left
+             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.imageLabel1.geometry()):
+-                print("INTERSECTION!")
+                 self.local_cL.sendCollision("paddleL")
+                 return True
+             # Collision Bande Oben
+             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeOben.geometry()):
+-                print("INTERSECTION!")
+                 self.local_cL.sendCollision("bandeO")
+                 return True
+             # Collision Bande Unten
+             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeUnten.geometry()):
+-                print("INTERSECTION!")
+                 self.local_cL.sendCollision("bandeU")
+                 return True
+                 # Collision Bande Oben
+             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torLeft.geometry()):
+-                print("INTERSECTION!")
+-                #self.String("torL")
+                 self.local_cL.sendCollision("torL")
+-                #self.scoreRightCounter += 1
+-                #self.pongWindow.scoreRight.setText(str(20))
+                 self.scoreRight = True
+                 self.updateTor()
+-                #time.sleep(0.5)
+                 return True
+             # Collision Bande Unten
+             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torRight.geometry()):
+-                print("INTERSECTION!")
+                 self.local_cL.sendCollision("torR")
+-                #self.scoreLeftCounter += 1
+-                #self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
+                 self.scoreLeft = True
+                 self.updateTor()
+-                #time.sleep(0.5)
+                 return True
+             else:
+                 return False
+ 
+-
+-
+     def updateTor(self):
+-        print("DIE METHODE WIRD AUSGEFÜHRT#####################################################1111####1##")
+         if self.scoreLeft:
+             self.scoreLeft = False
+             self.scoreRight = False
+@@ -484,40 +340,10 @@
+         if self.goalGlobalCounter <= 20:
+             self.goalGlobalCounter += 1
+         if self.goalGlobalCounter == 20:
+-            #TODO: Put Goal Code Here:
+             if self.scoreLeft:
+-                #self.scoreLeft = False
+-                #self.scoreRight = False
+-                #self.scoreLeftCounter +=1
+-                #self.pongWindow.scoreLeft.setText(str(self.scoreLeftCounter))
+                 self.goalGlobalCounter = 0
+             if self.scoreRight:
+-                #self.scoreLeft = False
+-                #self.scoreRight = False
+-                #self.scoreRightCounter += 1
+-                #self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
+                 self.goalGlobalCounter = 0
+-            #self.scoreLeft = False
+-            #self.scoreRight = False
+-
+-        #self.startWindow.fact_label.setText(self.funFacts.__getitem__(self.arCounter))
+-
+-        #if self.goalCounter == self.sizeOfAr - 1:
+-        #    self.goalCounter = 0
+-
+-
+-
+-        #if self.goalSetBool == True:
+-        #    self.scoreRightCounter += 1
+-        #    self.pongWindow.scoreRight.setText(str(self.scoreRightCounter))
+-        #    print('Tor')
+-        #    self.goalSetBool == False
+-        #    self.stopwatch.restart()
+-        #if self.stopwatch >= 5.00:
+-        #    self.goalSetBool == True
+-
+-
+-
+ 
+     def update_infolabel(self):
+         # Get Date and Time
+@@ -543,15 +369,7 @@
+             case "Sunday":
+                 get_date = "Sonntag"
+ 
+-        #if not self.threadOpen:
+-        #    self.arCounter = 0
+-        #    thread = threading.Thread(target=self.updateCounter)
+-        #    thread.start()
+-        #    self.threadOpen = True
+-        # run the thread
+-
+         # wait for the thread to finish
+-        print('Waiting for the thread...')
+ 
+         self.startWindow.clock_label.setText(str(timea))
+         self.startWindow.date_label.setText(str(get_date))
+@@ -563,31 +381,11 @@
+             self.arGlobalCounter = 0
+ 
+         self.startWindow.fact_label.setText(self.funFacts.__getitem__(self.arCounter))
+-        #self.updateCounter()
+-        #if self.arCounter < self.sizeOfAr - 1:
+-        #    self.arCounter += 1
+-        #    time.sleep(4)
+         if self.arCounter == self.sizeOfAr - 1:
+             self.arCounter = 0
+-        #print(self.funFacts)
+-        #thread.join()
+-
+-        #ToDo: Implements Wait
+-        #if self.goalSetBool == True:
+-
+-        #    self.goalSetBool == False
+-        #    #self.stopwatch.restart()
+-        #if str(self.stopwatch) >= str(1000.00):
+-        #    self.stopwatch.reset()
+-        #    self.stopwatch.start()
+-        #    self.goalSetBool == True
+-
+-
+-
+ 
+     def updateCounter(self):
+         self.arCounter += 1
+-        print(self.arCounter)
+         time.sleep(2)
+ 
+     def convert_cv_qt(self, cv_img):
+@@ -597,42 +395,24 @@
+ 
+     """Convert from an opencv image to QPixmap"""
+ 
+-    # rgb_image = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
+-    # h, w, ch = rgb_image.shape
+-    # bytes_per_line = ch * w
+-    # convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
+-    # p = convert_to_Qt_format.scaled(self.disply_width, self.display_height, Qt.KeepAspectRatio)
+     def start_thread_receive(self, local_cla):
+         self.local_cL = local_cla
+ 
+     def upchatlabel(self):
+         self.startWindow.inner_chat_label.move(400)
+         self.startWindow.inner_chat_label.setText("TEST111111111111111111111111!")
+-        print(bcolors.BOLD,"TEST111111111111111111111111!",bcolors.ENDC)
+ 
+     # Only for debug!
+ 
+-
+-
+-
+-
+-
+-
+     def update_chat_debug(self, ab):
+         # uses dict
+         self.vbar = self.startWindow.scrollArea.verticalScrollBar()
+         self.vbar.setValue(self.vbar.maximum())
+-        #Debug
++        # Debug
+         atuple = ('Left', 0)
+-        if ab[0] == atuple:
+-            print('TRUE!!!!')
+-            print(bcolors.HEADER, ab, bcolors.ENDC)
+-
+ 
+         ac = []
+         ac = ab
+-        #print(ac[1].__getitem__(0))
+-
+ 
+         if not ab == tuple:
+             if not ab[0] == atuple:
+@@ -642,7 +422,6 @@
+                 dicta = {}
+                 for x in range(len(list(ac))):
+ 
+-
+                     dicta = list(ac)[x].__getitem__(0)
+ 
+                     user = list(iter(dicta))[1]
+@@ -655,64 +434,35 @@
+                 a = {}
+                 a.values()
+ 
+-                # print(ab.index())
+-                ele = []
+-                # for k, v in list(ac)[0].__getitem__(1).items():
+-
+-                # print(k, v)
+-
+-                # for x in ac:
+-                #    ele.append(x[0])
+-                # res_list = [x[0] for x in ac]
+-                # x = list(ac)[0].__getitem__(1).count
+-
+-                print(bcolors.FAIL, self.globalChat, bcolors.ENDC)
+-
+-                # print(bcolors.FAIL, dicta.values(), bcolors.ENDC)
+-                # print(bcolors.FAIL, ac[1], bcolors.ENDC)
+                 self.startWindow.inner_chat_label.setText(str(self.globalChat))
+                 self.startWindow.inner_chat_label.setText(str("\n".join(self.globalChat)))
+ 
+-        #self.camera.close_camera()
+-        #self.startWindow.inner_chat_label.setText("TEST!")
+-        #self.startWindow.show()
+-        #self.pongWindow.hide()
+-
+-
+     def start_movie(self):
+         self.pongWindow.button_movie.setVisible(False)
+-        #self.pongWindow.imageLabel2.setGeometry(QRect(1240, 100, 10, 200))
+-        # create the video capture thread
+         self.thread = VideoThread(self.camera, self.hand_detector)
+-        # self.thread.client.client.close()
+         self.local_cL = self.thread.client
+-        print(self.local_cL)
+-        #self.thread.starte_receive_loop.connect(self.start_thread_receive)
+-        # connect its signal to the update_image slot
+         self.thread.change_pixmap_signal.connect(self.update_image)
+         self.thread.update_label_signal.connect(self.updatePosition)
+         self.thread.update_ball_signal.connect(self.updateBall)
+-        #self.thread.update_chat_signal.connect(self.upchatlabel)
+         self.thread.update_tor.connect(self.updateTor)
+         self.thread.update_player_2.connect(self.updatePositionPlayer2)
+ 
+-        #self.update_chat_debug()
++        # self.update_chat_debug()
+ 
+         # start the thread
+         self.thread.start()
+         # self.thread1.start()
+         # self.update_timer.start(30)
+ 
++
+ class msg(object):
+     def __init__(self, message):
+         self.message = message
+ 
+ 
+-
+-
+ class BackgroundFeed(QThread):
+     a = "a"
+-    #change_ab_signal = pyqtSignal(str)
++    # change_ab_signal = pyqtSignal(str)
+     change_ab_signal = pyqtSignal(object)
+     change_pixmap_signal = pyqtSignal(np.ndarray)
+     change_cursor_position = pyqtSignal(int, int)
+@@ -723,11 +473,9 @@
+ 
+     client = chat_client()
+ 
+-
+-
+     def start_receive(self):
+         self.client.receive()
+-        print("THEADING!!!!!")
++        # print("THEADING!!!!!")
+ 
+     def __init__(self, camera, hand_detector):
+         super().__init__()
+@@ -737,7 +485,7 @@
+ 
+     # Camera Loop
+     def run(self):
+-        print("Video Started")
++        # print("Video Started")
+         hd = hand_detector()
+         lmList = []
+         # rThread.start()
+@@ -747,41 +495,39 @@
+         bodyDetector = body_detector()
+ 
+         self.client.player = Player
+-        self.client.startClientThread() #Client Thread for receiving messages from the Chat Server
++        self.client.startClientThread()  # Client Thread for receiving messages from the Chat Server
+         rThread = threading.Thread(target=self.start_receive, args=())
+ 
+-
+         while True:
+ 
+-            #self.client.sendcoordinate(Player, 100)
++            # self.client.sendcoordinate(Player, 100)
+             success, img = self.camera.cap.read()
+             # img.flags.writeable = False
+             if success:
+                 self.update_infolabel.emit()
+-                print(bcolors.OKCYAN,'!!@@',self.client.TempChatList,bcolors.ENDC)
++                # print(bcolors.OKCYAN,'!!@@',self.client.TempChatList,bcolors.ENDC)
+                 self.change_ab_signal.emit(self.client.TempChatList)
+                 # init Hand detector
+                 # hd.findHands(img)
+                 img = cv2.resize(img, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
+                 img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
+                 lmList = self.hand_detector.handlist
+-                # print(lmList)
+-                if len(lmList) !=0:
++                # #print(lmList)
++                if len(lmList) != 0:
+                     x = int(lmList[0].__getitem__(1))
+                     y = int(lmList[0].__getitem__(2))
+-                    #print(x, "_", y)
++                    ##print(x, "_", y)
+                     # Updates Cursor Coordinate from the lmList hands points
+                     # Tracks always the middle point
+                     self.change_cursor_position.emit(x, y)
+-                # gd.print()
++                # gd.#print()
+                 # cv2.imshow('Test', img)
+                 body_image_black = bodyDetector.findPose(img_proc)
+                 body_image_black = cv2.resize(body_image_black, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
+-                #img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, body_image_black)
++                # img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, body_image_black)
+                 self.change_pixmap_signal.emit(body_image_black)
+ 
+ 
+-
+ class PauseThread(QThread):
+     def __init__(self):
+         super().__init__()
+@@ -790,6 +536,7 @@
+         time.sleep(0.1)
+         return False
+ 
++
+ if __name__ == '__main__':
+     app = QApplication([])
+     window = StartWindow()
+Index: de.hshl.uc/src/model/camera.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import numpy as np\r\n\r\nimport cv2\r\n\r\n\r\nclass Camera:\r\n    def __init__(self, cam_num):\r\n        self.cam_num = cam_num\r\n        self.cap = cv2.VideoCapture(0)\r\n        self.last_frame = np.zeros((1,1))\r\n    # Init Camera\r\n    def initialize(self):\r\n        self.cap = cv2.VideoCapture(self.cam_num)\r\n    # Capture Loop\r\n    def acquire_movie(self, num_frames):\r\n        movie = []\r\n        for _ in range(num_frames):\r\n            movie.append(self.get_frame())\r\n        return movie\r\n    # Set Brightenss (TO-DO: Later Auto)\r\n    def set_brightness(self, value):\r\n        self.cap.set(cv2.CAP_PROP_BRIGHTNESS, value)\r\n    # Get the Bright (TO-DO: Later Auto)\r\n    def get_brightness(self):\r\n        return self.cap.get(cv2.CAP_PROP_BRIGHTNESS)\r\n    # Close the camera stream\r\n    def close_camera(self):\r\n        self.cap.release()\r\n    # Debuging\r\n    def __str__(self):\r\n        return 'OpenCV Camera {}'.format(self.cam_num)\r\n\r\n\r\nif __name__ == '__main__':\r\n    cam = Camera(0)\r\n    cam.initialize()\r\n    print(cam)\r\n    # cam.set_brightness(1)\r\n    # print(cam.get_brightness())\r\n    # cam.set_brightness(0.5)\r\n    # print(cam.get_brightness())\r\n    cam.close_camera()\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/de.hshl.uc/src/model/camera.py b/de.hshl.uc/src/model/camera.py
+--- a/de.hshl.uc/src/model/camera.py	(revision cff081f71f3246b82c32d0a21d37f10c31fd6370)
++++ b/de.hshl.uc/src/model/camera.py	(date 1656892670420)
+@@ -7,26 +7,31 @@
+     def __init__(self, cam_num):
+         self.cam_num = cam_num
+         self.cap = cv2.VideoCapture(0)
+-        self.last_frame = np.zeros((1,1))
++        self.last_frame = np.zeros((1, 1))
++
+     # Init Camera
+     def initialize(self):
+         self.cap = cv2.VideoCapture(self.cam_num)
++
+     # Capture Loop
+     def acquire_movie(self, num_frames):
+         movie = []
+         for _ in range(num_frames):
+             movie.append(self.get_frame())
+         return movie
+-    # Set Brightenss (TO-DO: Later Auto)
++
++    # Set Brightens
+     def set_brightness(self, value):
+         self.cap.set(cv2.CAP_PROP_BRIGHTNESS, value)
+-    # Get the Bright (TO-DO: Later Auto)
++
++    # Get the Brightness
+     def get_brightness(self):
+         return self.cap.get(cv2.CAP_PROP_BRIGHTNESS)
++
+     # Close the camera stream
+     def close_camera(self):
+         self.cap.release()
+-    # Debuging
++
+     def __str__(self):
+         return 'OpenCV Camera {}'.format(self.cam_num)
+ 
+@@ -35,8 +40,4 @@
+     cam = Camera(0)
+     cam.initialize()
+     print(cam)
+-    # cam.set_brightness(1)
+-    # print(cam.get_brightness())
+-    # cam.set_brightness(0.5)
+-    # print(cam.get_brightness())
+     cam.close_camera()
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"0249d737-1b62-40ab-b2d4-51d9f088bc89\" name=\"Changes\" comment=\"Removed Unused Code!\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/HSHL_UC_SS22.iml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/HSHL_UC_SS22.iml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/misc.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/de.hshl.uc/resources/pictures/A_1.png\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/de.hshl.uc/resources/pictures/A_2.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/de.hshl.uc/resources/pictures/A_3.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/de.hshl.uc/resources/pictures/A_4.jpg\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/de.hshl.uc/src/start.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/de.hshl.uc/src/start.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/de.hshl.uc/src/user_interface/startWindow.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/de.hshl.uc/src/user_interface/startWindow.py\" afterDir=\"false\" />\r\n    </list>\r\n    <list id=\"cf1cc60c-cbd6-4cbf-82b8-5e64fd9c236c\" name=\"Changes by Jan-Gustav\" comment=\"Changes by Jan-Gustav\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"file://$PROJECT_DIR$/de.hshl.uc/src/start.py\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/de.hshl.uc/src/Socket/online/PongServer/Online_Client.py\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/startWindow.py\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/de.hshl.uc/src/recognition/hand_detector.py\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/Tools/Cursor.py\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/pongScreen.py\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/de.hshl.uc/src/Socket/online/ChatServer/Online_Chat_Server_V01.py\" root0=\"FORCE_HIGHLIGHTING\" />\r\n    <setting file=\"file://$PROJECT_DIR$/de.hshl.uc/src/Socket/online/ChatServer/Online_Chat_Client_V01.py\" root0=\"FORCE_HIGHLIGHTING\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"29qOighypyRB26nRvluXv9Vr1jJ\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Marvin\\PycharmProjects\\HSHL_UC_SS22\\de.hshl.uc\\src\\Socket\\local\" />\r\n      <recent name=\"C:\\Users\\Marvin\\PycharmProjects\\HSHL_UC_SS22\\de.hshl.uc\\src\\Socket\\online\\PongServer\" />\r\n      <recent name=\"C:\\Users\\Marvin\\PycharmProjects\\HSHL_UC_SS22\\de.hshl.uc\\src\\Socket\\online\\ChatServer\" />\r\n      <recent name=\"C:\\Users\\Marvin\\PycharmProjects\\HSHL_UC_SS22\\de.hshl.uc\\src\\Socket\\online\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\Marvin\\PycharmProjects\\HSHL_UC_SS22\\de.hshl.uc\\src\\Socket\\online\\PongServer\" />\r\n      <recent name=\"D:\\Studium\\SS 2022\\Ubliquitus Computing\\HSHL_UC_SS22\\de.hshl.uc\\src\\user_interface\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Python.start\">\r\n    <configuration name=\"Local_Chat_Server_V01\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"HSHL_UC_SS22\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/de.hshl.uc/src/Socket/local/ChatServer\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/de.hshl.uc/src/Socket/local/ChatServer/Local_Chat_Server_V01.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"start\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"HSHL_UC_SS22\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/de.hshl.uc/src\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/de.hshl.uc/src/start.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Python.start\" />\r\n        <item itemvalue=\"Python.Local_Chat_Server_V01\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"0249d737-1b62-40ab-b2d4-51d9f088bc89\" name=\"Changes\" comment=\"Implements Fun Facts!\" />\r\n      <created>1653837278035</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1653837278035</updated>\r\n      <workItem from=\"1656349707648\" duration=\"5581000\" />\r\n      <workItem from=\"1656859008804\" duration=\"6829000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"activate button with cam\">\r\n      <created>1654112819352</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1654112819352</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"cursor turns orange when intersecting\">\r\n      <created>1654115848354</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1654115848354</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"cursor counter\">\r\n      <created>1654120300911</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1654120300911</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"removed scroll bars\">\r\n      <created>1654179228289</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1654179228289</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"autoscroll down working\">\r\n      <created>1654179781487</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1654179781487</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"funfacts 1\">\r\n      <created>1655669701779</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1655669701779</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"funfacts 1\">\r\n      <created>1655669723506</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1655669723506</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"funfacts 2\">\r\n      <created>1655669862219</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1655669862219</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"Implements Fun Facts!\">\r\n      <created>1655677228404</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1655677228404</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Implements new goal method!\">\r\n      <created>1656350905764</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1656350905764</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"Implements new goal method!\">\r\n      <created>1656353961148</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1656353961148</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"Implements new goal method!\">\r\n      <created>1656354258182</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1656354258182</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"Implements new goal method!\">\r\n      <created>1656354593790</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1656354593790</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00014\" summary=\"Implements new goal method!\">\r\n      <created>1656355225245</created>\r\n      <option name=\"number\" value=\"00014\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1656355225245</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00015\" summary=\"Implements new goal method!\">\r\n      <created>1656355439076</created>\r\n      <option name=\"number\" value=\"00015\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1656355439076</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00016\" summary=\"Implements new goal method!\">\r\n      <created>1656355780836</created>\r\n      <option name=\"number\" value=\"00016\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00016\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1656355780836</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00017\" summary=\"Implements new goal method!\">\r\n      <created>1656356042211</created>\r\n      <option name=\"number\" value=\"00017\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00017\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1656356042211</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00018\" summary=\"Removed Unused Classes!\">\r\n      <created>1656877591136</created>\r\n      <option name=\"number\" value=\"00018\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00018\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1656877591136</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00019\" summary=\"Removed Unused Code!\">\r\n      <created>1656887857204</created>\r\n      <option name=\"number\" value=\"00019\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00019\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1656887857204</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"20\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"activate button with cam\" />\r\n    <MESSAGE value=\"cursor turns orange when intersecting\" />\r\n    <MESSAGE value=\"cursor counter\" />\r\n    <MESSAGE value=\"removed scroll bars\" />\r\n    <MESSAGE value=\"autoscroll down working\" />\r\n    <MESSAGE value=\"funfacts 1\" />\r\n    <MESSAGE value=\"funfacts 2\" />\r\n    <MESSAGE value=\"Implements Fun Facts!\" />\r\n    <MESSAGE value=\"Implements new goal method!\" />\r\n    <MESSAGE value=\"Removed Unused Classes!\" />\r\n    <MESSAGE value=\"Removed Unused Code!\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Removed Unused Code!\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\r\n          <url>file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py</url>\r\n          <line>520</line>\r\n          <option name=\"timeStamp\" value=\"1\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision cff081f71f3246b82c32d0a21d37f10c31fd6370)
++++ b/.idea/workspace.xml	(date 1656892670509)
+@@ -4,16 +4,10 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="0249d737-1b62-40ab-b2d4-51d9f088bc89" name="Changes" comment="Removed Unused Code!">
+-      <change beforePath="$PROJECT_DIR$/.idea/HSHL_UC_SS22.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/HSHL_UC_SS22.iml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++    <list default="true" id="0249d737-1b62-40ab-b2d4-51d9f088bc89" name="Changes" comment="Some Comments">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/resources/pictures/A_1.png" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/resources/pictures/A_2.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/resources/pictures/A_3.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/resources/pictures/A_4.jpg" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/start.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/start.py" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/startWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/startWindow.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/model/camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/model/camera.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" afterDir="false" />
+     </list>
+     <list id="cf1cc60c-cbd6-4cbf-82b8-5e64fd9c236c" name="Changes by Jan-Gustav" comment="Changes by Jan-Gustav" />
+     <option name="SHOW_DIALOG" value="false" />
+@@ -261,7 +255,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1656887857204</updated>
+     </task>
+-    <option name="localTasksCounter" value="20" />
++    <task id="LOCAL-00020" summary="Some Comments">
++      <created>1656891759728</created>
++      <option name="number" value="00020" />
++      <option name="presentableId" value="LOCAL-00020" />
++      <option name="project" value="LOCAL" />
++      <updated>1656891759728</updated>
++    </task>
++    <option name="localTasksCounter" value="21" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -290,17 +291,7 @@
+     <MESSAGE value="Implements new goal method!" />
+     <MESSAGE value="Removed Unused Classes!" />
+     <MESSAGE value="Removed Unused Code!" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Removed Unused Code!" />
+-  </component>
+-  <component name="XDebuggerManager">
+-    <breakpoint-manager>
+-      <breakpoints>
+-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+-          <url>file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py</url>
+-          <line>520</line>
+-          <option name="timeStamp" value="1" />
+-        </line-breakpoint>
+-      </breakpoints>
+-    </breakpoint-manager>
++    <MESSAGE value="Some Comments" />
++    <option name="LAST_COMMIT_MESSAGE" value="Some Comments" />
+   </component>
+ </project>
+\ No newline at end of file

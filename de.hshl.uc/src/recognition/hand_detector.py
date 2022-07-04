@@ -18,6 +18,7 @@ class hand_detector:
 
     def __init__(self, mode: object = False, maxHands: object = 1, detectionCon: object = 0.5, trackCon: object = 0.5,
                  modelComplexity: object = 1) -> object:
+        # save the input variables in local ones
         self.mode = mode
         self.maxHands = maxHands
         self.detectionCon = detectionCon
