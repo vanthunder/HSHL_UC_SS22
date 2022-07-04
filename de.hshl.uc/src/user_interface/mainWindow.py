@@ -123,10 +123,12 @@ class StartWindow(QMainWindow):
         self.bY = 0
         # ball moving direction
         self.positive = True
+        # count the frames the cursor is on a btn
         self.counter = 0
         self.camera = camera
         self.hand_detector = hand_detector
         self.local_cL = local_cL
+
         self.display_width = self.width
         self.display_height = self.height
         self.setWindowTitle(self.windowTitle)
@@ -227,7 +229,7 @@ class StartWindow(QMainWindow):
                 self.counter = 0
         else:
             self.startWindow.reset_load()
-            self.counter = 0;
+            self.counter = 0
 
     def updatePosition(self, c):
         self.pongWindow.imageLabel1.setGeometry(QRect(100, c - 100, 10, 200))
@@ -269,21 +271,21 @@ class StartWindow(QMainWindow):
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.imageLabel1.geometry()):
                 self.local_cL.sendCollision("paddleL")
                 return True
-            # Collision Bande Oben
+            # Collision top
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeOben.geometry()):
                 self.local_cL.sendCollision("bandeO")
                 return True
-            # Collision Bande Unten
+            # Collision bottom
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeUnten.geometry()):
                 self.local_cL.sendCollision("bandeU")
                 return True
-                # Collision Bande Oben
+                # Collision left
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torLeft.geometry()):
                 self.local_cL.sendCollision("torL")
                 self.scoreRight = True
                 self.updateTor()
                 return True
-            # Collision Bande Unten
+            # Collision right
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torRight.geometry()):
                 self.local_cL.sendCollision("torR")
                 self.scoreLeft = True
