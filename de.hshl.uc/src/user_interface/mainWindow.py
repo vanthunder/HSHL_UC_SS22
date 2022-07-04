@@ -35,14 +35,14 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-
+# This class purpose is to handle most of the threads used in the program
 class VideoThread(QThread):
     change_ab_signal = pyqtSignal(int)
     change_pixmap_signal = pyqtSignal(np.ndarray)
     update_label_signal = pyqtSignal(int)
     update_ball_signal = pyqtSignal(int, int)
     update_player_2 = pyqtSignal(int)
-    starte_receive_loop = pyqtSignal(local_client)
+    start_receive_loop = pyqtSignal(local_client)
     update_tor = pyqtSignal()
     counter = int(1)
     client = local_client()
@@ -57,7 +57,7 @@ class VideoThread(QThread):
 
     def videoLoop(self, Player):
         lmList = []
-        self.hand_detector.handlist = lmList
+        self.hand_detector.handList = lmList
         self.camera = Camera(0)
         self.camera.initialize()
         while True:
@@ -70,21 +70,13 @@ class VideoThread(QThread):
                 self.change_ab_signal.emit(1)
                 img = cv2.resize(img, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
                 img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
-                lmList = self.hand_detector.handlist
+                lmList = self.hand_detector.handList
                 self.change_pixmap_signal.emit(img_proc)
-                # Game Loop
-                # Bewege ball
-                print(bcolors.FAIL, self.client.ballcoords.__getitem__(0), bcolors.ENDC)
-                # Tor L
-                # To Do send to server:
 
-                if not lmList:
-                    print()
-                else:
+                # Game Loop
+                if lmList:
                     # Send Tupel
-                    print('Send Coordinates form Main Window')
                     self.client.sendcoordinate(Player, lmList[0].__getitem__(2))
-                    print('Send Coordinates form Main Window 2')
                     if self.client.TempTupel.__getitem__(0) == 'Left':
                         self.update_label_signal.emit(self.client.TempTupel.__getitem__(1))
                     else:
@@ -98,36 +90,38 @@ class VideoThread(QThread):
         self.client.sendReady('Left')
         while True:
             if self.client.canStart == True:
-                print(bcolors.WARNING, "Starte VideoLoop", bcolors.ENDC)
                 self.videoLoop(Player)
 
-
+# This class purpose is to handle everything connected to the start screen
 class StartWindow(QMainWindow):
-    window_title = ""
+    windowTitle = "Projekt: Ubi"
 
     def __init__(self, camera=None, hand_detector=None, local_cL=None):
         super().__init__()
+        # screen dimensions
+        self.width = 1280
+        self.height = 750
+        # goal vars
         self.threadOpen = False
         self.scoreLeft = False
         self.scoreRight = False
         self.scoreLeftCounter = 0
         self.scoreRightCounter = 0
-        self.goalSetBool = True
-        self.funFactsClass = FunFacts
-        self.funFacts = self.funFactsClass.FunFacts.funFacts
-        self.sizeOfAr = len(self.funFactsClass.FunFacts.funFacts)
-        self.arCounter = 0
-        self.arGlobalCounter = 0
         self.goalCounter = 0
         self.goalGlobalCounter = 0
-        self.width = 1280
-        self.height = 750
+        self.goalSetBool = True
+        # fun facts
+        self.funFactsClass = FunFacts
+        self.funFacts = self.funFactsClass.FunFacts.funFacts
+        self.lenOfFunFacts = len(self.funFactsClass.FunFacts.funFacts)
         self.window_title = 'start'
         self.fontA = QFont("Josefin Sans Medium", 24)
         self.fontB = QFont("Josefin Sans Medium", 100)
         self.fontC = QFont("Josefin Sans Medium", 40)
+        # ball position
         self.bX = 0
         self.bY = 0
+        # ball moving direction
         self.positive = True
         self.counter = 0
         self.camera = camera
@@ -135,7 +129,7 @@ class StartWindow(QMainWindow):
         self.local_cL = local_cL
         self.display_width = self.width
         self.display_height = self.height
-        self.setWindowTitle('Projekt: Ubi')
+        self.setWindowTitle(self.windowTitle)
         self.setMinimumSize(self.width, self.height)
         self.setMaximumSize(self.width, self.height)
         self.loading = QMovie('Tools/loading-circle.gif')
@@ -158,8 +152,6 @@ class StartWindow(QMainWindow):
 
         self.isPause = False
         self.pauseThread = PauseThread()
-
-        # self.pixmap_item = QPixmap()
 
         # Central Widget
         self.central_widget = QWidget()
@@ -215,7 +207,6 @@ class StartWindow(QMainWindow):
         if reply == QMessageBox.Yes:
             self.local_cL.close_client()
             event.accept()
-            print('Window closed')
         else:
             event.ignore()
 
@@ -227,12 +218,9 @@ class StartWindow(QMainWindow):
         self.startWindow.imageLabel.setPixmap(QPixmap.fromImage(qt_img))
 
     def update_cursor(self, x, y):
-        print(x, y)
-
         self.startWindow.cursor.move(x, y)
         if self.startWindow.cursor.geometry().intersected(self.startWindow.button_Play.geometry()):
             self.counter += 5
-            print("counter:", self.counter)
             self.startWindow.load(self.counter)
             if self.counter > 100:
                 self.start_Game()
@@ -261,9 +249,6 @@ class StartWindow(QMainWindow):
         self.pongWindow.scoreRight.setGeometry(QRect(700, 50, 10, 50))
         self.pongWindow.imageLabel3.setGeometry(x, y, 80, 80)
         self.detect_collision()
-        print(bcolors.FAIL, self.pongWindow.imageLabel3.geometry().x(), " X Coord", bcolors.ENDC)
-        # if self.pongWindow.imageLabel3.geometry().x() >= 850 and self.pongWindow.imageLabel3.geometry().x() <= 853:
-        #    self.updateTor()
 
     def ballMovementpositive(self):
         self.bX += 10
@@ -278,34 +263,28 @@ class StartWindow(QMainWindow):
         if self.positive:
             # Collision Paddle Right!
             if self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.imageLabel2.geometry()):
-                print("INTERSECTION!")
                 self.local_cL.sendCollision("paddleR")
                 return True
             # Collision Paddle Left
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.imageLabel1.geometry()):
-                print("INTERSECTION!")
                 self.local_cL.sendCollision("paddleL")
                 return True
             # Collision Bande Oben
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeOben.geometry()):
-                print("INTERSECTION!")
                 self.local_cL.sendCollision("bandeO")
                 return True
             # Collision Bande Unten
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.bandeUnten.geometry()):
-                print("INTERSECTION!")
                 self.local_cL.sendCollision("bandeU")
                 return True
                 # Collision Bande Oben
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torLeft.geometry()):
-                print("INTERSECTION!")
                 self.local_cL.sendCollision("torL")
                 self.scoreRight = True
                 self.updateTor()
                 return True
             # Collision Bande Unten
             elif self.pongWindow.imageLabel3.geometry().intersected(self.pongWindow.torRight.geometry()):
-                print("INTERSECTION!")
                 self.local_cL.sendCollision("torR")
                 self.scoreLeft = True
                 self.updateTor()
@@ -314,7 +293,6 @@ class StartWindow(QMainWindow):
                 return False
 
     def updateTor(self):
-        print("DIE METHODE WIRD AUSGEFÜHRT#####################################################1111####1##")
         if self.scoreLeft:
             self.scoreLeft = False
             self.scoreRight = False
@@ -358,7 +336,6 @@ class StartWindow(QMainWindow):
                 get_date = "Sonntag"
 
         # wait for the thread to finish
-        print('Waiting for the thread...')
 
         self.startWindow.clock_label.setText(str(timea))
         self.startWindow.date_label.setText(str(get_date))
@@ -370,26 +347,19 @@ class StartWindow(QMainWindow):
             self.arGlobalCounter = 0
 
         self.startWindow.fact_label.setText(self.funFacts.__getitem__(self.arCounter))
-        if self.arCounter == self.sizeOfAr - 1:
+        if self.arCounter == self.lenOfFunFacts - 1:
             self.arCounter = 0
 
     def updateCounter(self):
         self.arCounter += 1
-        print(self.arCounter)
         time.sleep(2)
 
+    # convert from an OpenCV image to a QPixmap
     def convert_cv_qt(self, cv_img):
         cv_img = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
         cv_img = qimage2ndarray.array2qimage(cv_img)
         return cv_img
 
-    """Convert from an opencv image to QPixmap"""
-
-    # rgb_image = cv2.cvtColor(cv_img, cv2.COLOR_BGR2RGB)
-    # h, w, ch = rgb_image.shape
-    # bytes_per_line = ch * w
-    # convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
-    # p = convert_to_Qt_format.scaled(self.disply_width, self.display_height, Qt.KeepAspectRatio)
     def start_thread_receive(self, local_cla):
         self.local_cL = local_cla
 
@@ -401,9 +371,6 @@ class StartWindow(QMainWindow):
         self.vbar = self.startWindow.scrollArea.verticalScrollBar()
         self.vbar.setValue(self.vbar.maximum())
         atuple = ('Left', 0)
-        if ab[0] == atuple:
-            print('TRUE!!!!')
-            print(bcolors.HEADER, ab, bcolors.ENDC)
         ac = []
         ac = ab
         if not ab == tuple:
@@ -424,7 +391,6 @@ class StartWindow(QMainWindow):
                         self.globalChat.append(chat)
                 a = {}
                 a.values()
-                print(bcolors.FAIL, self.globalChat, bcolors.ENDC)
                 self.startWindow.inner_chat_label.setText(str(self.globalChat))
                 self.startWindow.inner_chat_label.setText(str("\n".join(self.globalChat)))
 
@@ -433,7 +399,6 @@ class StartWindow(QMainWindow):
         # create the video capture thread
         self.thread = VideoThread(self.camera, self.hand_detector)
         self.local_cL = self.thread.client
-        print(self.local_cL)
         # connect its signal to the update_image slot
         self.thread.change_pixmap_signal.connect(self.update_image)
         self.thread.update_label_signal.connect(self.updatePosition)
@@ -469,10 +434,9 @@ class BackgroundFeed(QThread):
 
     # Camera Loop
     def run(self):
-        print("Video Started")
         lmList = []
         # capture from web cam
-        Player = 'Left'  # input('Player: ')
+        Player = 'Left'
         bodyDetector = body_detector()
         self.client.player = Player
         self.client.startClientThread()  # Client Thread for receiving messages from the Chat Server
@@ -484,7 +448,7 @@ class BackgroundFeed(QThread):
                 self.change_ab_signal.emit(self.client.TempChatList)
                 img = cv2.resize(img, (1280, 750), fx=0, fy=0, interpolation=cv2.INTER_CUBIC)
                 img_proc = self.hand_detector.find_hands_on_image(self.hand_detector, img)
-                lmList = self.hand_detector.handlist
+                lmList = self.hand_detector.handList
                 if len(lmList) != 0:
                     x = int(lmList[0].__getitem__(1))
                     y = int(lmList[0].__getitem__(2))

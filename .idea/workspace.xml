@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0249d737-1b62-40ab-b2d4-51d9f088bc89" name="Changes" comment="Removed Unused Code!">
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/model/camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/model/camera.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/recognition/body_detector.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/recognition/body_detector.py" afterDir="false" />
+    <list default="true" id="0249d737-1b62-40ab-b2d4-51d9f088bc89" name="Changes" comment="Some Comments">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de.hshl.uc/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/recognition/hand_detector.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/recognition/hand_detector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" afterDir="false" />
     </list>
     <list id="cf1cc60c-cbd6-4cbf-82b8-5e64fd9c236c" name="Changes by Jan-Gustav" comment="Changes by Jan-Gustav" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,9 +33,9 @@
     <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/recognition/hand_detector.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/Tools/Cursor.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/pongScreen.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/online/ChatServer/Online_Chat_Server_V01.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/Socket/online/ChatServer/Online_Chat_Client_V01.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/de.hshl.uc/src/user_interface/pongScreen.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -261,7 +263,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656889856148</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Some Comments">
+      <created>1656893986908</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1656893986908</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -290,6 +299,7 @@
     <MESSAGE value="Implements new goal method!" />
     <MESSAGE value="Removed Unused Classes!" />
     <MESSAGE value="Removed Unused Code!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed Unused Code!" />
+    <MESSAGE value="Some Comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some Comments" />
   </component>
 </project>

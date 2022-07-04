@@ -4,7 +4,7 @@ import numpy as np
 
 
 class hand_detector:
-    handlist = [1, 12]
+    handList = [1, 12]
     str = 'test'
     mode = False
     maxHands = 1
@@ -52,27 +52,25 @@ class hand_detector:
         return img2
 
     def intersection(self, lmList, x, y, start_Point, end_Point):
-        # X Range
-        x_wert = False
-        y_wert = False
+        xValue = False
+        yValue = False
 
+        # X Range
         for x in range(start_Point[0], end_Point[0]):
             if lmList[0].__getitem__(1) == x:
-                x_wert = True
+                xValue = True
                 break
             else:
-                x_wert = False
+                xValue = False
         # Y Range
         for y in range(start_Point[1], end_Point[1]):
             if lmList[0].__getitem__(2) == y:
-                y_wert = True
+                yValue = True
                 break
             else:
-                y_wert = False
+                yValue = False
 
-        if (x_wert & y_wert):
-            print("Intersection Y: True")
-            print("Intersection X: True")
+        if xValue & yValue:
             return True
 
     def findPosition(self, img, handNo=0, draw=True):
@@ -88,7 +86,7 @@ class hand_detector:
         handlist = lmlist
         return lmlist
 
-    def getLmlist(self):
+    def getLmList(self):
         return self.lmList
 
     def find_hands_on_image(self, img):
@@ -99,19 +97,20 @@ class hand_detector:
         counter = 0
         startPoint = (1000, 100)
         endPoint = (1400, 300)
+        # specify the image on where to find hands
         img = self.findHands(self, img)
         lmlist = self.findPosition(self, img)
-        handlist = lmlist
-        hand_detector.handlist = lmlist
+        hand_detector.handList = lmlist
+        # execute only if the lm list is not empty:
+        #   get the center coordinate of the Wrist
+        #   draw a circle to that position
         if len(lmlist) != 0:
             center = (int(lmlist[0].__getitem__(1)), int(lmlist[0].__getitem__(2)))
             img = cv2.circle(img, center, 20, (255, 255, 0), 2)
-
         return img
 
 
 def main(self):
-    print("TRUE INI!!!!!!")
     detector = hand_detector()
 
 
