@@ -31,7 +31,7 @@ class chat_client: # For Chat Client
 
             # Receive Message From Server
             message = self.client.recv(8192) # Receive message from server
-            message = (pickle.loads(message)) # Decode message
+            message = pickle.loads(message) # Decode message
             self.TempChatList = message # Save message to TempChatList
             print(bcolors.OKBLUE, "Chat vom Server empfangen: ", self.TempChatList, bcolors.ENDC)
 

@@ -108,6 +108,8 @@ class StartWindow(QMainWindow):
         self.goalCounter = 0
         self.goalGlobalCounter = 0
         self.goalSetBool = True
+        self.arCounter = 0
+        self.arGlobalCounter = 0
         # fun facts
         self.funFactsClass = FunFacts
         self.funFacts = self.funFactsClass.FunFacts.funFacts
@@ -392,6 +394,7 @@ class StartWindow(QMainWindow):
                 a = {}
                 a.values()
                 self.startWindow.inner_chat_label.setText(str(self.globalChat))
+                print(self.globalChat)
                 self.startWindow.inner_chat_label.setText(str("\n".join(self.globalChat)))
 
     def start_movie(self):
