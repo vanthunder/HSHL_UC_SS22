@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0249d737-1b62-40ab-b2d4-51d9f088bc89" name="Changes" comment="Removed Unused Code!" />
+    <list default="true" id="0249d737-1b62-40ab-b2d4-51d9f088bc89" name="Changes" comment="Removed Unused Code!">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/de.hshl.uc/src/user_interface/mainWindow.py" afterDir="false" />
+    </list>
     <list id="cf1cc60c-cbd6-4cbf-82b8-5e64fd9c236c" name="Changes by Jan-Gustav" comment="Changes by Jan-Gustav" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +46,9 @@
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -280,7 +287,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657041531501</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Removed Unused Code!">
+      <created>1657041771348</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1657041771348</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,6 +312,10 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/de.hshl.uc/App/Ubicomp_App" />
+      <path value="$PROJECT_DIR$/de.hshl.uc/App/frontend_" />
+    </ignored-roots>
     <MESSAGE value="activate button with cam" />
     <MESSAGE value="cursor turns orange when intersecting" />
     <MESSAGE value="cursor counter" />

@@ -21,6 +21,7 @@ from user_interface.Tools import FunFacts
 from user_interface.pongScreen import pongScreen
 from user_interface.startWindow import startWindow
 
+
 # This class purpose is to color the print statements (it is ment for debugging)
 class bcolors:
     HEADER = '\033[95m'
@@ -32,6 +33,7 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+
 
 # This class purpose is to handle most of the threads used in the program
 class VideoThread(QThread):
@@ -82,13 +84,15 @@ class VideoThread(QThread):
 
     # Camera Loop
     def run(self):
-        Player = 'Left'
+        Player = 'Right'
         self.client.player = Player
         rThread = threading.Thread(target=self.start_receive, args=())
-        self.client.sendReady('Left')
+        self.client.sendReady('Right')
+
         while True:
             if self.client.canStart == True:
                 self.videoLoop(Player)
+
 
 # This class purpose is to handle everything connected to the start screen
 class StartWindow(QMainWindow):
