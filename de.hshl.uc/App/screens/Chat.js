@@ -1,14 +1,18 @@
 import React,{useEffect, useState} from "react";
-import { View, TextInput, Button, Text, FlatList, TouchableOpacity, KeyboardAvoidingView, ActivityIndicator, ScrollView} from "react-native";
+import { View, TextInput, Text, FlatList, TouchableOpacity, KeyboardAvoidingView, ActivityIndicator, ScrollView} from "react-native";
 import { globalStyles } from "../styles/gobal";
 import { Ionicons } from '@expo/vector-icons'; 
 
 
 const Chat = () => {
- 
   const [message, setMessage] = useState()
   const [DATA,setDATA] = useState([])
   const [loading,setLoading]= useState(true)
+  const flatListRef = React.useRef();
+
+  const clearMessage = () => {
+    setMessage('');
+  }  
  
   const fetchData = ()=>{
     fetch("http://34.159.99.140:1666/get-data")
@@ -24,15 +28,15 @@ const Chat = () => {
  useEffect(()=>{
   fetchData()
 },[])
-  
+
   const Item = ({ message }) => (
-    <View>
-      <Text>{message}</Text>
+    <View style={globalStyles.item}>
+      <Text  style={{fontFamily: 'JosefineSansMedium'}}>{message}</Text>
     </View>
   );
 
   const renderItem = ({ item }) => (
-    <Item name={item.message} />
+    <Item message={item.message} />
   );
 
   const submitData = ()=>{
@@ -63,23 +67,26 @@ const Chat = () => {
 
   return (
     <KeyboardAvoidingView>
-    <ScrollView>
+    <ScrollView horizontal={false}>
 
        <Text style={globalStyles.boxFour}>Chat</Text>
        <View style={globalStyles.Chat}>
-      {
+      
+{
         loading? 
       <ActivityIndicator size="small" color="#0000ff" />
       :
+      <ScrollView horizontal={true}>
       <FlatList
+        ref={flatListRef}
         data={DATA}
         renderItem={renderItem}
         keyExtractor={item => item._id}
+         onLayout={() => flatListRef.current.scrollToEnd({ animated: true })}
         />
+        </ScrollView>  
       }
-      
-       
-     
+    
         <View style={globalStyles.Chatinput}>
          <TextInput
           style={{fontFamily: 'JosefineSansMedium'}}
@@ -90,9 +97,17 @@ const Chat = () => {
   
          <TouchableOpacity
            style={globalStyles.ButtonStyle}
-          onPress={() => submitData()}>
+          onPress={() =>{ 
+            if (message === "") {
+            console.log("Message empty")
+          } else {
+          submitData();
+          clearMessage();
+          fetchData()
+           } }}>
           <Ionicons name="send" size={18} color="black" />
          </TouchableOpacity>
+         
        </View>
       
        </View>

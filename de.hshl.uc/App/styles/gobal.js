@@ -74,7 +74,7 @@ export const globalStyles = StyleSheet.create({
       },
 
       Chat :{
-      
+        maxHeight:500,
         marginLeft: 20,
         marginRight: 20,
         borderWidth: 5,
@@ -84,11 +84,33 @@ export const globalStyles = StyleSheet.create({
         borderRadius: 25,
         padding: 10,
       },
-
+  
      Chatinput :{
+   
        flexDirection: "row",
        justifyContent: 'space-between',
-       paddingTop: 340,
+       alignItems: "flex-end",
+       borderColor: '#888888',
+       marginTop: 20,
+       borderTopWidth:2
+      
+      },
+
+      ButtonStyle :{
+        marginTop:5,
+        backgroundColor: '#8BC1E9',
+        borderRadius: 10,
+        alignItems: "center",
+        padding: 8,
+        width: 35,
+        height: 35,
+       
+      },
+
+      item :{
+        margin:2,
+        width: 342,
+        
       },
 
       Spieleauswahl :{
@@ -97,15 +119,4 @@ export const globalStyles = StyleSheet.create({
         
        },
  
-
-  
-      ButtonStyle :{
-        backgroundColor: '#8BC1E9',
-        borderRadius: 10,
-        alignItems: "center",
-        padding: 8,
-        width: 35,
-        height: 35
-      }
-
   });
