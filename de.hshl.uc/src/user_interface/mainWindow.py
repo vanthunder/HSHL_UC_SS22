@@ -112,6 +112,8 @@ class StartWindow(QMainWindow):
         self.funFactsClass = FunFacts
         self.funFacts = self.funFactsClass.FunFacts.funFacts
         self.lenOfFunFacts = len(self.funFactsClass.FunFacts.funFacts)
+        self.arGlobalCounter = 0
+        self.arCounter = 0
         self.window_title = 'start'
         self.fontA = QFont("Josefin Sans Medium", 24)
         self.fontB = QFont("Josefin Sans Medium", 100)
@@ -205,7 +207,6 @@ class StartWindow(QMainWindow):
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
-            self.local_cL.close_client()
             event.accept()
         else:
             event.ignore()
