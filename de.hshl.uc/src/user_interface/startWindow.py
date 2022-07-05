@@ -92,16 +92,14 @@ class startWindow(QWidget):
         data = response.json()
 
         # Kelvin to Celsius: 0K = -273,15°C
-        print("hier muss es hin: " + str(int(data["main"]["temp"] - (273.15))))
-
         # Write Temperature to label
         self.temp_label = QLabel()
-        self.temp_label.setText(str(int(data["main"]["temp"] - (273.15))) + "°C")
+        self.temp_label.setText(str(int(data["main"]["temp"] - 273.15)) + "°C")
         self.temp_label.setAlignment(QtCore.Qt.AlignCenter)
         self.temp_label.setFont(self.fontC)
         self.temp_label.setStyleSheet("margin-top: 0px; color: white")
 
-        # "FunFacts""
+        # "FunFacts"
         self.fact_label = QLabel()
         self.fact_label.setFont(self.fontA)
 
@@ -125,7 +123,8 @@ class startWindow(QWidget):
         # Add Buttons to the inner box
         self.button_Opinion = QPushButton('Meinungsumfrage', self.inner_vbox_label_container)
         self.button_Opinion.setStyleSheet(
-            "margin-left: 20px 40px; background-color: #B28BBC; border-style: thin; border-color: black; border-width: 5px; border-radius: 24px;")
+            "margin-left: 20px 40px; background-color: #B28BBC; border-style: thin; border-color: black; "
+            "border-width: 5px; border-radius: 24px;")
 
         # give some  Objects a size and a font
         self.button_Opinion.setMinimumSize(200, 200)
