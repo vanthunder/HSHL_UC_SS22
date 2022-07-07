@@ -1,5 +1,8 @@
 import { StyleSheet } from 'react-native';
 
+/**Erzeugen eines ausgelagerten Style Sheets für die Seiten Chat und Home */
+
+
 export const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
@@ -111,12 +114,5 @@ export const globalStyles = StyleSheet.create({
         margin:2,
         width: 342,
         
-      },
-
-      Spieleauswahl :{
-        flex:6,
-        paddingTop: 20,
-        
-       },
- 
+      }
   });

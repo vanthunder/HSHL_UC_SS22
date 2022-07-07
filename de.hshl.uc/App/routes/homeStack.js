@@ -6,7 +6,7 @@ import Chat from '../screens/Chat'
 import Umfrage from '../screens/Umfrage'
 import Spiele from '../screens/Spiele'
 
-
+/** Festlegen der einzelnen Routen für die Stack_Navigation*/
 const screens = {
   Home: {
     screen: Home,
@@ -31,7 +31,7 @@ const screens = {
   },
 };
 
-// home stack navigator screens
+/** Erzeugen des Navigator Screens mit gewünschtem Style*/
 const HomeStack = createStackNavigator(screens, {
     defaultNavigationOptions: {
     

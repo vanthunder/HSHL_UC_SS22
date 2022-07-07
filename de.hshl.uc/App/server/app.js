@@ -67,7 +67,9 @@ app.post('/send-data', (req, res) => {
     })
 
 })
-
+/** Die folgenden Befehle sind dazu gedacht, Daten auf der MonoDB auf den neusten Stand
+    zu bringen oder zu entfernen: 
+ 
 app.post('/delete', (req, res) => {
     User.findByIdAndRemove(req.body.id)
         .then(data => {
@@ -91,8 +93,9 @@ app.post('/update', (req, res) => {
             console.log(err)
         })
 })
+ */
+
 app.use(express.json())
-app.use('/api/user', Chat)
 app.use(cors(corsOptions));
 const port = process.env.PORT || 1666;
 app.listen(port, () => {

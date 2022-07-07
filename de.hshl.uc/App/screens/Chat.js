@@ -5,15 +5,21 @@ import { Ionicons } from '@expo/vector-icons';
 
 
 const Chat = () => {
+
+  /**Variablen zum Abspeichern von Daten */
+
   const [message, setMessage] = useState()
   const [DATA,setDATA] = useState([])
   const [loading,setLoading]= useState(true)
   const flatListRef = React.useRef();
 
+/** Textfeld wird wieder leer nach absenden der Nachricht */
+
   const clearMessage = () => {
     setMessage('');
   }  
  
+  /** Methode zum Auslesen der Daten von MongoDB */
   const fetchData = ()=>{
     fetch("http://34.159.99.140:1666/get-data")
     .then(res=>res.json())
@@ -24,10 +30,14 @@ const Chat = () => {
 
     })
  };
+/** Aufruf der Methode zum Auslesen der Daten um diese dann in den Variablen zu speichern */
 
  useEffect(()=>{
   fetchData()
 },[])
+
+/** Erzeugen einer Itemliste, welche später in der Flatlist ausgelesen wird mit den festgelegeten 
+    Styles*/
 
   const Item = ({ message }) => (
     <View style={globalStyles.item}>
@@ -35,9 +45,12 @@ const Chat = () => {
     </View>
   );
 
+  /** Festelegen vom Inhalt des Items. Hier sollen nur die Chatnachrichten der MongoDB erfasst werden */
   const renderItem = ({ item }) => (
     <Item message={item.message} />
   );
+
+  /** Übermitteln der Chatnarchrichten die gesendet werden sollen an die MongoDB */
 
   const submitData = ()=>{
     fetch("http://34.159.99.140:1666/send-data",{
@@ -66,17 +79,29 @@ const Chat = () => {
   
 
   return (
+
+    /** Keyboard Avoiding View bedeutet, dass die Seite auf dem Handy verschoben wird, damit die Tastatur, dass Textfeld nicht
+        verdeckt
+     */
     <KeyboardAvoidingView>
+
+     /** Verschachtelt das Scrollen ineinander damit die Flatlist ohne Probleme dargestellt werden kann */
     <ScrollView horizontal={false}>
 
        <Text style={globalStyles.boxFour}>Chat</Text>
        <View style={globalStyles.Chat}>
-      
+
+      /** Ausführen einer Ladeanimation falls die Datenbank leer sein sollte */
 {
         loading? 
       <ActivityIndicator size="small" color="#0000ff" />
       :
       <ScrollView horizontal={true}>
+
+      /**Hier werden die Daten der Mongo DB ausgelesen und nach ihrer item id sortiert. Außerdem ist eine Funktion implementiert,
+         damit die Liste immer zum aktuellen Listenende scrollt. Diese Funktion wird pro Seotenaufrif einmal ausgeführt. Neue Nachrichten
+         können also nicht gleich gelesen werden.
+       */
       <FlatList
         ref={flatListRef}
         data={DATA}
@@ -88,13 +113,18 @@ const Chat = () => {
       }
     
         <View style={globalStyles.Chatinput}>
+        /** Hier wird ein Eingabefeld für die Narchichten erzeugt */
          <TextInput
           style={{fontFamily: 'JosefineSansMedium'}}
           value={message}
           onChangeText={text => setMessage(text)}
           placeholder="Ihre Nachricht"
          />
-  
+
+         
+        /** Button zum Absenden der Nachrichten und zurücksetzen des Textfeldes.
+            Leere Textnachrichten können nicht gesendet werden. 
+        */
          <TouchableOpacity
            style={globalStyles.ButtonStyle}
           onPress={() =>{ 
@@ -103,7 +133,6 @@ const Chat = () => {
           } else {
           submitData();
           clearMessage();
-          fetchData()
            } }}>
           <Ionicons name="send" size={18} color="black" />
          </TouchableOpacity>
