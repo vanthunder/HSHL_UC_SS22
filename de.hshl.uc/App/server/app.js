@@ -3,11 +3,18 @@ const app = express()
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const cors = require('cors')
-const Server = require("socket.io")
-const socketio = require('socketio')
 require('./Chat')
 
+/** Fix von https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9  
+    damit die Routen des Servers funktionieren
+*/
 app.use(bodyParser.json())
+app.use(express.json())
+app.use(cors(corsOptions));
+const port = process.env.PORT || 1666;
+app.listen(port, () => {
+    console.log('server running')
+})
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:8080/");
@@ -30,10 +37,10 @@ app.use((req, res, next) => {
 
 const Chat = mongoose.model('Chatmessages')
 
-
+/**Link zur MongoDB */
 const mongoUri = "mongodb+srv://Damon:UbiComp@awd-cluster1.kbtax.mongodb.net/?retryWrites=true&w=majority"
 
-
+/**Verbinden mit der MongoDB */
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -47,6 +54,7 @@ mongoose.connection.on("error", (err) => {
     console.log("error", err)
 })
 
+/**Erstellen einer Route um die Daten von der MongoDB auszulesen */
 app.get('/get-data', (req, res) => {
     Chat.find({}).then(data => {
         res.send(data)
@@ -55,7 +63,7 @@ app.get('/get-data', (req, res) => {
     })
 })
 
-
+/**Erstellen einer Route um die Daten vom Chat an den Server zu senden */
 app.post('/send-data', (req, res) => {
     const chat = new Chat({
         message: req.body.message
@@ -69,6 +77,8 @@ app.post('/send-data', (req, res) => {
     })
 
 })
+/** Befehele zum Updaten oder Löschen der Daten auf der MongoDB. Funktionieren,
+    aber werden nicht gebraucht im aktuellen Programm.
 
 app.post('/delete', (req, res) => {
     User.findByIdAndRemove(req.body.id)
@@ -93,12 +103,5 @@ app.post('/update', (req, res) => {
             console.log(err)
         })
 })
-app.use(express.json())
-app.use('/api/user', Chat)
-app.use(cors(corsOptions));
-//const io = socketio(Server).sockets;
-const port = process.env.PORT || 1666;
-//console.log(io.handshake.host);
-app.listen(port, () => {
-    console.log('server running')
-})
+*/
+

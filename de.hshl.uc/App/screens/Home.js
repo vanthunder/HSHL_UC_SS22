@@ -3,6 +3,9 @@ import { StyleSheet, View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { globalStyles } from '../styles/gobal';
 
+/** Aufrufen der Navifation und erstellen einzehlner Funktionen
+   für jede Seite die vom Homscreen aus erreicht werden soll.
+ */
 export default function Home( { navigation }) {
   const pressUmfrage = () => {
     navigation.navigate('Umfrage')
@@ -13,6 +16,10 @@ export default function Home( { navigation }) {
   const pressChat = () => {
     navigation.navigate('Chat')
   }
+
+  /** Aufbau der Seite der zurückggegeben wird mit individuellen Buttons, die
+      auf Touch reagieren.
+   */
   return (
     <View styles={globalStyles.container}>
   
