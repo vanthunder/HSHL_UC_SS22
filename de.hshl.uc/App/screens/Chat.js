@@ -83,26 +83,29 @@ const Chat = () => {
     /** Keyboard Avoiding View bedeutet, dass die Seite auf dem Handy verschoben wird, damit die Tastatur, dass Textfeld nicht
         verdeckt
      */
-    <KeyboardAvoidingView>
-
+    <KeyboardAvoidingView
      /** Verschachtelt das Scrollen ineinander damit die Flatlist ohne Probleme dargestellt werden kann */
+     >    
+
+
     <ScrollView horizontal={false}>
 
        <Text style={globalStyles.boxFour}>Chat</Text>
        <View style={globalStyles.Chat}>
 
-      /** Ausführen einer Ladeanimation falls die Datenbank leer sein sollte */
-{
+    
+{    /** Ausführen einer Ladeanimation falls die Datenbank leer sein sollte */
         loading? 
       <ActivityIndicator size="small" color="#0000ff" />
       :
       <ScrollView horizontal={true}>
 
-      /**Hier werden die Daten der Mongo DB ausgelesen und nach ihrer item id sortiert. Außerdem ist eine Funktion implementiert,
+    
+      <FlatList
+        /**Hier werden die Daten der Mongo DB ausgelesen und nach ihrer item id sortiert. Außerdem ist eine Funktion implementiert,
          damit die Liste immer zum aktuellen Listenende scrollt. Diese Funktion wird pro Seotenaufrif einmal ausgeführt. Neue Nachrichten
          können also nicht gleich gelesen werden.
        */
-      <FlatList
         ref={flatListRef}
         data={DATA}
         renderItem={renderItem}
@@ -112,8 +115,9 @@ const Chat = () => {
         </ScrollView>  
       }
     
-        <View style={globalStyles.Chatinput}>
-        /** Hier wird ein Eingabefeld für die Narchichten erzeugt */
+        <View style={globalStyles.Chatinput}
+        /** Hier wird ein Eingabefeld für die Narchichten erzeugt */>
+        
          <TextInput
           style={{fontFamily: 'JosefineSansMedium'}}
           value={message}
@@ -122,10 +126,11 @@ const Chat = () => {
          />
 
          
-        /** Button zum Absenden der Nachrichten und zurücksetzen des Textfeldes.
+       
+         <TouchableOpacity
+          /** Button zum Absenden der Nachrichten und zurücksetzen des Textfeldes.
             Leere Textnachrichten können nicht gesendet werden. 
         */
-         <TouchableOpacity
            style={globalStyles.ButtonStyle}
           onPress={() =>{ 
             if (message === "") {
