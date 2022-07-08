@@ -94,7 +94,9 @@ const Chat = () => {
        <View style={globalStyles.Chat}>
 
     
-{    /** Ausführen einer Ladeanimation falls die Datenbank leer sein sollte */
+{    /** Ausführen einer Ladeanimation falls die Datenbank leer sein sollte 
+      Icon von https://reactnative.dev/docs/activityindicator
+    */
         loading? 
       <ActivityIndicator size="small" color="#0000ff" />
       :
@@ -103,7 +105,7 @@ const Chat = () => {
     
       <FlatList
         /**Hier werden die Daten der Mongo DB ausgelesen und nach ihrer item id sortiert. Außerdem ist eine Funktion implementiert,
-         damit die Liste immer zum aktuellen Listenende scrollt. Diese Funktion wird pro Seotenaufrif einmal ausgeführt. Neue Nachrichten
+         damit die Liste immer zum aktuellen Listenende scrollt. Diese Funktion wird pro Seitenaufruf einmal ausgeführt. Neue Nachrichten
          können also nicht gleich gelesen werden.
        */
         ref={flatListRef}
